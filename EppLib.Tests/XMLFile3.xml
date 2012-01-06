@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <command>
+    <clTRID>4aad6fd1-0fa2-490e-9cb5-618c9daf2c49</clTRID>
+    <update>
+      <contact:update xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
+        <contact:id>3406310</contact:id>
+        <contact:chg>
+          <contact:postalInfo type="loc">
+            <contact:name>Joe Smith</contact:name>
+            <contact:addr>
+              <contact:street>306 - 350 Sparks St.</contact:street>
+              <contact:city>Ottawa</contact:city>
+              <contact:sp>ON</contact:sp>
+              <contact:pc>K1R 7S8</contact:pc>
+              <contact:cc>CA</contact:cc>
+            </contact:addr>
+          </contact:postalInfo>
+          <contact:voice>+1.6132375335</contact:voice>
+          <contact:fax>+1.6135555555</contact:fax>
+          <contact:email>accreditation@cira.ca</contact:email>
+        </contact:chg>
+      </contact:update>
+    </update>
+    <extension />
+  </command>
+</epp>

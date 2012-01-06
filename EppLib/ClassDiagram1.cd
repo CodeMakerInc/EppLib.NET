@@ -1,0 +1,516 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EppLib.Service" Collapsed="true">
+    <Position X="56" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAQAAAAAQIAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Service.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.TcpTransport" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="59.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASIAIAAACAAEAAAAAAAAIAgAAAAAAAACAAAAAEECAA=</HashCode>
+      <FileName>TcpTransport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EppLib.Entities.EppExtension" Collapsed="true">
+    <Position X="59.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAgAAAAAAAEAAAAAAAACAA=</HashCode>
+      <FileName>Entities\EppExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Contact" Collapsed="true">
+    <Position X="52.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEqCABAAAAIAAAAAQEIgAAAEAAAAAAEAAAAgg=</HashCode>
+      <FileName>Entities\Contact\Contact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactBase&lt;T&gt;" Collapsed="true">
+    <Position X="25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactChange" Collapsed="true">
+    <Position X="54.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgCABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Entities\Contact\ContactChange.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactCheck" Collapsed="true">
+    <Position X="25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactCheckResponse" Collapsed="true">
+    <Position X="25.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactCheckResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactCreate" Collapsed="true">
+    <Position X="27.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactCreate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactCreateResponse" Collapsed="true">
+    <Position X="32.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactCreateResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactDelete" Collapsed="true">
+    <Position X="29.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactDelete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactDeleteResponse" Collapsed="true">
+    <Position X="46" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactDeleteResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactInfo" Collapsed="true">
+    <Position X="20.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactInfoResponse" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAACAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactInfoResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactUpdate" Collapsed="true">
+    <Position X="22.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAACAAAAAAAAABAAAAAAAAAAAAAEEEAAAAAAAQAAA=</HashCode>
+      <FileName>Entities\Contact\ContactUpdate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.ContactUpdateResponse" Collapsed="true">
+    <Position X="16.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\ContactUpdateResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.CiraCprCategories" Collapsed="true">
+    <Position X="50.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIQBgAEIAADIAYAAAEAAAAABEJAAAAAAAAAAAABAI=</HashCode>
+      <FileName>Entities\Contact\CiraCprCategories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.EppContactUpdateAddRemove" Collapsed="true">
+    <Position X="56" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\EppContactUpdateAddRemove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.PostalInfo" Collapsed="true">
+    <Position X="54.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAIAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\PostalInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Telephone" Collapsed="true">
+    <Position X="50.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\Telephone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Domain" Collapsed="true">
+    <Position X="56" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgQAAAAEAAAABQCAIAAAAAQAICAAAEACAAAAAAAABgA=</HashCode>
+      <FileName>Entities\Domain\Domain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainBase&lt;T&gt;" Collapsed="true">
+    <Position X="11.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainChange" Collapsed="true">
+    <Position X="57.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainChange.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainCheck" Collapsed="true">
+    <Position X="7" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAEA=</HashCode>
+      <FileName>Entities\Domain\DomainCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainCheckResponse" Collapsed="true">
+    <Position X="19" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAACAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainCheckResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainCheckResult" Collapsed="true">
+    <Position X="59.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAARAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainCheckResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainContact" Collapsed="true">
+    <Position X="50.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainContact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainCreate" Collapsed="true">
+    <Position X="11.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAQAAAAEAAAAIAAIAAEAEAAAAAAAAAAI=</HashCode>
+      <FileName>Entities\Domain\DomainCreate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainCreateResponse" Collapsed="true">
+    <Position X="34.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Entities\Domain\DomainCreateResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainCreateResult" Collapsed="true">
+    <Position X="52.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainCreateResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainDelete" Collapsed="true">
+    <Position X="18.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainDelete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainDeleteResponse" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainDeleteResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainInfo" Collapsed="true">
+    <Position X="4.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAABAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainInfoResponse" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainInfoResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainPeriod" Collapsed="true">
+    <Position X="54.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainPeriod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainRenew" Collapsed="true">
+    <Position X="9.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAQIAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainRenew.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainRenewResponse" Collapsed="true">
+    <Position X="28" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainRenewResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainTransfer" Collapsed="true">
+    <Position X="13.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAEAAAAAAAAAAAAEAAAEAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainTransfer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainTransferResponse" Collapsed="true">
+    <Position X="37" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainTransferResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainUpdate" Collapsed="true">
+    <Position X="16" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAIAAAAAAABAAAAAAACAAAAAEAEABAAAAAQAAA=</HashCode>
+      <FileName>Entities\Domain\DomainUpdate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.DomainUpdateResponse" Collapsed="true">
+    <Position X="48.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Domain\DomainUpdateResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.EppBase&lt;T&gt;" Collapsed="true">
+    <Position X="19.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAIAoEAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\EppBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.EppCommand&lt;T&gt;" Collapsed="true">
+    <Position X="18.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAABAAAAAAAAAAAAAAAAAGAAgCAABAACE=</HashCode>
+      <FileName>Entities\EppCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.EppDomainUpdateAddRemove" Collapsed="true">
+    <Position X="57.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Entities\EppDomainUpdateAddRemove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.EppResponse" Collapsed="true">
+    <Position X="25.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAQAAAAAAAAIAAAAgIAAAAAAAAAAAAQAAMAAAAAA=</HashCode>
+      <FileName>Entities\EppResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Hello" Collapsed="true">
+    <Position X="36.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Hello.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HelloResponse" Collapsed="true">
+    <Position X="39.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\HelloResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.EppHostUpdateAddRemove" Collapsed="true">
+    <Position X="50.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\EppHostUpdateAddRemove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Host" Collapsed="true">
+    <Position X="52.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gARAAAAEQAAAAACAIAAAAAAAICAAAEAAAAAAAAAAAgA=</HashCode>
+      <FileName>Entities\Host\Host.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostAddress" Collapsed="true">
+    <Position X="54.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Entities\Host\HostAddress.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostChange" Collapsed="true">
+    <Position X="56" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostChange.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostCheck" Collapsed="true">
+    <Position X="57.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostCheckResponse" Collapsed="true">
+    <Position X="21.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAACAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostCheckResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostCheckResult" Collapsed="true">
+    <Position X="59.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAARAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostCheckResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostCreate" Collapsed="true">
+    <Position X="50.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostCreate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostCreateResponse" Collapsed="true">
+    <Position X="41.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostCreateResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostCreateResult" Collapsed="true">
+    <Position X="52.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostCreateResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostDelete" Collapsed="true">
+    <Position X="54.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostDelete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostDeleteResponse" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostDeleteResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostInfo" Collapsed="true">
+    <Position X="56" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostInfoResponse" Collapsed="true">
+    <Position X="14.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostInfoResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostUpdate" Collapsed="true">
+    <Position X="57.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAACAAAAAAAAABAAAAAAAAAAAAAEAEAAAAAAEQAAA=</HashCode>
+      <FileName>Entities\Host\HostUpdate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.HostUpdateResponse" Collapsed="true">
+    <Position X="23.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Host\HostUpdateResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Login" Collapsed="true">
+    <Position X="31.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEgAAAAgBAAAA=</HashCode>
+      <FileName>Entities\Login.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.LoginResponse" Collapsed="true">
+    <Position X="30.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\LoginResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Logout" Collapsed="true">
+    <Position X="34" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Logout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.LogoutResponse" Collapsed="true">
+    <Position X="43.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\LogoutResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Options" Collapsed="true">
+    <Position X="59.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Entities\Options.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Poll" Collapsed="true">
+    <Position X="2.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAQAAAAAAAAA=</HashCode>
+      <FileName>Entities\Poll.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.PollResponse" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAACAAAAAAAAAARIAQIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\PollResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.PollType" Collapsed="true">
+    <Position X="50.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\PollType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.Status" Collapsed="true">
+    <Position X="57.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAgAAAAAAA=</HashCode>
+      <FileName>Entities\Status.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EppLib.Entities.PostalAddressType" Collapsed="true">
+    <Position X="52.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Contact\PostalAddressType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -1,0 +1,206 @@
+﻿using System.Xml;
+
+namespace EppLib.Entities
+{
+    public class ContactInfoResponse : EppResponse
+    {
+        public ContactInfoResponse(byte[] bytes)
+            : base(bytes)
+        {
+        }
+
+        protected override void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
+        {
+            namespaces.AddNamespace("contact", "urn:ietf:params:xml:ns:contact-1.0");
+
+            var children = doc.SelectSingleNode("/ns:epp/ns:response/ns:resData/contact:infData", namespaces);
+
+            Contact = new Contact();
+
+            if (children != null)
+            {
+                var idNode = children.SelectSingleNode("contact:id", namespaces);
+
+                if(idNode!=null)
+                {
+                    Contact.Id = idNode.InnerText;
+                }
+
+                var roidNode = children.SelectSingleNode("contact:roid", namespaces);
+
+                if (roidNode != null)
+                {
+                    Contact.Roid = roidNode.InnerText;
+                }
+
+                var statusNode = children.SelectSingleNode("contact:status", namespaces);
+
+                if (statusNode != null)
+                {
+                    if (statusNode.Attributes != null) Contact.Status = statusNode.Attributes["s"].Value;
+                }
+
+                var emailNode = children.SelectSingleNode("contact:email", namespaces);
+
+                if (emailNode != null)
+                {
+                    Contact.Email = emailNode.InnerText;
+                }
+
+                var voiceNode = children.SelectSingleNode("contact:voice", namespaces);
+
+                if (voiceNode != null)
+                {
+                    Contact.Voice = new Telephone(voiceNode.InnerText,"");
+                }
+
+                var faxNode = children.SelectSingleNode("contact:fax", namespaces);
+
+                if (faxNode != null)
+                {
+                    Contact.Fax = new Telephone(faxNode.InnerText, "");
+                }
+
+                var clIdNode = children.SelectSingleNode("contact:clID", namespaces);
+
+                if (clIdNode != null)
+                {
+                    Contact.ClId = clIdNode.InnerText;
+                }
+
+                var crIdNode = children.SelectSingleNode("contact:crID", namespaces);
+
+                if (crIdNode != null)
+                {
+                    Contact.CrId = crIdNode.InnerText;
+                }
+
+                var crDateNode = children.SelectSingleNode("contact:crDate", namespaces);
+
+                if (crDateNode != null)
+                {
+                    Contact.CrDate = crDateNode.InnerText;
+                }
+                
+                var postalInfoNode = children.SelectSingleNode("contact:postalInfo", namespaces);
+
+                if (postalInfoNode != null)
+                {
+                    Contact.PostalInfo = new PostalInfo();
+
+                    var nameNode = postalInfoNode.SelectSingleNode("contact:name", namespaces);
+
+                    if(nameNode!=null)
+                    {
+                        Contact.PostalInfo.m_name = nameNode.InnerText;
+                    }
+
+                    var orgNode = postalInfoNode.SelectSingleNode("contact:org", namespaces);
+
+                    if (orgNode != null)
+                    {
+                        Contact.PostalInfo.m_org = orgNode.InnerText;
+                    }
+
+                    Contact.PostalInfo.m_type = postalInfoNode.Attributes["type"].Value;
+
+                    var addrNode = postalInfoNode.SelectSingleNode("contact:addr", namespaces);
+
+                    if (addrNode != null)
+                    {
+                        Contact.PostalInfo.m_address = new PostalAddress();
+
+                        var streetNode = addrNode.SelectSingleNode("contact:street", namespaces);
+
+                        if(streetNode!=null)
+                        {
+                            Contact.PostalInfo.m_address.Street1 = streetNode.InnerText;
+                        }
+
+                        var cityNode = addrNode.SelectSingleNode("contact:city", namespaces);
+
+                        if (streetNode != null)
+                        {
+                            Contact.PostalInfo.m_address.City = cityNode.InnerText;
+                        }
+
+                        var spNode = addrNode.SelectSingleNode("contact:sp", namespaces);
+
+                        if (spNode != null)
+                        {
+                            Contact.PostalInfo.m_address.StateProvince = spNode.InnerText;
+                        }
+
+                        var pcNode = addrNode.SelectSingleNode("contact:pc", namespaces);
+
+                        if (pcNode != null)
+                        {
+                            Contact.PostalInfo.m_address.PostalCode = pcNode.InnerText;
+                        }
+
+                        var ccNode = addrNode.SelectSingleNode("contact:cc", namespaces);
+
+                        if (ccNode != null)
+                        {
+                            Contact.PostalInfo.m_address.CountryCode = ccNode.InnerText;
+                        }
+                    } 
+                }
+            }
+        }
+
+        protected override void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
+        {
+            namespaces.AddNamespace("cira", "urn:ietf:params:xml:ns:cira-1.0");
+
+            var children = doc.SelectSingleNode("/ns:epp/ns:response/ns:extension/cira:ciraInfo", namespaces);
+
+            if(children!=null)
+            {
+                var crLanguage = children.SelectSingleNode("cira:language", namespaces);
+
+                if (crLanguage != null)
+                {
+                    Contact.Language = crLanguage.InnerText;
+                }
+
+                var crCprCategory = children.SelectSingleNode("cira:cprCategory", namespaces);
+
+                if (crCprCategory != null)
+                {
+                    Contact.CprCategory = crCprCategory.InnerText;
+                }
+
+                var crIndividual = children.SelectSingleNode("cira:individual", namespaces);
+
+                if (crIndividual != null)
+                {
+                    Contact.Individual = crIndividual.InnerText;
+                }
+
+                var crCiraAgreementVersion = children.SelectSingleNode("cira:ciraAgreementVersion", namespaces);
+
+                if (crCiraAgreementVersion != null)
+                {
+                    Contact.CiraAgreementVersion = crCiraAgreementVersion.InnerText;
+                }
+
+                var crAgreementTimestamp = children.SelectSingleNode("cira:agreementTimestamp", namespaces);
+
+                if (crAgreementTimestamp != null)
+                {
+                    Contact.AgreementTimestamp = crAgreementTimestamp.InnerText;
+                }
+
+                var crWhoisDisplaySetting = children.SelectSingleNode("cira:whoisDisplaySetting", namespaces);
+
+                if (crWhoisDisplaySetting != null)
+                {
+                    Contact.WhoisDisplaySetting = crWhoisDisplaySetting.InnerText;
+                }
+            }
+        }
+
+        public Contact Contact { get; set; }
+    }
+}

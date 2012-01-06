@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24067FC1-33F6-428B-8E0E-74601A5354EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EppLib</RootNamespace>
+    <AssemblyName>EppLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>epplib.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\Cira\CiraContactUpdateExtension.cs" />
+    <Compile Include="Entities\Contact\ContactChange.cs" />
+    <Compile Include="Entities\Contact\ContactCheckResponse.cs" />
+    <Compile Include="Entities\Contact\ContactCreateResponse.cs" />
+    <Compile Include="Entities\Contact\ContactDeleteResponse.cs" />
+    <Compile Include="Entities\Contact\ContactInfoResponse.cs" />
+    <Compile Include="Extensions\Cira\CiraAgreementExtension.cs" />
+    <Compile Include="Extensions\Cira\CiraContactCreate.cs" />
+    <Compile Include="Extensions\Cira\CiraTransferExtension.cs" />
+    <Compile Include="Entities\Contact\Contact.cs" />
+    <Compile Include="Entities\Contact\ContactBase.cs" />
+    <Compile Include="Entities\Contact\ContactCheck.cs" />
+    <Compile Include="Entities\Contact\ContactDelete.cs" />
+    <Compile Include="Entities\Contact\ContactInfo.cs" />
+    <Compile Include="Entities\Contact\ContactUpdate.cs" />
+    <Compile Include="Entities\Contact\ContactUpdateResponse.cs" />
+    <Compile Include="Entities\Contact\CiraCprCategory.cs" />
+    <Compile Include="Entities\Contact\EppContactUpdateAddRemove.cs" />
+    <Compile Include="Entities\Contact\CiraCprCategories.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="Extensions\Cira\CiraDomainTransfer.cs" />
+    <Compile Include="Entities\Domain\Domain.cs" />
+    <Compile Include="Entities\Domain\DomainBase.cs" />
+    <Compile Include="Entities\Domain\DomainChange.cs" />
+    <Compile Include="Entities\Domain\DomainCheck.cs" />
+    <Compile Include="Entities\Domain\DomainCheckResponse.cs" />
+    <Compile Include="Entities\Domain\DomainCheckResult.cs" />
+    <Compile Include="Entities\Domain\DomainContact.cs" />
+    <Compile Include="Entities\Domain\DomainCreate.cs" />
+    <Compile Include="Entities\Domain\DomainCreateResponse.cs" />
+    <Compile Include="Entities\Domain\DomainCreateResult.cs" />
+    <Compile Include="Entities\Domain\DomainDelete.cs" />
+    <Compile Include="Entities\Domain\DomainDeleteResponse.cs" />
+    <Compile Include="Entities\Domain\DomainInfo.cs" />
+    <Compile Include="Entities\Domain\DomainInfoResponse.cs" />
+    <Compile Include="Entities\Domain\DomainPeriod.cs" />
+    <Compile Include="Entities\Domain\DomainRenew.cs" />
+    <Compile Include="Entities\Domain\DomainRenewResponse.cs" />
+    <Compile Include="Entities\Domain\DomainTransfer.cs" />
+    <Compile Include="Entities\Domain\DomainTransferResult.cs" />
+    <Compile Include="Entities\Domain\DomainTransferResponse.cs" />
+    <Compile Include="Entities\Domain\DomainUpdate.cs" />
+    <Compile Include="Entities\Domain\DomainUpdateResponse.cs" />
+    <Compile Include="Entities\EppBase.cs" />
+    <Compile Include="Extensions\Cira\CiraCreateExtension.cs" />
+    <Compile Include="Entities\Contact\ContactCreate.cs" />
+    <Compile Include="Entities\EppCommand.cs" />
+    <Compile Include="Entities\EppDomainUpdateAddRemove.cs" />
+    <Compile Include="Entities\EppException.cs" />
+    <Compile Include="Entities\EppExtension.cs" />
+    <Compile Include="Entities\EppResponse.cs" />
+    <Compile Include="Extensions\Cira\GetAgreement.cs" />
+    <Compile Include="Extensions\Cira\GetAgreementResponse.cs" />
+    <Compile Include="Entities\Hello.cs" />
+    <Compile Include="Entities\HelloResponse.cs" />
+    <Compile Include="Entities\Host\EppHostUpdateAddRemove.cs" />
+    <Compile Include="Entities\Host\Host.cs" />
+    <Compile Include="Entities\Host\HostAddress.cs" />
+    <Compile Include="Entities\Host\HostBase.cs" />
+    <Compile Include="Entities\Host\HostChange.cs" />
+    <Compile Include="Entities\Host\HostCheck.cs" />
+    <Compile Include="Entities\Host\HostCheckResponse.cs" />
+    <Compile Include="Entities\Host\HostCheckResult.cs" />
+    <Compile Include="Entities\Host\HostCreate.cs" />
+    <Compile Include="Entities\Host\HostCreateResponse.cs" />
+    <Compile Include="Entities\Host\HostCreateResult.cs" />
+    <Compile Include="Entities\Host\HostDelete.cs" />
+    <Compile Include="Entities\Host\HostDeleteResponse.cs" />
+    <Compile Include="Entities\Host\HostInfo.cs" />
+    <Compile Include="Entities\Host\HostInfoResponse.cs" />
+    <Compile Include="Entities\Host\HostUpdate.cs" />
+    <Compile Include="Entities\Host\HostUpdateResponse.cs" />
+    <Compile Include="Entities\Login.cs" />
+    <Compile Include="Entities\LoginResponse.cs" />
+    <Compile Include="Entities\Logout.cs" />
+    <Compile Include="Entities\LogoutResponse.cs" />
+    <Compile Include="Entities\PollMessage.cs" />
+    <Compile Include="Entities\Options.cs" />
+    <Compile Include="Entities\Contact\PostalAddress.cs" />
+    <Compile Include="Entities\Contact\PostalAddressType.cs" />
+    <Compile Include="Entities\Contact\PostalInfo.cs" />
+    <Compile Include="Entities\Contact\Telephone.cs" />
+    <Compile Include="Entities\Poll.cs" />
+    <Compile Include="Entities\PollResponse.cs" />
+    <Compile Include="Entities\PollType.cs" />
+    <Compile Include="Entities\Status.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TcpTransport.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="epplib.pfx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>if /I "$(ConfigurationName)" == "Release" Eazfuscator.NET.exe "$(TargetPath)" --msbuild-project-path "$(ProjectPath)" --msbuild-project-configuration "$(ConfigurationName)" --msbuild-project-platform "$(PlatformName)" --msbuild-solution-path "$(SolutionPath)" -n --newline-flush -v 3.2</PostBuildEvent>
+  </PropertyGroup>
+</Project>

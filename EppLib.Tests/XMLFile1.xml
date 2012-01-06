@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <command>
+    <update>
+      <contact:update xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
+        <contact:id>rantxx38</contact:id>
+        <contact:chg>
+          <contact:postalInfo type="loc">
+            <contact:name>Pepe Antonio</contact:name>
+            <contact:org>Example Inc.</contact:org>
+            <contact:addr>
+              <contact:street>301 La Fanfan Ave.</contact:street>
+              <contact:city>Toronto</contact:city>
+              <contact:sp>ON</contact:sp>
+              <contact:pc>M5V 3T1</contact:pc>
+              <contact:cc>CA</contact:cc>
+            </contact:addr>
+          </contact:postalInfo>
+          <contact:voice x="333">+1.6478913606</contact:voice>
+          <contact:email>ademar.gonzalez@gmail.com</contact:email>
+        </contact:chg>
+      </contact:update>
+    </update>
+    <extension />
+  </command>
+</epp>
