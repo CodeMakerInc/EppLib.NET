@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>EppLib.NET - How To</title>
+</head>
+<body>
+<h1>EppLib.NET - How To</h1>
+<h2>- How to connect to the registry?</h2>
+<pre>
+	var tcpTransport = new TcpTransport("epp.registry", 700, new X509Certificate("mycert.pfx", "p4ssw0rd"), true);
+
+	var service = new Service(tcpTransport);
+
+	// SSL connection establishment
+	service.Connect();
+</pre>
+<h2>- How to login?</h2>
+<pre>
+	var logingCmd = new Login("username", "password");
+
+	var response = service.Execute(logingCmd);
+
+	if(!response.Code.Equals("1000"))
+	{
+		throw new ApplicationException("Authentication failed");
+	}
+</pre>
+<h2>- How to get the CIRA registrar agreement?</h2>
+<pre>
+	var agreementCmd = new GetAgreement();
+
+	var getAgreementResponse = service.Execute(agreementCmd);
+
+	var agreementVersion = getAgreementResponse.AgreementVersion;
+	var agreementText = getAgreementResponse.Agreement;
+	var agreementLanguage = getAgreementResponse.Language;
+</pre>
+<h2>- How to create a contact?</h2>
+<pre>
+	var registrantContact = new Contact("xxxx",
+		"Registrant Full Name", "Example Inc.",
+		"Toronto", "Address", "ON", "M5V3T1", "CA",
+		"example@example.com",
+		new Telephone { Value = "+1.6471114444", Extension = "333" },
+		new Telephone { Value = "+1.6471114445" });
+
+	var registrantContactCmd = ContactCreate(registrantContact);
+	
+	var ciraExtension = new CiraCreateExtension
+	{
+		Language = "en",
+		OriginatingIpAddress = "127.0.0.1",
+		CprCategory = CprCategory.CCT,
+		AgreementVersion = "2.0",
+		AggreementValue = "Y",
+		CreatedByResellerId = "resellerId"
+	};
+	
+	registrantContactCmd.Extensions.Add(ciraExtension);
+	
+	response = service.Execute(registrantContactCmd);
+ </pre>
+<h2>- How to change a domain’s contact?</h2>
+<pre>
+	var registrantTransferCmd = new DomainUpdate("mydomain.ca");
+
+	registrantTransferCmd.DomainChange = new DomainChange { RegistrantContactId = "newcontactid" };
+
+	response = service.Execute(registrantTransferCmd);
+</pre>
+<h2>- How to update a contact’s information?</h2>
+<pre>
+	var contactUpdateCmd = new ContactUpdate(registrantContact.Id);
+
+	var contactChange = new ContactChange(registrantContact);
+
+	contactChange.Fax = new Telephone("2223334444", "123");
+
+	contactUpdateCmd.ContactChange = contactChange;
+
+	// CIRA CPR extension
+	contactUpdateCmd.Extensions.Add(new CiraContactUpdateExtension { CprCategory = CiraCprCategories.CCT });
+
+	response = service.Execute(contactUpdateCmd);
+</pre>
+<h2>- How to check if a domain is available for registration?</h2>
+<pre>
+	var domainCheckCmd = new DomainCheck("mydomain.ca");
+
+	response = service.Execute(domainCheckCmd) as DomainCheckResponse;
+
+	if(response.Available){
+		// add to shopping cart
+	}
+</pre>
+<h2>- How to register a domain?</h2>
+<pre>
+	var domainCreateCmd = new DomainCreate("mydomain.ca", "contactid");
+
+	domainCreateCmd.DomainContacts.Add(new DomainContact("admincontactid", "admin"));
+
+	//NOTE: password is compulsory
+	domainCreateCmd.Password = "s0mer4ndom";
+
+	response = service.Execute(domainCreateCmd);
+</pre>
+<h2>How to check if a host exists?</h2>
+<pre>
+	var hostCheckCmd = new HostCheck(new List<string> { "ns1.example.com", "ns2.example.com" });
+
+	response = service.Execute(hostCheckCmd);
+</pre>
+<h2>How to create a host or nameserver?</h2>
+<pre>
+	var host = new Host("ns1.example.com");
+	host.Addresses.Add(new HostAddress("127.0.0.1", "v4"));
+	var hostCreateCmd = new HostCreate(host);
+
+	response = service.Execute(hostCreateCmd);
+</pre>
+<h2>How to obtain information on a host?</h2>
+<pre>
+	var hostInfoCmd = new HostInfo("ns1.example.com");
+
+	response = service.Execute(hostInfoCmd);
+</pre>
+<h2>How to update a domain?</h2>
+<pre>
+	var domainUpdateCmd = new DomainUpdate("example.ca");
+
+	//NOTE: Nameservers need different IP addresses
+	domainUpdateCmd.ToAdd.NameServers = new List<string> { "ns1.example.com", "ns2.example.com" };
+
+	response = service.Execute(domainUpdateCmd);
+</pre>
+<h2>How to update a host?</h2>
+<pre>
+	var hostUpdateCmd = new HostUpdate("ns1.example.com");
+
+	var eppHostUpdateAddRemove = new EppHostUpdateAddRemove();
+
+	eppHostUpdateAddRemove.Adresses = new List<HostAddress> { new HostAddress("1080:0:0:0:8:800:2004:17A", "v6") };
+	eppHostUpdateAddRemove.Status = new List<Status> { new Status("", "clientUpdateProhibited") };
+
+	hostUpdateCmd.ToAdd = eppHostUpdateAddRemove;
+
+	response = service.Execute(hostUpdateCmd);
+</pre>
+<h2>How to obtain information on a domain?</h2>
+<pre>
+	var domainInfoCmd = new DomainInfo("example.ca");
+	var domainInfo = (DomainInfoResponse)service.Execute(domainInfoCmd);
+</pre>
+<h2>How to renew a domain?</h2>
+<pre>
+	var renewCmd = new DomainRenew(domainInfo.Domain.Name, domainInfo.Domain.ExDate, new DomainPeriod(2, "y"));
+
+	response = service.Execute(renewCmd);
+</pre>
+<h2>How to do a registrar transfer?</h2>
+<pre>
+	var transferCmd = new DomainTransfer("example.ca", null, null, new List<string>());
+    
+	transferCmd.Password = "p4ssw0rd";
+	response = service.Execute(transferCmd);
+</pre>
+<h2>How to delete a domain?</h2>
+<pre>
+	var deleteDomainCmd = new DomainDelete("example.ca");
+	
+	response = service.Execute(deleteDomainCmd);
+</pre>
+<h2>How to acknowledge and poll messages?</h2>
+<pre>
+	var thereAreMessages = true;
+
+	while (thereAreMessages)
+	{
+		var poll = new Poll { Type = PollType.Request };
+
+		var pollResponse = (PollResponse)service.Execute(poll);
+
+        
+		if (!String.IsNullOrEmpty(pollResponse.Id))
+		{
+			//acknowledge
+			poll = new Poll { Type = PollType.Acknowledge, MessageId = pollResponse.Id };
+
+			pollResponse = (PollResponse)service.Execute(poll);
+
+			PrintResponse(pollResponse);
+		}
+
+		Console.WriteLine("Messages left in the queue:" + pollResponse.Count);
+
+		thereAreMessages = pollResponse.Count != 0;
+	}
+</pre>
+<div>(c) 2011 <a href="http://www.codemaker.net/">Code Maker Inc.</a> All rights reserved</div>
+
+</body>
+</html>
