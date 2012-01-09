@@ -51,17 +51,6 @@ namespace EppLib
             this.clientCertificate = clientCertificate;
         }
 
-       /* public TcpTransport(bool loggingEnabled = false)
-        {
-            this.loggingEnabled = loggingEnabled;
-            clientCertificate = new X509Certificate("isq.pfx", "tiburon");
-        }
-
-        public TcpTransport()
-        {
-            clientCertificate = new X509Certificate("isq.pfx", "tiburon");
-        }*/
-
         /// <summary>
         /// Connect to the registry end point
         /// </summary>
@@ -69,36 +58,15 @@ namespace EppLib
         {
             var client = new TcpClient(EPP_REGISTRY_COM, PORT);
 
-            // ** microsoft
-            /* */
             stream = new SslStream(client.GetStream(), false, ValidateServerCertificate);
 
-            //TODO: extract the cert
-            var sslCert = clientCertificate;
-            var clientCertificates = new X509CertificateCollection { sslCert };
+            var clientCertificates = new X509CertificateCollection { clientCertificate };
 
             stream.AuthenticateAsClient(EPP_REGISTRY_COM, clientCertificates, SslProtocols.Ssl3, false);
 
-            // ** openssl
-
-            /* _sslStream = new SslStream(client.GetStream(), false, OpenSslValidateServerCertificate);
-
-            var clientCertificates = new X509List(BIO.File(@"D:\isqsolutions\temp\isq.pem","r"));
-
-//             var caCertificates = new X509Chain(BIO.File(@"D:\isqsolutions\temp\eppServer.pem", "r"));
-
-             _sslStream.AuthenticateAsClient(EPP_REGISTRY_COM, null, null, SslProtocols.Ssl3, SslStrength.High, false);*/
-
-           
-
         }
 
-        /*private static bool OpenSslValidateServerCertificate(object sender, OpenSSL.X509.X509Certificate cert, OpenSSL.X509.X509Chain chain, int depth, VerifyResult result)
-        {
-            return true;
-        }*/
-
-        /**/
+        
         private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return true;
