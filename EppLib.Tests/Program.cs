@@ -9,16 +9,13 @@ namespace EppLib.Tests
 {
     public class Program
     {
-        private const string registrarNumber = "3406310";
-
-        //private const string registrarNumber = "d1234";
+        private const string registrarNumber = "d1234";
 
         private static void Main(string[] args) { (new Program()).CiraTecnicalTest(); }
        
         private void CiraTecnicalTest()
         {
-            //var tcpTransport = new TcpTransport("epp.test.cira.ca", 700, true);
-            var tcpTransport = new TcpTransport("epp.accred.cira.ca", 700, new X509Certificate("isq.pfx", "tiburon"), true);
+            var tcpTransport = new TcpTransport("epp.test.cira.ca", 700, new X509Certificate("cert.pfx", "password"), true);
 
             var service = new Service(tcpTransport);
 
@@ -28,7 +25,7 @@ namespace EppLib.Tests
 
             //2. EPP <login> command with your ‘a’ account
             Console.WriteLine("TEST: 2");
-            var logingCmd = new Login("a3406310", "a3406310");
+            var logingCmd = new Login("username", "password");
 
             var response = service.Execute(logingCmd);
 
@@ -651,7 +648,7 @@ namespace EppLib.Tests
 
             /*34. EPP <login> command with your ‘e’ account*/
             Console.WriteLine("TEST: 34");
-            logingCmd = new Login("e3406310", "e3406310");
+            logingCmd = new Login("username", "password");
 
             response = service.Execute(logingCmd);
 
