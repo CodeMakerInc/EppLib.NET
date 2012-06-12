@@ -18,7 +18,7 @@
           </contact:postalInfo>
           <contact:voice x="333">+1.6478913606</contact:voice>
           <contact:fax />
-          <contact:email>ademar.gonzalez@gmail.com</contact:email>
+          <contact:email>foo@example.com</contact:email>
         </contact:chg>
       </contact:update>
     </update>

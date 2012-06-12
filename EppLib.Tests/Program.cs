@@ -54,7 +54,7 @@ namespace EppLib.Tests
             var registrantContact = new Contact("rant" + registrarNumber,
                 "Registrant Step Four", "Example Inc.",
                 "Toronto", "301 La Fanfan Ave.", "ON", "M5V 3T1", "CA",
-                "ademar.gonzalez@gmail.com",
+                "foo@example.com",
                 new Telephone { Value = "+1.6478913606", Extension = "333" },
                 new Telephone { Value = "+1.6478913607" });
 
@@ -82,7 +82,7 @@ namespace EppLib.Tests
             var adminContact = new Contact("admin" + registrarNumber,
                "Administrative Step Five", "Example Inc.",
                "Toronto", "301 La Fanfan Ave.", "ON", "M5V 3T1", "CA",
-               "ademar.gonzalez@gmail.com",
+               "foo@example.com",
                new Telephone { Value = "+1.6478913606", Extension = "333" },
                new Telephone { Value = "+1.6478913607" });
 
@@ -178,7 +178,7 @@ namespace EppLib.Tests
             var registrantContact10 = new Contact("ten" + registrarNumber,
                "Registrant Step Ten", "Example Inc.",
                "Toronto", "301 La Fanfan Ave.", "ON", "M5V 3T1", "CA",
-               "ademar.gonzalez@gmail.com",
+               "foo@example.com",
                new Telephone { Value = "+1.6478913606", Extension = "333" },
                new Telephone { Value = "+1.6478913607" });
 
