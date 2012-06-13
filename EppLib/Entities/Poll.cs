@@ -17,24 +17,20 @@ namespace EppLib.Entities
 {
     public class Poll : EppCommand<PollResponse>
     {
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var commandRootElement = GetCommandRootElement(doc);
-            
-            var poll = CreateElement(doc, "poll");
+           var poll = CreateElement(doc, "poll");
 
             poll.SetAttribute("op", Type);
 
-            if (Type.Equals("ack") && MessageId!=null)
+            if (Type.Equals("ack") && MessageId != null)
             {
                 poll.SetAttribute("msgID", MessageId);
             }
 
             commandRootElement.AppendChild(poll);
 
-            return doc;
+            return commandRootElement;
         }
 
         public string MessageId { get; set; }

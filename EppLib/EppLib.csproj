@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Services.cs" />
     <Compile Include="Extensions\Cira\CiraContactUpdateExtension.cs" />
     <Compile Include="Entities\Contact\ContactChange.cs" />
     <Compile Include="Entities\Contact\ContactCheckResponse.cs" />
@@ -123,7 +124,6 @@
     <Compile Include="Entities\LoginResponse.cs" />
     <Compile Include="Entities\Logout.cs" />
     <Compile Include="Entities\LogoutResponse.cs" />
-    <Compile Include="Entities\PollMessage.cs" />
     <Compile Include="Entities\Options.cs" />
     <Compile Include="Entities\Contact\PostalAddress.cs" />
     <Compile Include="Entities\Contact\PostalAddressType.cs" />

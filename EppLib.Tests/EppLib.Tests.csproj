@@ -56,9 +56,15 @@
     <Content Include="XMLFile1.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="XMLFile2.xml" />
-    <Content Include="XMLFile3.xml" />
-    <Content Include="XMLFile4.xml" />
+    <Content Include="XMLFile2.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="XMLFile3.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="XMLFile4.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,6 +13,7 @@
 // limitations under the License.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -29,8 +30,7 @@ namespace EppLib.Entities
 
         protected static void PrepareExtensionElement(XmlDocument doc, XmlElement command, IEnumerable<EppExtension> extensions)
         {
-
-            if (extensions != null)
+            if (extensions != null && extensions.Count()>0)
             {
                 var extension_element = CreateElement(doc,"extension");
 

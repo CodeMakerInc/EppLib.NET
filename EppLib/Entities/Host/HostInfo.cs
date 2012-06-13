@@ -24,17 +24,15 @@ namespace EppLib.Entities
             this.hostName = hostName;
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var hostInfo = BuildCommandElement(doc, "info");
+            var hostInfo = BuildCommandElement(doc, "info", commandRootElement);
 
             AddXmlElement(doc, hostInfo, "host:name", hostName, namespaceUri);
-            
-            return doc;
+
+            return hostInfo;
         }
-        
+
         public override HostInfoResponse FromBytes(byte[] bytes)
         {
             return new HostInfoResponse(bytes);

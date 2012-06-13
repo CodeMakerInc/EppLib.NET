@@ -11,27 +11,28 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using EppLib.Entities;
 
 namespace EppLib.Extensions.Cira
 {
-    public class GetAgreement : EppCommand<GetAgreementResponse>
+    public class GetAgreement : EppBase<GetAgreementResponse>
     {
         public override XmlDocument ToXml()
         {
             var doc = new XmlDocument();
+            var root = CreateDocRoot(doc);
 
-            var commandRootElement = GetCommandRootElement(doc);
+            var ciraAgreementExtension = new List<EppExtension> { new CiraAgreementExtension() };
 
-            var ciraAgreementExtension = new List<EppExtension>{new CiraAgreementExtension()};
-
-            PrepareExtensionElement(doc, commandRootElement, ciraAgreementExtension);
+            PrepareExtensionElement(doc, root, ciraAgreementExtension);
+            doc.AppendChild(root);
 
             return doc;
         }
-        
+
         public override GetAgreementResponse FromBytes(byte[] bytes)
         {
             return new GetAgreementResponse(bytes);

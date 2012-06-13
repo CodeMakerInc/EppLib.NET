@@ -11,9 +11,9 @@ namespace EppLib.Tests
     {
         private const string registrarNumber = "d1234";
 
-        private static void Main(string[] args) { (new Program()).CiraTecnicalTest(); }
-       
-        private void CiraTecnicalTest()
+        private static void Main(string[] args) { CiraTecnicalTest(); }
+
+        private static void CiraTecnicalTest()
         {
             var tcpTransport = new TcpTransport("epp.test.cira.ca", 700, new X509Certificate("cert.pfx", "password"), true);
 
@@ -35,7 +35,7 @@ namespace EppLib.Tests
             Console.WriteLine("TEST: 3");
             var agreementCmd = new GetAgreement();
 
-            var getAgreementResponse = (GetAgreementResponse)service.Execute(agreementCmd);
+            var getAgreementResponse = service.Execute(agreementCmd);
 
             var agreementVersion = getAgreementResponse.AgreementVersion;
             var agreementText = getAgreementResponse.Agreement;

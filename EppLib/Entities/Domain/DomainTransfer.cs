@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -45,15 +44,13 @@ namespace EppLib.Entities
             this.registrantContactId = registrantContactId;
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
+            var domainTransfer = BuildCommandElement(doc, "transfer", commandRootElement, "request");
 
-           var domainCreate = BuildCommandElement(doc, "transfer", "request" );
+            AddXmlElement(doc, domainTransfer, "domain:name", m_name, namespaceUri);
 
-            AddXmlElement(doc, domainCreate, "domain:name", m_name,namespaceUri);
-
-            return doc;
+            return domainTransfer;
         }
 
         public override DomainTransferResponse FromBytes(byte[] bytes)

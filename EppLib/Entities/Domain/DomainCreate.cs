@@ -46,11 +46,9 @@ namespace EppLib.Entities
             RegistrantContactId = registrantContactId;
         }
 
-       public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var domainCreate = BuildCommandElement(doc, "create");
+            var domainCreate = BuildCommandElement(doc, "create", commandRootElement);
 
             AddXmlElement(doc, domainCreate, "domain:name", DomainName, namespaceUri);
 
@@ -78,7 +76,7 @@ namespace EppLib.Entities
                 contact_element.SetAttribute("type", contact.Type);
             }
 
-            return doc;
+            return domainCreate;
         }
 
         public override DomainCreateResponse FromBytes(byte[] bytes)

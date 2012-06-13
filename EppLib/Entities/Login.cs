@@ -21,48 +21,74 @@ namespace EppLib.Entities
         private readonly string password;
         
         public Options Options;
+        public Services Services;
 
         public Login(string clientId, string password)
         {
             this.clientId = clientId;
             this.password = password;
         }
-
-        public override XmlDocument ToXml()
+        
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-            
-            var commandRootElement = GetCommandRootElement(doc);
-
-            var login = CreateElement(doc,"login");
+            var login = CreateElement(doc, "login");
 
             AddXmlElement(doc, login, "clID", clientId);
             AddXmlElement(doc, login, "pw", password);
-            
-           
+
             if (Options != null)
             {
-                var options_element = CreateElement(doc,"options");
+                var options_element = CreateElement(doc, "options");
 
                 if (Options.MVersion != null)
                 {
                     AddXmlElement(doc, options_element, "version", Options.MVersion);
                 }
+
                 if (Options.MLang != null)
                 {
                     AddXmlElement(doc, options_element, "lang", Options.MLang);
                 }
+
                 login.AppendChild(options_element);
+            }
+
+            if (Services != null)
+            {
+                var svcs_element = CreateElement(doc, "svcs");
+
+                foreach (var svc in Services.ObjURIs)
+                {
+                    AddXmlElement(doc, svcs_element, "objURI", svc);
+                }
+
+                if (Services.Extensions != null)
+                {
+                    var svc_extension = CreateElement(doc, "svcExtension");
+
+                    foreach (var extension in Services.Extensions)
+                    {
+                        AddXmlElement(doc, svc_extension, "extURI", extension);
+                    }
+
+                    svcs_element.AppendChild(svc_extension);
+                }
+
+                login.AppendChild(svcs_element);
             }
 
             commandRootElement.AppendChild(login);
 
-            return doc;
+            return commandRootElement;
         }
 
         public override LoginResponse FromBytes(byte[] bytes)
         {
             return new LoginResponse(bytes);
         }
+    }
+
+    public class ObjUri
+    {
     }
 }

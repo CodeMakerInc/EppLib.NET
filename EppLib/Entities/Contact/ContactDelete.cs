@@ -11,10 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace EppLib.Entities
@@ -28,15 +24,13 @@ namespace EppLib.Entities
             m_id = mId;
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var contact_delete = BuildCommandElement(doc, "delete");
+            var contact_delete = BuildCommandElement(doc, "delete", commandRootElement);
 
             AddXmlElement(doc, contact_delete, "contact:id", m_id, namespaceUri);
-            
-            return doc;
+
+            return contact_delete;
         }
 
         public override ContactDeleteResponse FromBytes(byte[] bytes)

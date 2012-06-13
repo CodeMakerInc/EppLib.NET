@@ -11,22 +11,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
 using System.Xml;
 
 namespace EppLib.Entities
 {
     public class Logout : EppCommand<LogoutResponse>
     {
-        public override XmlDocument ToXml()
+       protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var commandRootElement = GetCommandRootElement(doc);
-
             var logout = CreateElement(doc, "logout");
             commandRootElement.AppendChild(logout);
-           
-            return doc;
+
+            return commandRootElement;
         }
 
         public override LogoutResponse FromBytes(byte[] bytes)

@@ -40,15 +40,25 @@ namespace EppLib.Entities
         {
         }
 
+        public override XmlDocument ToXml()
+        {
+            var doc = new XmlDocument();
+            var commandRootElement = GetCommandRootElement(doc);
+
+            BuildCommandElement(doc, commandRootElement);
+
+            AppendTRID(doc, commandRootElement);
+
+            return doc;
+        }
+
         private void SetCommonAttributes(XmlElement command)
         {
             command.SetAttribute("xmlns:" + nspace, namespaceUri);
         }
 
-        protected XmlElement BuildCommandElement(XmlDocument doc, string qualifiedName/*, IEnumerable<CiraExtension> mExtensions = null*/, string query = null)
+        protected XmlElement BuildCommandElement(XmlDocument doc, string qualifiedName, XmlElement commandRootElement, string query = null)
         {
-            var commandRootElement = GetCommandRootElement(doc);
-
             var command = GetCommand(doc, qualifiedName, commandRootElement, query);
 
             if (Extensions != null)
@@ -70,7 +80,7 @@ namespace EppLib.Entities
         {
             var elem = CreateElement(doc, qualifiedName);
 
-            if(query !=null)
+            if (query != null)
             {
                 elem.SetAttribute("op", query);
             }
@@ -96,15 +106,18 @@ namespace EppLib.Entities
 
             root.AppendChild(command);
 
+            return command;
+        }
+
+        protected static void AppendTRID(XmlDocument doc, XmlNode command)
+        {
             var clTRIDElement = CreateElement(doc, "clTRID");
 
             clTRIDElement.InnerText = ClTrid;
 
             command.AppendChild(clTRIDElement);
-            
-            return command;
         }
 
-        
+        protected abstract XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement);
     }
 }

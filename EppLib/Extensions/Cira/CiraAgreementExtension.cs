@@ -24,13 +24,13 @@ namespace EppLib.Extensions.Cira
         {
             var root = CreateElement(doc, "cira:ciraInfo");
 
-            AddXmlElement(doc, root, "cira:action", "get CIRA latest agreement");
-
             if (language != null)
             {
                 AddXmlElement(doc, root, "cira:language", language);
             }
 
+            AddXmlElement(doc, root, "cira:action", "get CIRA latest agreement");
+            
             return root;
         }
     }

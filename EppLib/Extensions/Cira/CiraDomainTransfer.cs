@@ -31,8 +31,10 @@ namespace EppLib.Extensions.Cira
         {
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
+            var commandElement = base.BuildCommandElement(doc, commandRootElement);
+
             var ciraExtension = new CiraTransferExtension
                                     {
                                         RegistrantContactId = registrantContactId,
@@ -42,7 +44,8 @@ namespace EppLib.Extensions.Cira
 
             Extensions.Add(ciraExtension);
 
-            return base.ToXml();
+            return commandElement;
         }
+
     }
 }

@@ -29,11 +29,9 @@ namespace EppLib.Entities
             HostName = hostName;
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var domainUpdate = BuildCommandElement(doc, "update");
+            var domainUpdate = BuildCommandElement(doc, "update", commandRootElement);
 
             AddXmlElement(doc, domainUpdate, "host:name", HostName, namespaceUri);
 
@@ -63,7 +61,7 @@ namespace EppLib.Entities
                 domainUpdate.AppendChild(change_element);
             }
 
-            return doc;
+            return domainUpdate;
         }
 
         private static XmlElement getAddRemoveElement(XmlDocument doc, EppHostUpdateAddRemove add_remove_items, string tag_name, string namespaceUri)

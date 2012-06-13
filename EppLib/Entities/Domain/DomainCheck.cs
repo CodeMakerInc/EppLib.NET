@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -31,18 +30,16 @@ namespace EppLib.Entities
             this.domains = domains;
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var domainCheck = BuildCommandElement(doc, "check");
+            var domainCheck = BuildCommandElement(doc, "check", commandRootElement);
 
             foreach (var domain in domains)
             {
-                AddXmlElement(doc, domainCheck, "domain:name", domain, namespaceUri);    
+                AddXmlElement(doc, domainCheck, "domain:name", domain, namespaceUri);
             }
-            
-            return doc;
+
+            return domainCheck;
         }
 
         public override DomainCheckResponse FromBytes(byte[] bytes)

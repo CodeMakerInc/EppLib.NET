@@ -25,15 +25,13 @@ namespace EppLib.Entities
             DomainName = domainName;
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
+            var domainDelete = BuildCommandElement(doc, "delete", commandRootElement);
 
-            var domainCreate = BuildCommandElement(doc, "delete");
+            AddXmlElement(doc, domainDelete, "domain:name", DomainName, namespaceUri);
 
-            AddXmlElement(doc, domainCreate, "domain:name", DomainName, namespaceUri);
-
-            return doc;
+            return domainDelete;
         }
 
         public override DomainDeleteResponse FromBytes(byte[] bytes)

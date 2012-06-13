@@ -35,19 +35,16 @@ namespace EppLib.Entities
             return new ContactCheckResponse(bytes);
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-            
-            var contact_check = BuildCommandElement(doc, "check");
-           
+            var contact_check = BuildCommandElement(doc, "check", commandRootElement);
+
             foreach (var contactId in contactIds)
             {
-                AddXmlElement(doc, contact_check, "contact:id", contactId, namespaceUri);    
+                AddXmlElement(doc, contact_check, "contact:id", contactId, namespaceUri);
             }
-            
-            return doc;
-        }
 
+            return contact_check;
+        }
     }
 }

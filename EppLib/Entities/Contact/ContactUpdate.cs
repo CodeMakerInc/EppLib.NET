@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System;
-using System.Collections.Generic;
 using System.Xml;
 
 namespace EppLib.Entities
@@ -32,16 +31,14 @@ namespace EppLib.Entities
             ContactId = contactId;
         }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
             if (ContactId == null)
             {
                 throw new EppException("missing contact id");
             }
 
-            var doc = new XmlDocument();
-
-            var contact_update = BuildCommandElement(doc, "update");
+            var contact_update = BuildCommandElement(doc, "update", commandRootElement);
 
             AddXmlElement(doc, contact_update, "contact:id", ContactId, namespaceUri);
 
@@ -61,7 +58,7 @@ namespace EppLib.Entities
 
             if (ContactChange != null)
             {
-                var change_element = doc.CreateElement("contact:chg",namespaceUri);
+                var change_element = doc.CreateElement("contact:chg", namespaceUri);
 
                 var xml = AddressToXml(doc, "contact:postalInfo", ContactChange.PostalInfo);
 
@@ -92,7 +89,7 @@ namespace EppLib.Entities
                 contact_update.AppendChild(change_element);
             }
 
-            return doc;
+            return contact_update;
         }
 
         private static XmlElement getAddRemoveElement(XmlDocument doc, EppContactUpdateAddRemove addRemoveItems)

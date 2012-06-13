@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
 using System.Xml;
 
 namespace EppLib.Entities
@@ -21,23 +22,21 @@ namespace EppLib.Entities
         {
             Host = host;
         }
-
-        public override XmlDocument ToXml()
+        
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
+            var hostCreate = BuildCommandElement(doc, "create", commandRootElement);
 
-            var domainCreate = BuildCommandElement(doc, "create");
-
-            AddXmlElement(doc, domainCreate, "host:name", Host.HostName, namespaceUri);
+            AddXmlElement(doc, hostCreate, "host:name", Host.HostName, namespaceUri);
 
             foreach (var address in Host.Addresses)
             {
-                var node = AddXmlElement(doc, domainCreate, "host:addr", address.IPAddress, namespaceUri);
+                var node = AddXmlElement(doc, hostCreate, "host:addr", address.IPAddress, namespaceUri);
 
                 node.SetAttribute("ip", address.IPVersion);
             }
-            
-            return doc;
+
+            return hostCreate;
         }
 
         public Host Host { get; set; }

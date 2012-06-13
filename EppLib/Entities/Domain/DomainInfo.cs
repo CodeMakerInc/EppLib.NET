@@ -27,11 +27,9 @@ namespace EppLib.Entities
 
         public string Hosts { get; set; }
 
-        public override XmlDocument ToXml()
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var doc = new XmlDocument();
-
-            var domainInfo = BuildCommandElement(doc, "info");
+            var domainInfo = BuildCommandElement(doc, "info", commandRootElement);
 
             var domainNameElement = AddXmlElement(doc, domainInfo, "domain:name", domainName, namespaceUri);
 
@@ -40,7 +38,7 @@ namespace EppLib.Entities
                 domainNameElement.SetAttribute("hosts", Hosts);
             }
 
-            return doc;
+            return domainInfo;
         }
 
         public override DomainInfoResponse FromBytes(byte[] bytes)
