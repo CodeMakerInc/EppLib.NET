@@ -37,18 +37,6 @@ namespace EppLib.Extensions.Cira
             if (CprCategory != null)
             {
                 AddXmlElement(doc, root, "cira:cprCategory", CprCategory);
-
-                //The CIRA Originating IP Address is valid only for Registrants with an assigned CPR category
-                if (OriginatingIpAddress != null)
-                {
-                    AddXmlElement(doc, root, "cira:originatingIpAddress", OriginatingIpAddress);
-                }
-
-                //The CIRA Created by Reseller ID is valid only for Registrants with an assigned CPR category
-                if (CreatedByResellerId != null)
-                {
-                    AddXmlElement(doc, root, "cira:createdByResellerId", CreatedByResellerId);
-                }
             }
 
             if (AgreementVersion != null)
@@ -59,7 +47,19 @@ namespace EppLib.Extensions.Cira
             if (AggreementValue != null)
             {
                 AddXmlElement(doc, root, "cira:agreementValue", AggreementValue);
-            } 
+            }
+
+            //The CIRA Originating IP Address is valid only for Registrants with an assigned CPR category
+            if (OriginatingIpAddress != null && CprCategory != null)
+            {
+                AddXmlElement(doc, root, "cira:originatingIpAddress", OriginatingIpAddress);
+            }
+
+            //The CIRA Created by Reseller ID is valid only for Registrants with an assigned CPR category
+            if (CreatedByResellerId != null && CprCategory != null)
+            {
+                AddXmlElement(doc, root, "cira:createdByResellerId", CreatedByResellerId);
+            }
             
             return root;
         }
