@@ -45,11 +45,23 @@ namespace EppLib.Entities
             var doc = new XmlDocument();
             var commandRootElement = GetCommandRootElement(doc);
 
-            BuildCommandElement(doc, commandRootElement);
+            var cmdElement = BuildCommandElement(doc, commandRootElement);
+
+            AppendAuthInfo(doc, cmdElement);
 
             AppendTRID(doc, commandRootElement);
 
             return doc;
+        }
+
+        private void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
+        {
+            if (!String.IsNullOrWhiteSpace(Password))
+            {
+                var authInfo = AddXmlElement(doc, cmdElement, "domain:authInfo", null, namespaceUri);
+
+                AddXmlElement(doc, authInfo, "domain:pw", Password, namespaceUri);
+            }
         }
 
         private void SetCommonAttributes(XmlElement command)
@@ -64,13 +76,6 @@ namespace EppLib.Entities
             if (Extensions != null)
             {
                 PrepareExtensionElement(doc, commandRootElement, Extensions);
-            }
-
-            if (!String.IsNullOrWhiteSpace(Password))
-            {
-                var authInfo = AddXmlElement(doc, command, "domain:authInfo", null, namespaceUri);
-
-                AddXmlElement(doc, authInfo, "domain:pw", Password, namespaceUri);
             }
 
             return command;
