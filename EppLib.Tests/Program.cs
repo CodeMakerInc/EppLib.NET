@@ -11,9 +11,51 @@ namespace EppLib.Tests
     {
         private const string registrarNumber = "d1234";
 
-        private static void Main(string[] args) { CiraTecnicalTest(); }
+        private static void Main(string[] args) { (new Program()).TestDomainCheckNominetResponse(); }
 
-        private static void CiraTecnicalTest()
+        public void TestDomainCheckNominetResponse()
+        {
+
+            var eppResponse =
+                new DomainCheckResponse(
+                    ToBytes(
+                        @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""no""?>
+<epp xmlns=""urn:ietf:params:xml:ns:epp-1.0""
+      xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
+      xsi:schemaLocation=""http://www.nominet.org.uk/epp/xml/epp-1.0 epp-1.0.xsd"">
+  <response>
+    <result code=""1000"">
+      <msg>Command completed successfully</msg>
+    </result>
+    <resData>
+      <domain:chkData
+        xmlns:domain=""urn:ietf:params:xml:ns:domain-1.0""
+        xsi:schemaLocation=""urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd"">
+        <domain:cd>
+          <domain:name avail=""1"">testing.co.uk</domain:name>
+        </domain:cd>
+      </domain:chkData>
+    </resData>
+    <trID>
+      <clTRID>EPP-e331cb97-e073-43fa-9f31-dc0249d79c82</clTRID>
+      <svTRID>231770</svTRID>
+    </trID>
+  </response>
+</epp>
+"));
+
+            if (eppResponse.Results.Count > 0)
+            {
+                Console.WriteLine("Domain is available: {0}", eppResponse.Results[0].Available);
+            }
+            else
+            {
+                Console.WriteLine("Error");
+            }
+
+        }
+        
+        private void CiraTecnicalTest()
         {
             var tcpTransport = new TcpTransport("epp.test.cira.ca", 700, new X509Certificate("cert.pfx", "password"), true);
 
@@ -67,7 +109,7 @@ namespace EppLib.Tests
             registrantContactCmd.Language = "en";
             registrantContactCmd.OriginatingIpAddress = "127.0.0.1";
             registrantContactCmd.CreatedByResellerId = registrarNumber;
-            
+
             var response1 = service.Execute(registrantContactCmd);
 
             PrintResponse(response1);
@@ -87,14 +129,14 @@ namespace EppLib.Tests
                new Telephone { Value = "+1.6478913607" });
 
             var adminContactCmd = new CiraContactCreate(adminContact);
-            
+
             adminContactCmd.CprCategory = null;
             adminContactCmd.AgreementVersion = null;
             adminContactCmd.AggreementValue = null;
             adminContactCmd.Language = "en";
-            adminContactCmd.OriginatingIpAddress =  "127.0.0.1";
-            adminContactCmd.CreatedByResellerId =  registrarNumber;
-           
+            adminContactCmd.OriginatingIpAddress = "127.0.0.1";
+            adminContactCmd.CreatedByResellerId = registrarNumber;
+
             const string adminContactId = "admin" + registrarNumber;
 
             var loginresponse = service.Execute(adminContactCmd);
@@ -111,9 +153,9 @@ namespace EppLib.Tests
 
             //7. Do a Registrant transfer for domain <registrar number>-3.ca to the Registrant created in operation #4
             Console.WriteLine("TEST: 7");
-            
+
             //NOTE: registrant transfers are domain updates
-            
+
             var registrantTransferCmd = new DomainUpdate(registrarNumber + "-3.ca");
             //var registrantTransferCmd = new DomainUpdate("3406310-4.ca");
 
@@ -249,7 +291,7 @@ namespace EppLib.Tests
              */
             Console.WriteLine("TEST: 13");
             //13.1 - Create a corporation
-            
+
             //If it is a corporation you can not provide company name
             var corporation = new Contact("corp" + registrarNumber, "Acme Corp.", null, "Toronto",
                                           "some where 22", "ON", "M6G2L1", "CA", "joe@isqsolutions.com",
@@ -518,7 +560,7 @@ namespace EppLib.Tests
              - Have the system auto-generate the contacts so that their information is identical to the contacts in the ‘e’ account
              */
             Console.WriteLine("TEST: 24");
-            
+
             var transferCmd = new CiraDomainTransfer(registrarNumber + "X2-1.ca", null, null, new List<string>());
             //var transferCmd = new DomainTransfer("3406310x2-5.ca", null, null, new List<string>());
 
@@ -532,7 +574,7 @@ namespace EppLib.Tests
               - Specify the same Registrant, administrative, and technical contacts used for the domain created in operation #14
              */
             Console.WriteLine("TEST: 25");
-            
+
             //BUG: did not use all the technical contacts.
 
             transferCmd = new CiraDomainTransfer(registrarNumber + "X2-2.ca", association.Id, adminContactId, new List<string> { tech1.Id, tech2.Id, tech3.Id });
@@ -602,7 +644,8 @@ namespace EppLib.Tests
                 PrintResponse(response27);
 
 
-            }else
+            }
+            else
             {
                 Console.WriteLine("Error: contact does not exist?");
             }
