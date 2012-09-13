@@ -31,7 +31,11 @@ namespace EppLib.Entities
                 {
                     var xmlAttribute = nameNode.Attributes["avail"];
 
-                    if (xmlAttribute != null) Available = xmlAttribute.Value.ToLower(CultureInfo.InvariantCulture).Equals("true");
+                    if (xmlAttribute != null)
+                    {
+                        var atributeValue = xmlAttribute.Value.ToLower(CultureInfo.InvariantCulture);
+                        Available = atributeValue.Equals("true") || atributeValue.Equals("1");
+                    }
                 }
             }
 
