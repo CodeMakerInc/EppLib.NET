@@ -12,13 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System.IO;
+using System.Text;
 using System.Xml;
 
 namespace EppLib.Entities
 {
     public class EppResponse
     {
-        public EppResponse(byte[] bytes)
+		public EppResponse(string xml)
+		{
+			FromXmlString(Encoding.UTF8.GetBytes(xml));
+		}
+
+    	public EppResponse(byte[] bytes)
         {
             FromXmlString(bytes);
         }
@@ -41,7 +47,6 @@ namespace EppLib.Entities
             }
 
             ProcessDataNode(doc, namespaces);
-           
 
             var extension = doc.SelectSingleNode("/ns:epp/ns:response/ns:extension", namespaces);
 
@@ -49,15 +54,16 @@ namespace EppLib.Entities
             {
                 ProcessExtensionNode(doc, namespaces);
             }
-            
+
+        	Xml = doc.OuterXml;
         }
 
-        protected virtual void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
+		protected virtual void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             //default implementation does nothing
         }
 
-        protected virtual void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
+		protected virtual void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             //default implementation does nothing
         }
@@ -86,6 +92,7 @@ namespace EppLib.Entities
         public string ExtValue { get; private set; }
         public string Message { get; private set; }
         public string Code { get; private set; }
+		public string Xml { get; private set; }
     }
 
 }

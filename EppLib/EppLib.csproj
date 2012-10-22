@@ -47,6 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\AuthInfo.cs" />
+    <Compile Include="Entities\Domain\DomainReleaseResponse.cs" />
+    <Compile Include="Entities\Domain\DomainRelease.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\HandshakeRejectedNotification.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\DomainsReleasedNotification.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\ReferralRejecteNotification.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\ReferralAcceptNotification.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\RegistrarChangeNotification.cs" />
     <Compile Include="Entities\Services.cs" />
     <Compile Include="Extensions\Cira\CiraContactUpdateExtension.cs" />
     <Compile Include="Entities\Contact\ContactChange.cs" />
@@ -99,6 +107,7 @@
     <Compile Include="Entities\EppException.cs" />
     <Compile Include="Entities\EppExtension.cs" />
     <Compile Include="Entities\EppResponse.cs" />
+    <Compile Include="Extensions\Cira\CiraExtensionBase.cs" />
     <Compile Include="Extensions\Cira\GetAgreement.cs" />
     <Compile Include="Extensions\Cira\GetAgreementResponse.cs" />
     <Compile Include="Entities\Hello.cs" />
@@ -133,6 +142,24 @@
     <Compile Include="Entities\PollResponse.cs" />
     <Compile Include="Entities\PollType.cs" />
     <Compile Include="Entities\Status.cs" />
+    <Compile Include="Extensions\Nominet\ContactInfo\NominetContactInfo.cs" />
+    <Compile Include="Extensions\Nominet\ContactInfo\NominetContactInfoResponse.cs" />
+    <Compile Include="Extensions\Nominet\ContactCreate\NominetContactCreate.cs" />
+    <Compile Include="Extensions\Nominet\ContactCreate\NominetContactCreateExtension.cs" />
+    <Compile Include="Extensions\Nominet\ContactInfo\NominetContactExtension.cs" />
+    <Compile Include="Extensions\Nominet\ContactUpdate\NominetContactUpdate.cs" />
+    <Compile Include="Extensions\Nominet\ContactUpdate\NominetContactUpdateExtension.cs" />
+    <Compile Include="Extensions\Nominet\YesNoFlag.cs" />
+    <Compile Include="Extensions\Nominet\CoType.cs" />
+    <Compile Include="Extensions\Nominet\NominetContactExtensionBase.cs" />
+    <Compile Include="Extensions\Nominet\DomainInfo\NominetDomainExtension.cs" />
+    <Compile Include="Extensions\Nominet\DomainInfo\NominetDomainInfo.cs" />
+    <Compile Include="Extensions\Nominet\DomainCreate\NominetDomainCreate.cs" />
+    <Compile Include="Extensions\Nominet\DomainCreate\NominetDomainCreateExtension.cs" />
+    <Compile Include="Extensions\Nominet\DomainInfo\NominetDomainInfoResponse.cs" />
+    <Compile Include="Extensions\Nominet\NominetDomainExtensionBase.cs" />
+    <Compile Include="Extensions\Nominet\DomainUpdate\NominetDomainUpdate.cs" />
+    <Compile Include="Extensions\Nominet\DomainUpdate\NominetDomainUpdateExtension.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -150,6 +177,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -17,22 +17,22 @@ namespace EppLib.Entities
     {
         public Contact(string contactId, string fullName, string companyName, string city, string streetAddress, string province, string postalCode, string countryCode, string email, Telephone voice, Telephone fax)
         {
-            var postalAddress = new PostalAddress
-            {
-                City = city,
-                Street1 = streetAddress,
-                StateProvince = province,
-                PostalCode = postalCode,
-                CountryCode = countryCode
-            };
+        	var postalAddress = new PostalAddress
+        	                    	{
+        	                    		City = city,
+        	                    		Street1 = streetAddress,
+        	                    		StateProvince = province,
+        	                    		PostalCode = postalCode,
+        	                    		CountryCode = countryCode
+        	                    	};
 
-            PostalInfo = new PostalInfo
-            {
-                m_name = fullName,
-                m_org = companyName,
-                m_type = PostalAddressType.LOC,
-                m_address = postalAddress
-            };
+        	PostalInfo = new PostalInfo
+        	             	{
+        	             		m_name = fullName,
+        	             		m_org = companyName,
+        	             		m_type = PostalAddressType.LOC,
+        	             		m_address = postalAddress
+        	             	};
 
             Email = email;
             Voice = voice;

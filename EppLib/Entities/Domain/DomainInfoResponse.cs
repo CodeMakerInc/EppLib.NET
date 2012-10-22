@@ -17,18 +17,20 @@ namespace EppLib.Entities
 {
     public class DomainInfoResponse : EppResponse
     {
-        public DomainInfoResponse(byte[] bytes)
-            : base(bytes)
-        {
-        }
+		protected Domain _domain = new Domain();
+		public virtual Domain Domain
+		{
+			get { return _domain; }
+		}
 
-        protected override void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
+		public DomainInfoResponse(string xml) : base(xml) { }
+    	public DomainInfoResponse(byte[] bytes) : base(bytes) { }
+
+		protected override void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             namespaces.AddNamespace("domain", "urn:ietf:params:xml:ns:domain-1.0");
 
-            var children = doc.SelectSingleNode("/ns:epp/ns:response/ns:resData/domain:infData", namespaces);
-
-            Domain = new Domain();
+            var children = doc.SelectSingleNode("domain:infData", namespaces);
 
             if (children != null)
             {
@@ -178,7 +180,5 @@ namespace EppLib.Entities
             }
 
         }
-
-        public Domain Domain { get; set; }
     }
 }

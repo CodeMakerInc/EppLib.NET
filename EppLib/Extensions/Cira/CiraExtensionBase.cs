@@ -11,12 +11,18 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-namespace EppLib.Entities
+using System.Xml;
+using EppLib.Entities;
+
+namespace EppLib.Extensions.Cira
 {
-    public abstract class HostBase<T> : EppCommand<T> where T : EppResponse
-    {
-        protected HostBase() : base("host", "urn:ietf:params:xml:ns:host-1.0")
-        {
-        }
-    }
+	public abstract class CiraExtensionBase : EppExtension
+	{
+		private string _ns = "urn:ietf:params:xml:ns:cira-1.02";
+		protected override string Namespace
+		{
+			get { return _ns; }
+			set { _ns = value; }
+		}
+	}
 }

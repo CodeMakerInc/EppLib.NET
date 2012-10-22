@@ -17,18 +17,20 @@ namespace EppLib.Entities
 {
     public class ContactInfoResponse : EppResponse
     {
-        public ContactInfoResponse(byte[] bytes)
-            : base(bytes)
-        {
-        }
+		protected Contact _contact = new Contact();
+		public virtual Contact Contact
+		{
+			get { return _contact; }
+		}
+
+		public ContactInfoResponse(string xml) : base(xml) { }
+    	public ContactInfoResponse(byte[] bytes) : base(bytes) { }
 
         protected override void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             namespaces.AddNamespace("contact", "urn:ietf:params:xml:ns:contact-1.0");
 
-            var children = doc.SelectSingleNode("/ns:epp/ns:response/ns:resData/contact:infData", namespaces);
-
-            Contact = new Contact();
+            var children = doc.SelectSingleNode("contact:infData", namespaces);
 
             if (children != null)
             {
@@ -162,7 +164,7 @@ namespace EppLib.Entities
             }
         }
 
-        protected override void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
+		protected override void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             namespaces.AddNamespace("cira", "urn:ietf:params:xml:ns:cira-1.0");
 
@@ -213,7 +215,5 @@ namespace EppLib.Entities
                 }
             }
         }
-
-        public Contact Contact { get; set; }
     }
 }

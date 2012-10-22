@@ -18,7 +18,7 @@ using EppLib.Entities;
 
 namespace EppLib.Extensions.Cira
 {
-    public class CiraTransferExtension : EppExtension
+	public class CiraTransferExtension : CiraExtensionBase
     {
         private IList<string> techContactIds = new List<string>();
         
