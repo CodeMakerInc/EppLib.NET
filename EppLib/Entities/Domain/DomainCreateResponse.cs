@@ -24,7 +24,7 @@ namespace EppLib.Entities
         {
             namespaces.AddNamespace("domain", "urn:ietf:params:xml:ns:domain-1.0");
 
-            var children = doc.SelectSingleNode("domain:creData", namespaces);
+            var children = doc.SelectSingleNode("//domain:creData", namespaces);
 
             if (children != null)
             {

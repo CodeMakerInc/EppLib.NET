@@ -30,7 +30,7 @@ namespace EppLib.Entities
         {
             namespaces.AddNamespace("contact", "urn:ietf:params:xml:ns:contact-1.0");
 
-            var children = doc.SelectSingleNode("contact:infData", namespaces);
+			var children = doc.SelectSingleNode("//contact:infData", namespaces);
 
             if (children != null)
             {

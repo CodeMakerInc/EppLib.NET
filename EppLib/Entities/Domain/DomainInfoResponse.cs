@@ -15,8 +15,8 @@ using System.Xml;
 
 namespace EppLib.Entities
 {
-    public class DomainInfoResponse : EppResponse
-    {
+	public class DomainInfoResponse : EppResponse
+	{
 		protected Domain _domain = new Domain();
 		public virtual Domain Domain
 		{
@@ -24,161 +24,161 @@ namespace EppLib.Entities
 		}
 
 		public DomainInfoResponse(string xml) : base(xml) { }
-    	public DomainInfoResponse(byte[] bytes) : base(bytes) { }
+		public DomainInfoResponse(byte[] bytes) : base(bytes) { }
 
 		protected override void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
-        {
-            namespaces.AddNamespace("domain", "urn:ietf:params:xml:ns:domain-1.0");
+		{
+			namespaces.AddNamespace("domain", "urn:ietf:params:xml:ns:domain-1.0");
 
-            var children = doc.SelectSingleNode("domain:infData", namespaces);
+			var children = doc.SelectSingleNode("//domain:infData", namespaces);
 
-            if (children != null)
-            {
-                var nameNode = children.SelectSingleNode("domain:name", namespaces);
+			if (children != null)
+			{
+				var nameNode = children.SelectSingleNode("domain:name", namespaces);
 
-                if (nameNode != null)
-                {
-                    Domain.Name = nameNode.InnerText;
-                }
+				if (nameNode != null)
+				{
+					Domain.Name = nameNode.InnerText;
+				}
 
-                var roidNode = children.SelectSingleNode("domain:roid", namespaces);
+				var roidNode = children.SelectSingleNode("domain:roid", namespaces);
 
-                if (roidNode != null)
-                {
-                    Domain.Roid = roidNode.InnerText;
-                }
+				if (roidNode != null)
+				{
+					Domain.Roid = roidNode.InnerText;
+				}
 
-                var registrantNode = children.SelectSingleNode("domain:registrant", namespaces);
+				var registrantNode = children.SelectSingleNode("domain:registrant", namespaces);
 
-                if (registrantNode != null)
-                {
-                    Domain.RegistrantId = registrantNode.InnerText;
-                }
+				if (registrantNode != null)
+				{
+					Domain.RegistrantId = registrantNode.InnerText;
+				}
 
-                var statusNodes = children.SelectNodes("domain:status", namespaces);
+				var statusNodes = children.SelectNodes("domain:status", namespaces);
 
-                if (statusNodes != null)
-                {
-                    foreach (XmlNode statusNode in statusNodes)
-                    {
-                        if (statusNode != null)
-                        {
-                            if (statusNode.Attributes != null)
-                            {
-                                var value = statusNode.Attributes["s"].Value;
-
-
-                                Domain.Status.Add(new Status(statusNode.InnerText,value));
-                            }
-                        }
-                    }
-                }
-
-                var contactNodes = children.SelectNodes("domain:contact", namespaces);
-
-                if (contactNodes != null)
-                {
-                    foreach (XmlNode contactNode in contactNodes)
-                    {
-                        if (contactNode != null)
-                        {
-                            if (contactNode.Attributes != null)
-                            {
-                                var type = contactNode.Attributes["type"].Value;
-
-                                Domain.Contacts.Add(new DomainContact(contactNode.InnerText, type));
-                            }
-                        }
-                    }
-                }
-
-                var hostNodes = children.SelectNodes("domain:host", namespaces);
-
-                if (hostNodes != null)
-                {
-                    foreach (XmlNode hostNode in hostNodes)
-                    {
-                        Domain.Hosts.Add(hostNode.InnerText);
-                    }
-                }
-
-                var nsNode = children.SelectSingleNode("domain:ns", namespaces);
-
-                if(nsNode!=null)
-                {
-                    var hostObjNodes = nsNode.SelectNodes("domain:hostObj", namespaces);
-
-                    if (hostObjNodes!=null)
-                    {
-                        foreach (XmlNode hostObjNode in hostObjNodes)
-                        {
-                            if(hostObjNode!=null)
-                            {
-                                Domain.NameServers.Add(hostObjNode.InnerText);
-                            }
-                        }
-                    }
-                }
+				if (statusNodes != null)
+				{
+					foreach (XmlNode statusNode in statusNodes)
+					{
+						if (statusNode != null)
+						{
+							if (statusNode.Attributes != null)
+							{
+								var value = statusNode.Attributes["s"].Value;
 
 
-                var clIdNode = children.SelectSingleNode("domain:clID", namespaces);
+								Domain.Status.Add(new Status(statusNode.InnerText, value));
+							}
+						}
+					}
+				}
 
-                if (clIdNode != null)
-                {
-                    Domain.ClId = clIdNode.InnerText;
-                }
+				var contactNodes = children.SelectNodes("domain:contact", namespaces);
 
-                var crIdNode = children.SelectSingleNode("domain:crID", namespaces);
+				if (contactNodes != null)
+				{
+					foreach (XmlNode contactNode in contactNodes)
+					{
+						if (contactNode != null)
+						{
+							if (contactNode.Attributes != null)
+							{
+								var type = contactNode.Attributes["type"].Value;
 
-                if (crIdNode != null)
-                {
-                    Domain.CrId = crIdNode.InnerText;
-                }
+								Domain.Contacts.Add(new DomainContact(contactNode.InnerText, type));
+							}
+						}
+					}
+				}
 
-                var crDateNode = children.SelectSingleNode("domain:crDate", namespaces);
+				var hostNodes = children.SelectNodes("domain:host", namespaces);
 
-                if (crDateNode != null)
-                {
-                    Domain.CrDate = crDateNode.InnerText;
-                }
+				if (hostNodes != null)
+				{
+					foreach (XmlNode hostNode in hostNodes)
+					{
+						Domain.Hosts.Add(hostNode.InnerText);
+					}
+				}
 
-                var upIdNode = children.SelectSingleNode("domain:upID", namespaces);
+				var nsNode = children.SelectSingleNode("domain:ns", namespaces);
 
-                if (upIdNode != null)
-                {
-                    Domain.UpId = upIdNode.InnerText;
-                }
+				if (nsNode != null)
+				{
+					var hostObjNodes = nsNode.SelectNodes("domain:hostObj", namespaces);
 
-                var upDateNode = children.SelectSingleNode("domain:upDate", namespaces);
+					if (hostObjNodes != null)
+					{
+						foreach (XmlNode hostObjNode in hostObjNodes)
+						{
+							if (hostObjNode != null)
+							{
+								Domain.NameServers.Add(hostObjNode.InnerText);
+							}
+						}
+					}
+				}
 
-                if (upDateNode != null)
-                {
-                    Domain.UpDate = upDateNode.InnerText;
-                }
 
-                var trDateNode = children.SelectSingleNode("domain:trDate", namespaces);
+				var clIdNode = children.SelectSingleNode("domain:clID", namespaces);
 
-                if (trDateNode != null)
-                {
-                    Domain.TrDate = trDateNode.InnerText;
-                }
+				if (clIdNode != null)
+				{
+					Domain.ClId = clIdNode.InnerText;
+				}
 
-                var exDateNode = children.SelectSingleNode("domain:exDate", namespaces);
+				var crIdNode = children.SelectSingleNode("domain:crID", namespaces);
 
-                if (exDateNode != null)
-                {
-                    Domain.ExDate = exDateNode.InnerText;
-                }
+				if (crIdNode != null)
+				{
+					Domain.CrId = crIdNode.InnerText;
+				}
 
-                //read authinfo .. maybe this should be part of all the objects  or not
-                var passwordNode = children.SelectSingleNode("domain:authInfo/domain:pw", namespaces);
+				var crDateNode = children.SelectSingleNode("domain:crDate", namespaces);
 
-                if (passwordNode != null)
-                {
-                    Domain.Password = passwordNode.InnerText;
-                }
-            }
+				if (crDateNode != null)
+				{
+					Domain.CrDate = crDateNode.InnerText;
+				}
 
-        }
-    }
+				var upIdNode = children.SelectSingleNode("domain:upID", namespaces);
+
+				if (upIdNode != null)
+				{
+					Domain.UpId = upIdNode.InnerText;
+				}
+
+				var upDateNode = children.SelectSingleNode("domain:upDate", namespaces);
+
+				if (upDateNode != null)
+				{
+					Domain.UpDate = upDateNode.InnerText;
+				}
+
+				var trDateNode = children.SelectSingleNode("domain:trDate", namespaces);
+
+				if (trDateNode != null)
+				{
+					Domain.TrDate = trDateNode.InnerText;
+				}
+
+				var exDateNode = children.SelectSingleNode("domain:exDate", namespaces);
+
+				if (exDateNode != null)
+				{
+					Domain.ExDate = exDateNode.InnerText;
+				}
+
+				//read authinfo .. maybe this should be part of all the objects  or not
+				var passwordNode = children.SelectSingleNode("domain:authInfo/domain:pw", namespaces);
+
+				if (passwordNode != null)
+				{
+					Domain.Password = passwordNode.InnerText;
+				}
+			}
+
+		}
+	}
 }
