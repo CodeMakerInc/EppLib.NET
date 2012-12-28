@@ -88,11 +88,25 @@ namespace EppLib.Entities
                     Contact.CrId = crIdNode.InnerText;
                 }
 
+                var upIdNode = children.SelectSingleNode("contact:upID", namespaces);
+
+                if (upIdNode != null)
+                {
+                    Contact.UpId = upIdNode.InnerText;
+                }
+
                 var crDateNode = children.SelectSingleNode("contact:crDate", namespaces);
 
                 if (crDateNode != null)
                 {
                     Contact.CrDate = crDateNode.InnerText;
+                }
+
+                var upDateNode = children.SelectSingleNode("contact:upDate", namespaces);
+
+                if (upDateNode != null)
+                {
+                    Contact.UpDate = upDateNode.InnerText;
                 }
                 
                 var postalInfoNode = children.SelectSingleNode("contact:postalInfo", namespaces);
@@ -123,16 +137,28 @@ namespace EppLib.Entities
                     {
                         Contact.PostalInfo.m_address = new PostalAddress();
 
-                        var streetNode = addrNode.SelectSingleNode("contact:street", namespaces);
-
-                        if(streetNode!=null)
+                        var streetNodes = addrNode.SelectNodes("contact:street", namespaces);
+                        if (streetNodes != null)
                         {
-                            Contact.PostalInfo.m_address.Street1 = streetNode.InnerText;
+                            if (streetNodes[0] != null)
+                            {
+                                Contact.PostalInfo.m_address.Street1 = streetNodes[0].InnerText;
+                            }
+
+                            if (streetNodes[1] != null)
+                            {
+                                Contact.PostalInfo.m_address.Street2 = streetNodes[1].InnerText;
+                            }
+
+                            if (streetNodes[2] != null)
+                            {
+                                Contact.PostalInfo.m_address.Street3 = streetNodes[2].InnerText;
+                            }
                         }
 
                         var cityNode = addrNode.SelectSingleNode("contact:city", namespaces);
 
-                        if (streetNode != null)
+                        if (cityNode != null)
                         {
                             Contact.PostalInfo.m_address.City = cityNode.InnerText;
                         }

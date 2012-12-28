@@ -11,16 +11,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
 namespace EppLib.Entities
 {
     public class Contact
     {
-        public Contact(string contactId, string fullName, string companyName, string city, string streetAddress, string province, string postalCode, string countryCode, string email, Telephone voice, Telephone fax)
+        public Contact(string contactId, string fullName, string companyName, string city, string street1, string street2, string street3, string province, string postalCode, string countryCode, string email, Telephone voice, Telephone fax)
         {
             var postalAddress = new PostalAddress
             {
                 City = city,
-                Street1 = streetAddress,
+                Street1 = street1,
+                Street2 = street2,
+                Street3 = street3,
                 StateProvince = province,
                 PostalCode = postalCode,
                 CountryCode = countryCode
@@ -41,6 +44,11 @@ namespace EppLib.Entities
             
         }
 
+        public Contact(string contactId, string fullName, string companyName, string city, string streetAddress, string province, string postalCode, string countryCode, string email, Telephone voice, Telephone fax)
+                : this(contactId, fullName, companyName, city, streetAddress, null, null, province, postalCode, countryCode, email, voice, fax)
+        {
+        }
+
         public Contact()
         {
         }
@@ -55,17 +63,26 @@ namespace EppLib.Entities
         public string Email;
 
         public PostalInfo PostalInfo;
+
+        [Obsolete("Use CIRA Extension", false)]
         public string Language;
+        [Obsolete("Use CIRA Extension", false)]
         public string CprCategory;
+        [Obsolete("Use CIRA Extension", false)]
         public string Individual;
+        [Obsolete("Use CIRA Extension", false)]
         public string CiraAgreementVersion;
+        [Obsolete("Use CIRA Extension", false)]
         public string AgreementTimestamp;
+        [Obsolete("Use CIRA Extension", false)]
         public string WhoisDisplaySetting;
 
         public string Roid { get; set; }
         public string Status { get; set; }
         public string ClId { get; set; }
         public string CrId { get; set; }
+        public string UpId { get; set; }
         public string CrDate { get; set; }
+        public string UpDate { get; set; }
     }
 }
