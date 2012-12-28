@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EppLib", "EppLib.csproj", "{24067FC1-33F6-428B-8E0E-74601A5354EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EppLib.Tests", "..\EppLib.Tests\EppLib.Tests.csproj", "{B037131A-F558-4C96-8781-9E0CB1BBEF2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EppLib.UnitTests", "..\EppLib.UnitTests\EppLib.UnitTests.csproj", "{31A88640-FDF7-46E1-83D7-C65000720EA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,16 @@ Global
 		{B037131A-F558-4C96-8781-9E0CB1BBEF2E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B037131A-F558-4C96-8781-9E0CB1BBEF2E}.Release|x86.ActiveCfg = Release|x86
 		{B037131A-F558-4C96-8781-9E0CB1BBEF2E}.Release|x86.Build.0 = Release|x86
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{31A88640-FDF7-46E1-83D7-C65000720EA4}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

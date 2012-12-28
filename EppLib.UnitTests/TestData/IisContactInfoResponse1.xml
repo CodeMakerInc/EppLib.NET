@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd">
+  <response>
+    <result code="1000">
+      <msg>Command completed successfully</msg>
+    </result>
+    <resData>
+      <contact:infData xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" xsi:schemaLocation="urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd">
+        <contact:id>sh0808-8013</contact:id>
+        <contact:roid>CONTACT-12345</contact:roid>
+        <contact:status s="ok"/>
+        <contact:postalInfo type="loc">
+          <contact:name>Erik Svensson</contact:name>
+          <contact:org>Example AB</contact:org>
+          <contact:addr>
+            <contact:street>c/o Johan Persson</contact:street>
+            <contact:street>Götgatan 13</contact:street>
+            <contact:city>Stockholm</contact:city>
+            <contact:pc>11346</contact:pc>
+            <contact:cc>SE</contact:cc>
+          </contact:addr>
+        </contact:postalInfo>
+        <contact:voice x="">+46.835555555</contact:voice>
+        <contact:fax x="">+46.835555556</contact:fax>
+        <contact:email>er.sv@nic.se</contact:email>
+        <contact:clID>ClientY</contact:clID>
+        <contact:crID>ClientX</contact:crID>
+        <contact:crDate>1999-04-03T22:00:00.0Z</contact:crDate>
+        <contact:upID>ClientX</contact:upID>
+        <contact:upDate>1999-12-03T09:00:00.0Z</contact:upDate>
+        <contact:disclose flag="0">
+          <contact:voice/>
+          <contact:email/>
+        </contact:disclose>
+      </contact:infData>
+    </resData>
+    <extension>
+      <iis:infData xmlns:iis="urn:se:iis:xml:epp:iis-1.2" xsi:schemaLocation="urn:se:iis:xml:epp:iis-1.2 iis-1.2.xsd">
+        <iis:orgno>[SE]802405-0190</iis:orgno>
+        <iis:vatno>SE802405019001</iis:vatno>
+      </iis:infData>
+    </extension>
+    <trID>
+      <clTRID>ABC-12345</clTRID>
+      <svTRID>54322-XYZ</svTRID>
+    </trID>
+  </response>
+</epp>
