@@ -16,7 +16,7 @@ using EppLib.Entities;
 
 namespace EppLib.Extensions.Cira
 {
-    public class CiraCreateExtension : EppExtension
+	public class CiraCreateExtension : CiraExtensionBase
     {
         public string Language;
         public string OriginatingIpAddress;

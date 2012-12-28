@@ -42,7 +42,6 @@ namespace EppLib.Entities
         public DomainCreate(string domainName, string registrantContactId)
         {
             DomainName = domainName;
-
             RegistrantContactId = registrantContactId;
         }
 
@@ -78,6 +77,13 @@ namespace EppLib.Entities
 
             return domainCreate;
         }
+
+		protected override void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
+		{
+			// add auth info
+			var authInfo = AddXmlElement(doc, cmdElement, "domain:authInfo", null, namespaceUri);
+			AddXmlElement(doc, authInfo, "domain:pw", Password, namespaceUri);
+		}
 
         public override DomainCreateResponse FromBytes(byte[] bytes)
         {

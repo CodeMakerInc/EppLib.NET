@@ -18,16 +18,16 @@ namespace EppLib.Entities
 {
     public abstract class EppExtension 
     {
-        private const string _namespace = "urn:ietf:params:xml:ns:cira-1.0";
+		protected abstract string Namespace { get; set; }
 
-        public abstract XmlNode ToXml(XmlDocument doc);
+    	public abstract XmlNode ToXml(XmlDocument doc);
 
-        protected static XmlElement CreateElement(XmlDocument doc, string qualifiedName)
+        protected XmlElement CreateElement(XmlDocument doc, string qualifiedName)
         {
-            return doc.CreateElement(qualifiedName, _namespace);
+			return doc.CreateElement(qualifiedName, Namespace);
         }
 
-        protected static XmlElement AddXmlElement(XmlDocument doc, XmlElement containingElement, String tagName, String value)
+        protected XmlElement AddXmlElement(XmlDocument doc, XmlElement containingElement, String tagName, String value)
         {
             var xml_element = CreateElement(doc, tagName);
 

@@ -15,16 +15,19 @@ using System.Xml;
 
 namespace EppLib.Entities
 {
-    public class DomainCreateResponse : EppResponse
+    public class DomainReleaseResponse : EppResponse
     {
-		public DomainCreateResponse(string xml) : base(xml) { }
-        public DomainCreateResponse(byte[] bytes) : base(bytes) { }
+		public DomainReleaseResponse(byte[] bytes)
+			: base(bytes)
+        {
+            
+        }
 
         protected override void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             namespaces.AddNamespace("domain", "urn:ietf:params:xml:ns:domain-1.0");
 
-            var children = doc.SelectSingleNode("//domain:creData", namespaces);
+            var children = doc.SelectSingleNode("/ns:epp/ns:response/ns:resData/domain:trnData", namespaces);
 
             if (children != null)
             {
@@ -32,28 +35,29 @@ namespace EppLib.Entities
 
                 if (hostNode != null)
                 {
-                    DomainCreateResult = new DomainCreateResult {DomainName = hostNode.InnerText};
+                    DomainTransferResult = new DomainTransferResult { DomainName = hostNode.InnerText };
 
                     var crDateNode = children.SelectSingleNode("domain:crDate", namespaces);
 
                     if (crDateNode != null)
                     {
-                        DomainCreateResult.CreatedDate = crDateNode.InnerText;
+                        DomainTransferResult.CreatedDate = crDateNode.InnerText;
                     }
 
-					var exDateNode = children.SelectSingleNode("domain:exDate", namespaces);
+                    var exDateNode = children.SelectSingleNode("domain:expDate", namespaces);
 
                     if (exDateNode != null)
                     {
-                        DomainCreateResult.ExpirationDate = exDateNode.InnerText;
+                        DomainTransferResult.ExpirationDate = exDateNode.InnerText;
                     }
                 }
             }
         }
 
-        public DomainCreateResult DomainCreateResult
+        public DomainTransferResult DomainTransferResult
         {
-            get; set;
+            get;
+            set;
         }
     }
 }

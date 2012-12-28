@@ -28,7 +28,7 @@ namespace EppLib.Entities
         public string Password;
 
         public readonly IList<EppExtension> Extensions = new List<EppExtension>();
-        private static readonly string ClTrid = Guid.NewGuid().ToString();
+		private static readonly string ClTrid = "EKM-EPP-SYSTEM";
 
         protected EppCommand(string nspace, string namespaceUri)
         {
@@ -54,13 +54,12 @@ namespace EppLib.Entities
             return doc;
         }
 
-        private void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
+        protected virtual void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
         {
             if (!String.IsNullOrWhiteSpace(Password))
             {
-                var authInfo = AddXmlElement(doc, cmdElement, "domain:authInfo", null, namespaceUri);
-
-                AddXmlElement(doc, authInfo, "domain:pw", Password, namespaceUri);
+				var authInfo = AddXmlElement(doc, cmdElement, "domain:authInfo", null, namespaceUri);
+				AddXmlElement(doc, authInfo, "domain:pw", Password, namespaceUri);
             }
         }
 

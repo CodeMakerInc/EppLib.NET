@@ -17,7 +17,7 @@ namespace EppLib.Entities
 {
     public class ContactCreate : ContactBase<ContactCreateResponse>
     {
-        private readonly Contact contact;
+        protected readonly Contact contact;
 
         public ContactCreate(Contact contact)
         {
@@ -57,11 +57,18 @@ namespace EppLib.Entities
                     voice.SetAttribute("x", contact.Fax.Extension);
                 }
             }
-
+			
             if (contact.Email != null) { AddXmlElement(doc, contact_create, "contact:email", contact.Email, namespaceUri); }
 
             return contact_create;
         }
+
+		protected override void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
+		{
+			// add auth info
+			var authInfo = AddXmlElement(doc, cmdElement, "contact:authInfo", null, namespaceUri);
+			AddXmlElement(doc, authInfo, "contact:pw", Password, namespaceUri);
+		}
 
         public override ContactCreateResponse FromBytes(byte[] bytes)
         {

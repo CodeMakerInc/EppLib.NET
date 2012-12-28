@@ -14,24 +14,29 @@
 using System.Xml;
 using EppLib.Entities;
 
-namespace EppLib.Extensions.Cira
+namespace EppLib.Extensions.Nominet.ContactInfo
 {
-    public class CiraAgreementExtension : CiraExtensionBase
-    {
-        private string language = "en";
+	public class NominetContactInfo : ContactBase<NominetContactInfoResponse>
+	{
+		private string m_id;
 
-        public override XmlNode ToXml(XmlDocument doc)
-        {
-            var root = CreateElement(doc, "cira:ciraInfo");
+		public NominetContactInfo(string mId)
+		{
+			m_id = mId;
+		}
 
-            if (language != null)
-            {
-                AddXmlElement(doc, root, "cira:language", language);
-            }
+		protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
+		{
+			var contact_info = BuildCommandElement(doc, "info", commandRootElement);
 
-            AddXmlElement(doc, root, "cira:action", "get CIRA latest agreement");
-            
-            return root;
-        }
-    }
+			AddXmlElement(doc, contact_info, "contact:id", m_id, namespaceUri);
+
+			return contact_info;
+		}
+
+		public override NominetContactInfoResponse FromBytes(byte[] bytes)
+		{
+			return new NominetContactInfoResponse(bytes);
+		}
+	}
 }

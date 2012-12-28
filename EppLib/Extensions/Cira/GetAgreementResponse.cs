@@ -27,7 +27,7 @@ namespace EppLib.Extensions.Cira
             
         }
 
-        protected override void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
+		protected override void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             namespaces.AddNamespace("cira", "urn:ietf:params:xml:ns:cira-1.0");
 

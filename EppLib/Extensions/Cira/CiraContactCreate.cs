@@ -34,6 +34,7 @@ namespace EppLib.Extensions.Cira
                 CreatedByResellerId = CreatedByResellerId
             };
 
+			Extensions.Clear();
             Extensions.Add(ciraExtension);
 
             return base.ToXml();

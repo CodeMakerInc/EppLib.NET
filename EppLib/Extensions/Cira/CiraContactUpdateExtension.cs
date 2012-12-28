@@ -16,7 +16,7 @@ using EppLib.Entities;
 
 namespace EppLib.Extensions.Cira
 {
-    public class CiraContactUpdateExtension : EppExtension
+	public class CiraContactUpdateExtension : CiraExtensionBase
     {
         public string Language;
         public string CprCategory;

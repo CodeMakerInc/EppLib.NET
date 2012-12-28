@@ -22,10 +22,8 @@ namespace EppLib.Entities
         public string MsgId;
         public string DomainName;
 
-        public PollResponse(byte[] bytes) : base(bytes)
-        {
-            
-        }
+		public PollResponse(string xml) : base(xml) { }
+        public PollResponse(byte[] bytes) : base(bytes) { }
 
         protected override void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
@@ -33,7 +31,6 @@ namespace EppLib.Entities
 
             if (messageNode != null)
             {
-               
                 if (messageNode.Attributes != null)
                 {
                     Id = messageNode.Attributes["id"].Value;
@@ -53,9 +50,9 @@ namespace EppLib.Entities
                 {
                     Body = msgNode.InnerText;
 
-                    if (msgNode.Attributes != null)
+					if (msgNode.Attributes != null && msgNode.Attributes["lang"] != null)
                     {
-                        Language = msgNode.Attributes["lang"].Value;
+						Language = msgNode.Attributes["lang"].Value;
                     }
                 }
                 
@@ -67,6 +64,7 @@ namespace EppLib.Entities
 
             if (resData != null)
             {
+            	ResultData = resData.InnerXml;
                 var msgIDNode = resData.SelectSingleNode("poll:msgID", namespaces);
 
                 if (msgIDNode != null)
@@ -88,5 +86,6 @@ namespace EppLib.Entities
         public string QDate { get; set; }
         public string Body { get; set; }
         public string Language { get; set; }
+		public string ResultData { get; set; }
     }
 }
