@@ -1,4 +1,5 @@
-﻿// Copyright 2012 Code Maker Inc. (http://codemaker.net)
+﻿using System.Collections.Generic;
+// Copyright 2012 Code Maker Inc. (http://codemaker.net)
 //  
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,7 +54,18 @@ namespace EppLib.Entities
 
                 if (statusNode != null)
                 {
-                    if (statusNode.Attributes != null) Contact.Status = statusNode.Attributes["s"].Value;
+                    if (statusNode.Attributes["s"] != null) Contact.Status = statusNode.Attributes["s"].Value;
+                }
+
+                var statusNodes = children.SelectNodes("contact:status", namespaces);
+
+                if(statusNodes != null)
+                {
+                    if(Contact.StatusList == null) Contact.StatusList = new List<string>();
+                    foreach(XmlNode status in statusNodes)
+                    {
+                        if (status.Attributes["s"] != null) Contact.StatusList.Add(status.Attributes["s"].Value);
+                    }
                 }
 
                 var emailNode = children.SelectSingleNode("contact:email", namespaces);
@@ -68,6 +80,10 @@ namespace EppLib.Entities
                 if (voiceNode != null)
                 {
                     Contact.Voice = new Telephone(voiceNode.InnerText,"");
+                    if(voiceNode.Attributes["x"] != null)
+                    {
+                        Contact.Voice.Extension = voiceNode.Attributes["x"].Value;
+                    }
                 }
 
                 var faxNode = children.SelectSingleNode("contact:fax", namespaces);

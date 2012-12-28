@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System;
+using System.Collections;
 namespace EppLib.Entities
 {
     public class Contact
@@ -78,7 +79,9 @@ namespace EppLib.Entities
         public string WhoisDisplaySetting;
 
         public string Roid { get; set; }
+        [Obsolete("Use StatusList", false)]
         public string Status { get; set; }
+        public IList StatusList { get; set; }
         public string ClId { get; set; }
         public string CrId { get; set; }
         public string UpId { get; set; }
