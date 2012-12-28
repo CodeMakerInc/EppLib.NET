@@ -111,6 +111,13 @@ namespace EppLib.Entities
                 {
                     Contact.UpDate = upDateNode.InnerText;
                 }
+
+                var trDateNode = children.SelectSingleNode("contact:trDate", namespaces);
+
+                if (trDateNode != null)
+                {
+                    Contact.TrDate = trDateNode.InnerText;
+                }
                 
                 var postalInfoNode = children.SelectSingleNode("contact:postalInfo", namespaces);
 

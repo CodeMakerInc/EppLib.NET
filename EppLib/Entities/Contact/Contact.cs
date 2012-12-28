@@ -84,5 +84,6 @@ namespace EppLib.Entities
         public string UpId { get; set; }
         public string CrDate { get; set; }
         public string UpDate { get; set; }
+        public string TrDate { get; set; }
     }
 }
