@@ -42,11 +42,11 @@ namespace EppLib.Entities
             Voice = voice;
             Fax = fax;
             Id = contactId;
-            
+
         }
 
         public Contact(string contactId, string fullName, string companyName, string city, string streetAddress, string province, string postalCode, string countryCode, string email, Telephone voice, Telephone fax)
-                : this(contactId, fullName, companyName, city, streetAddress, null, null, province, postalCode, countryCode, email, voice, fax)
+            : this(contactId, fullName, companyName, city, streetAddress, null, null, province, postalCode, countryCode, email, voice, fax)
         {
         }
 
@@ -88,5 +88,23 @@ namespace EppLib.Entities
         public string CrDate { get; set; }
         public string UpDate { get; set; }
         public string TrDate { get; set; }
+        public string Password { get; set; }
+        public DiscloseFlags DiscloseMask { get; set; }
+
+        [Flags]
+        public enum DiscloseFlags
+        {
+            All = ~0,
+            None = 0,
+            NameInt = 1,
+            NameLoc = 2,
+            OrganizationInt = 4,
+            OrganizationLoc = 8,
+            AddressInt = 16,
+            AddressLoc = 32,
+            Voice = 64,
+            Fax = 128,
+            Email = 256
+        }
     }
 }

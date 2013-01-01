@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-// Copyright 2012 Code Maker Inc. (http://codemaker.net)
+﻿// Copyright 2012 Code Maker Inc. (http://codemaker.net)
 //  
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,6 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
+using System.Collections.Generic;
 using System.Xml;
 
 namespace EppLib.Entities
@@ -38,7 +39,7 @@ namespace EppLib.Entities
             {
                 var idNode = children.SelectSingleNode("contact:id", namespaces);
 
-                if(idNode!=null)
+                if (idNode != null)
                 {
                     Contact.Id = idNode.InnerText;
                 }
@@ -59,10 +60,10 @@ namespace EppLib.Entities
 
                 var statusNodes = children.SelectNodes("contact:status", namespaces);
 
-                if(statusNodes != null)
+                if (statusNodes != null)
                 {
-                    if(Contact.StatusList == null) Contact.StatusList = new List<string>();
-                    foreach(XmlNode status in statusNodes)
+                    if (Contact.StatusList == null) Contact.StatusList = new List<string>();
+                    foreach (XmlNode status in statusNodes)
                     {
                         if (status.Attributes["s"] != null) Contact.StatusList.Add(status.Attributes["s"].Value);
                     }
@@ -79,8 +80,8 @@ namespace EppLib.Entities
 
                 if (voiceNode != null)
                 {
-                    Contact.Voice = new Telephone(voiceNode.InnerText,"");
-                    if(voiceNode.Attributes["x"] != null)
+                    Contact.Voice = new Telephone(voiceNode.InnerText, "");
+                    if (voiceNode.Attributes["x"] != null)
                     {
                         Contact.Voice.Extension = voiceNode.Attributes["x"].Value;
                     }
@@ -134,7 +135,106 @@ namespace EppLib.Entities
                 {
                     Contact.TrDate = trDateNode.InnerText;
                 }
-                
+
+                var authInfoNode = children.SelectSingleNode("contact:authInfo", namespaces);
+
+                if (authInfoNode != null)
+                {
+                    var pwNode = authInfoNode.SelectSingleNode("contact:pw", namespaces);
+
+                    if (pwNode != null)
+                    {
+                        Contact.Password = pwNode.InnerText;
+                    }
+                }
+
+                var discloseNode = children.SelectSingleNode("contact:disclose", namespaces);
+
+                if (discloseNode != null)
+                {
+                    bool flag;
+                    if (!Boolean.TryParse(discloseNode.Attributes["flag"].Value, out flag))
+                    {
+                        if (discloseNode.Attributes["flag"].Value == "0")
+                        {
+                            flag = false;
+                        }
+                        else if (discloseNode.Attributes["flag"].Value == "1")
+                        {
+                            flag = true;
+                        }
+                        else
+                        {
+                            throw new Exception("Unable to parse contact:disclose flag");
+                        }
+                    }
+                    Contact.DiscloseMask = flag ? Contact.DiscloseFlags.None : Contact.DiscloseFlags.All;
+
+                    foreach (XmlNode changeNode in discloseNode.ChildNodes)
+                    {
+                        switch (changeNode.LocalName)
+                        {
+                            case "name":
+                                if (changeNode.Attributes["type"].Value == "int")
+                                {
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.NameInt
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.NameInt;
+                                }
+                                else if (changeNode.Attributes["type"].Value == "loc")
+                                {
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.NameLoc
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.NameLoc;
+                                }
+                                break;
+                            case "org":
+                                if (changeNode.Attributes["type"].Value == "int")
+                                {
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.OrganizationInt
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.OrganizationInt;
+                                }
+                                else if (changeNode.Attributes["type"].Value == "loc")
+                                {
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.OrganizationLoc
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.OrganizationLoc;
+                                }
+                                break;
+                            case "addr":
+                                if (changeNode.Attributes["type"].Value == "int")
+                                {
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.AddressInt
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.AddressInt;
+                                }
+                                else if (changeNode.Attributes["type"].Value == "loc")
+                                {
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.AddressLoc
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.AddressLoc;
+                                }
+                                break;
+                            case "voice":
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.Voice
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.Voice;
+                                break;
+                            case "fax":
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.Fax
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.Fax;
+                                break;
+                            case "email":
+                                    Contact.DiscloseMask = flag ?
+                                        Contact.DiscloseMask | Contact.DiscloseFlags.Email
+                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.Email;
+                                break;
+                        }
+                    }
+                }
+
                 var postalInfoNode = children.SelectSingleNode("contact:postalInfo", namespaces);
 
                 if (postalInfoNode != null)
@@ -143,7 +243,7 @@ namespace EppLib.Entities
 
                     var nameNode = postalInfoNode.SelectSingleNode("contact:name", namespaces);
 
-                    if(nameNode!=null)
+                    if (nameNode != null)
                     {
                         Contact.PostalInfo.m_name = nameNode.InnerText;
                     }
@@ -209,7 +309,7 @@ namespace EppLib.Entities
                         {
                             Contact.PostalInfo.m_address.CountryCode = ccNode.InnerText;
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -220,7 +320,7 @@ namespace EppLib.Entities
 
             var children = doc.SelectSingleNode("/ns:epp/ns:response/ns:extension/cira:ciraInfo", namespaces);
 
-            if(children!=null)
+            if (children != null)
             {
                 var crLanguage = children.SelectSingleNode("cira:language", namespaces);
 

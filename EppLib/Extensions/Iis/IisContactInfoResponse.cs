@@ -46,6 +46,8 @@ namespace EppLib.Extensions.Iis
             _iisContact.CrDate = _contact.CrDate;
             _iisContact.UpDate = _contact.UpDate;
             _iisContact.TrDate = _contact.TrDate;
+            _iisContact.Password = _contact.Password;
+            _iisContact.DiscloseMask = _contact.DiscloseMask;
         }
 
         protected override void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
