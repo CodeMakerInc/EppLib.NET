@@ -88,6 +88,9 @@ namespace EppLib.Tests
             Assert.AreEqual("1999-04-03T22:00:00.0Z", contact.CrDate);
             Assert.AreEqual("1999-12-03T09:00:00.0Z", contact.UpDate);
             Assert.AreEqual("2000-04-08T09:00:00.0Z", contact.TrDate);
+
+            Assert.AreEqual("2fooBAR", contact.Password);
+            Assert.AreEqual(Contact.DiscloseFlags.All & ~Contact.DiscloseFlags.Voice & ~Contact.DiscloseFlags.Email, contact.DiscloseMask);
         }
     }
 }

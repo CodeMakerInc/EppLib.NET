@@ -67,6 +67,29 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\contact-1.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TestData\domain-1.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TestData\epp-1.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TestData\eppcom-1.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TestData\host-1.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TestData\iis-1.2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TestData\secDNS-1.1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using EppLib.Extensions.Iis;
+using EppLib.Entities;
 
 namespace EppLib.Tests
 {
@@ -73,6 +74,8 @@ namespace EppLib.Tests
             Assert.AreEqual("ClientX", contact.UpId);
             Assert.AreEqual("1999-04-03T22:00:00.0Z", contact.CrDate);
             Assert.AreEqual("1999-12-03T09:00:00.0Z", contact.UpDate);
+            Assert.IsNull(contact.Password);
+            Assert.AreEqual(Contact.DiscloseFlags.All & ~Contact.DiscloseFlags.Voice & ~Contact.DiscloseFlags.Email, contact.DiscloseMask);
         }
     }
 }
