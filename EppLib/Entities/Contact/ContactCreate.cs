@@ -60,6 +60,12 @@ namespace EppLib.Entities
 
             if (contact.Email != null) { AddXmlElement(doc, contact_create, "contact:email", contact.Email, namespaceUri); }
 
+            if (contact.DiscloseFlag != null)
+            {
+                var disclose = DiscloseToXml(doc, contact.DiscloseMask, (bool)contact.DiscloseFlag);
+                contact_create.AppendChild(disclose);
+            }
+
             return contact_create;
         }
 

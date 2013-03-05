@@ -168,6 +168,7 @@ namespace EppLib.Entities
                             throw new Exception("Unable to parse contact:disclose flag");
                         }
                     }
+                    Contact.DiscloseFlag = flag;
                     Contact.DiscloseMask = flag ? Contact.DiscloseFlags.None : Contact.DiscloseFlags.All;
 
                     foreach (XmlNode changeNode in discloseNode.ChildNodes)
@@ -217,19 +218,19 @@ namespace EppLib.Entities
                                 }
                                 break;
                             case "voice":
-                                    Contact.DiscloseMask = flag ?
-                                        Contact.DiscloseMask | Contact.DiscloseFlags.Voice
-                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.Voice;
+                                Contact.DiscloseMask = flag ?
+                                    Contact.DiscloseMask | Contact.DiscloseFlags.Voice
+                                    : Contact.DiscloseMask & ~Contact.DiscloseFlags.Voice;
                                 break;
                             case "fax":
-                                    Contact.DiscloseMask = flag ?
-                                        Contact.DiscloseMask | Contact.DiscloseFlags.Fax
-                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.Fax;
+                                Contact.DiscloseMask = flag ?
+                                    Contact.DiscloseMask | Contact.DiscloseFlags.Fax
+                                    : Contact.DiscloseMask & ~Contact.DiscloseFlags.Fax;
                                 break;
                             case "email":
-                                    Contact.DiscloseMask = flag ?
-                                        Contact.DiscloseMask | Contact.DiscloseFlags.Email
-                                        : Contact.DiscloseMask & ~Contact.DiscloseFlags.Email;
+                                Contact.DiscloseMask = flag ?
+                                    Contact.DiscloseMask | Contact.DiscloseFlags.Email
+                                    : Contact.DiscloseMask & ~Contact.DiscloseFlags.Email;
                                 break;
                         }
                     }

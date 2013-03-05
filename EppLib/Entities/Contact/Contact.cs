@@ -89,6 +89,7 @@ namespace EppLib.Entities
         public string UpDate { get; set; }
         public string TrDate { get; set; }
         public string Password { get; set; }
+        public bool? DiscloseFlag { get; set; }
         public DiscloseFlags DiscloseMask { get; set; }
 
         [Flags]
