@@ -20,12 +20,18 @@ namespace EppLib.Entities
     {
         private readonly string domainName;
 
+        /// <summary>
+        /// "all" (default if missing) request delegated and subordinate hosts.
+        /// "del" request delegeted hosts only.
+        /// "sub" request subordinate hosts only.
+        /// "none" request no information about hosts.
+        /// </summary>
+        public string Hosts { get; set; }
+
         public DomainInfo(string domainName)
         {
             this.domainName = domainName;
         }
-
-        public string Hosts { get; set; }
 
         protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {

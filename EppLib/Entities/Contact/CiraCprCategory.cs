@@ -28,7 +28,16 @@ namespace EppLib.Entities
 
         public override bool Equals(object obj)
         {
+            if ((CiraCprCategory)obj == null) return false;
+
             return CprCode.Equals(((CiraCprCategory)obj).CprCode);
+        }
+
+        public override int GetHashCode()
+        {
+            if (CprCode == null) return 0;
+
+            return CprCode.GetHashCode();
         }
     }
 }
