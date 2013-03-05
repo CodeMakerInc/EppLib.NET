@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <response>
+    <result code="1301">
+      <msg>Command completed successfully; ack to dequeue</msg>
+    </result>
+    <msgQ count="5" id="12345">
+      <qDate>1999-04-04T22:01:00.0Z</qDate>
+      <msg>Pending action completed successfully.</msg>
+    </msgQ>
+    <resData>
+      <domain:panData xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+        <domain:name paResult="1">example.com</domain:name>
+        <domain:paTRID>
+          <clTRID>ABC-12345</clTRID>
+          <svTRID>54321-XYZ</svTRID>
+        </domain:paTRID>
+        <domain:paDate>1999-04-04T22:00:00.0Z</domain:paDate>
+      </domain:panData>
+    </resData>
+    <trID>
+      <clTRID>BCD-23456</clTRID>
+      <svTRID>65432-WXY</svTRID>
+    </trID>
+  </response>
+</epp>
