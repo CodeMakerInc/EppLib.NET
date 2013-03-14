@@ -39,7 +39,7 @@ namespace EppLib.Entities
 
             if (m_period != null)
             {
-                var period = AddXmlElement(doc, domainRenew, "domain:period", m_period.Value.ToString(CultureInfo.InvariantCulture));
+                var period = AddXmlElement(doc, domainRenew, "domain:period", m_period.Value.ToString(CultureInfo.InvariantCulture), namespaceUri);
                 period.SetAttribute("unit", m_period.Unit);
             }
 
