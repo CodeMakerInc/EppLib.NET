@@ -18,7 +18,7 @@ namespace EppLib.Extensions.Cira
 {
 	public abstract class CiraExtensionBase : EppExtension
 	{
-		private string _ns = "urn:ietf:params:xml:ns:cira-1.02";
+		private string _ns = "urn:ietf:params:xml:ns:cira-1.0";
 		protected override string Namespace
 		{
 			get { return _ns; }
