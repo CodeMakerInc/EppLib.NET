@@ -19,16 +19,16 @@ namespace EppLib.Entities
 {
     public abstract class EppCommand<T> : EppBase<T> where T : EppResponse
     {
-        private readonly string nspace;
+        protected readonly string nspace;
         protected readonly string namespaceUri;
 
         /// <summary>
-        /// Lenght is 6 - 16, ascii chars
+        /// Length is 6 - 16, ascii chars
         /// </summary>
-        public string Password;
+        public string Password { get; set; }
+        public string TransactionId { get; set; }
 
         public readonly IList<EppExtension> Extensions = new List<EppExtension>();
-		private static readonly string ClTrid = "EKM-EPP-SYSTEM";
 
         protected EppCommand(string nspace, string namespaceUri)
         {
@@ -54,12 +54,12 @@ namespace EppLib.Entities
             return doc;
         }
 
-        protected virtual void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
+        private void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
         {
             if (!String.IsNullOrWhiteSpace(Password))
             {
-				var authInfo = AddXmlElement(doc, cmdElement, "domain:authInfo", null, namespaceUri);
-				AddXmlElement(doc, authInfo, "domain:pw", Password, namespaceUri);
+                var authInfo = AddXmlElement(doc, cmdElement, nspace + ":authInfo", null, namespaceUri);
+                AddXmlElement(doc, authInfo, nspace + ":pw", Password, namespaceUri);
             }
         }
 
@@ -113,11 +113,13 @@ namespace EppLib.Entities
             return command;
         }
 
-        protected static void AppendTRID(XmlDocument doc, XmlNode command)
+        protected void AppendTRID(XmlDocument doc, XmlNode command)
         {
+            if (String.IsNullOrWhiteSpace(TransactionId)) return;
+
             var clTRIDElement = CreateElement(doc, "clTRID");
 
-            clTRIDElement.InnerText = ClTrid;
+            clTRIDElement.InnerText = TransactionId;
 
             command.AppendChild(clTRIDElement);
         }

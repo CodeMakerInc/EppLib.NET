@@ -19,22 +19,28 @@ namespace EppLib.Entities
     {
         private readonly string clientId;
         private readonly string password;
-        
-        public Options Options;
-        public Services Services;
+        private readonly string newPassword;
 
-        public Login(string clientId, string password)
+        public Options Options { get; set; }
+        public Services Services { get; set; }
+
+        public Login(string clientId, string password, string newPassword)
         {
             this.clientId = clientId;
             this.password = password;
+            this.newPassword = newPassword;
         }
-        
+
+        public Login(string clientId, string password)
+            : this(clientId, password, null) { }
+
         protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
             var login = CreateElement(doc, "login");
 
             AddXmlElement(doc, login, "clID", clientId);
             AddXmlElement(doc, login, "pw", password);
+            if (newPassword != null) AddXmlElement(doc, login, "newPW", newPassword);
 
             if (Options != null)
             {

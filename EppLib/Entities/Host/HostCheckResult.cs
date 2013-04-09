@@ -18,20 +18,31 @@ namespace EppLib.Entities
 {
     public class HostCheckResult
     {
+        public string Name { get; set; }
+        public bool Available { get; set; }
+        public string Reason { get; set; }
+
+        public HostCheckResult()
+        {
+        }
+
         public HostCheckResult(XmlNode child, XmlNamespaceManager namespaces)
         {
             var nameNode = child.SelectSingleNode("host:name", namespaces);
 
             if (nameNode != null)
             {
-
                 Name = nameNode.InnerText;
 
                 if (nameNode.Attributes != null)
                 {
                     var xmlAttribute = nameNode.Attributes["avail"];
 
-                    if (xmlAttribute != null) Available = xmlAttribute.Value.ToLower(CultureInfo.InvariantCulture).Equals("true");
+                    if (xmlAttribute != null)
+                    {
+                        var attributeValue = xmlAttribute.Value.ToLower(CultureInfo.InvariantCulture);
+                        Available = attributeValue.Equals("true") || attributeValue.Equals("1");
+                    }
                 }
             }
 
@@ -41,13 +52,20 @@ namespace EppLib.Entities
             {
                 Reason = reasonNode.InnerText;
             }
-
         }
 
-        protected string Reason { get; set; }
+        public override bool Equals(object obj)
+        {
+            HostCheckResult o = (HostCheckResult)obj;
 
-        protected bool Available { get; set; }
+            if (o == null) return false;
 
-        protected string Name { get; set; }
+            return (o.Name == Name) && (o.Available == Available) && (o.Reason == Reason);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() ^ Available.GetHashCode() ^ Reason.GetHashCode();
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace EppLib.Entities
                 if (nameAddress.m_address != null)
                 {
                     var address = nameAddress.m_address;
-                    var address_element = doc.CreateElement("contact:addr",namespaceUri);
+                    var address_element = doc.CreateElement("contact:addr", namespaceUri);
                     // Because this method is used by contact create and update,
                     // the lowest common denominator (update), says that all
                     // members are optional.
@@ -93,6 +93,59 @@ namespace EppLib.Entities
             }
 
             return name_address_element;
+        }
+
+        protected XmlElement DiscloseToXml(XmlDocument doc, Contact.DiscloseFlags discloseMask, bool discloseFlag)
+        {
+            XmlElement discloseElement = doc.CreateElement("contact:disclose", namespaceUri);
+            discloseElement.SetAttribute("flag", discloseFlag ? "1" : "0");
+
+            var mask = discloseFlag ? discloseMask : ~discloseMask;
+
+            if ((mask & Contact.DiscloseFlags.Voice) != 0)
+            {
+                AddXmlElement(doc, discloseElement, "contact:voice", null, namespaceUri);
+            }
+            if ((mask & Contact.DiscloseFlags.Fax) != 0)
+            {
+                AddXmlElement(doc, discloseElement, "contact:fax", null, namespaceUri);
+            }
+            if ((mask & Contact.DiscloseFlags.Email) != 0)
+            {
+                AddXmlElement(doc, discloseElement, "contact:email", null, namespaceUri);
+            }
+            if ((mask & Contact.DiscloseFlags.NameInt) != 0)
+            {
+                var nameInt = AddXmlElement(doc, discloseElement, "contact:name", null, namespaceUri);
+                nameInt.SetAttribute("type", "int");
+            }
+            if ((mask & Contact.DiscloseFlags.NameLoc) != 0)
+            {
+                var nameLoc = AddXmlElement(doc, discloseElement, "contact:name", null, namespaceUri);
+                nameLoc.SetAttribute("type", "loc");
+            }
+            if ((mask & Contact.DiscloseFlags.OrganizationInt) != 0)
+            {
+                var orgInt = AddXmlElement(doc, discloseElement, "contact:org", null, namespaceUri);
+                orgInt.SetAttribute("type", "int");
+            }
+            if ((mask & Contact.DiscloseFlags.OrganizationLoc) != 0)
+            {
+                var orgLoc = AddXmlElement(doc, discloseElement, "contact:org", null, namespaceUri);
+                orgLoc.SetAttribute("type", "loc");
+            }
+            if ((mask & Contact.DiscloseFlags.AddressInt) != 0)
+            {
+                var addrInt = AddXmlElement(doc, discloseElement, "contact:addr", null, namespaceUri);
+                addrInt.SetAttribute("type", "int");
+            }
+            if ((mask & Contact.DiscloseFlags.AddressLoc) != 0)
+            {
+                var addrLoc = AddXmlElement(doc, discloseElement, "contact:addr", null, namespaceUri);
+                addrLoc.SetAttribute("type", "loc");
+            }
+
+            return discloseElement;
         }
     }
 }

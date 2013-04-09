@@ -19,12 +19,12 @@ namespace EppLib.Entities
 {
     public class EppResponse
     {
-		public EppResponse(string xml)
-		{
-			FromXmlString(Encoding.UTF8.GetBytes(xml));
-		}
+        public EppResponse(string xml)
+        {
+            FromXmlString(Encoding.UTF8.GetBytes(xml));
+        }
 
-    	public EppResponse(byte[] bytes)
+        public EppResponse(byte[] bytes)
         {
             FromXmlString(bytes);
         }
@@ -32,14 +32,14 @@ namespace EppLib.Entities
         private void FromXmlString(byte[] bytes)
         {
             var doc = new XmlDocument();
-            
+
             var namespaces = new XmlNamespaceManager(doc.NameTable);
 
             namespaces.AddNamespace("ns", "urn:ietf:params:xml:ns:epp-1.0");
 
             doc.Load(new MemoryStream(bytes));
 
-            var resultNode = doc.SelectSingleNode("/ns:epp/ns:response/ns:result",namespaces);
+            var resultNode = doc.SelectSingleNode("/ns:epp/ns:response/ns:result", namespaces);
 
             if (resultNode != null)
             {
@@ -55,15 +55,17 @@ namespace EppLib.Entities
                 ProcessExtensionNode(doc, namespaces);
             }
 
-        	Xml = doc.OuterXml;
+            ProcessTransactionIdNode(doc, namespaces);
+
+            Xml = doc.OuterXml;
         }
 
-		protected virtual void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
+        protected virtual void ProcessDataNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             //default implementation does nothing
         }
 
-		protected virtual void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
+        protected virtual void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
         {
             //default implementation does nothing
         }
@@ -74,7 +76,7 @@ namespace EppLib.Entities
 
             var msgNode = doc.SelectSingleNode("/ns:epp/ns:response/ns:result/ns:msg", namespaces);
 
-            if (msgNode != null) {Message = msgNode.InnerText;}
+            if (msgNode != null) { Message = msgNode.InnerText; }
 
             var extValueNode = doc.SelectSingleNode("/ns:epp/ns:response/ns:result/ns:extValue", namespaces);
 
@@ -88,11 +90,22 @@ namespace EppLib.Entities
             }
         }
 
+        private void ProcessTransactionIdNode(XmlDocument doc, XmlNamespaceManager namespaces)
+        {
+            var node = doc.SelectSingleNode("/ns:epp/ns:response/ns:trID/ns:clTRID", namespaces);
+            if (node != null) ClientTransactionId = node.InnerText;
+
+            node = doc.SelectSingleNode("/ns:epp/ns:response/ns:trID/ns:svTRID", namespaces);
+            if (node != null) ServerTransactionId = node.InnerText;
+        }
+
+        public string ClientTransactionId { get; private set; }
+        public string ServerTransactionId { get; private set; }
         public string Reason { get; private set; }
         public string ExtValue { get; private set; }
         public string Message { get; private set; }
         public string Code { get; private set; }
-		public string Xml { get; private set; }
+        public string Xml { get; private set; }
     }
 
 }

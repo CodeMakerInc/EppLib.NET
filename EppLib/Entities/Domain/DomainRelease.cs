@@ -19,7 +19,7 @@ namespace EppLib.Entities
     public class DomainRelease : DomainBase<DomainReleaseResponse>
     {
         private string _domainName;
-        protected string _registrarTag;
+        private string _registrarTag;
 
         public DomainRelease(string domainName, string registrarTag)
         {

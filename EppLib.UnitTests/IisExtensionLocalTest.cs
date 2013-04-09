@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using EppLib.Extensions.Iis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EppLib.Entities;
+using EppLib.Extensions.Iis;
 
 namespace EppLib.Tests
 {
@@ -33,6 +30,7 @@ namespace EppLib.Tests
         /// https://www.iis.se/docs/EPP-Server-Protocol-description.pdf
         /// </summary>
         [TestMethod]
+        [TestCategory("IisExtension")]
         [TestCategory("LocalResponse")]
         [DeploymentItem("TestData/IisContactInfoResponse1.xml")]
         public void TestIisContactInfoResponse1()

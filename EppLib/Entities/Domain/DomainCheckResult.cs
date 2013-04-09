@@ -18,13 +18,20 @@ namespace EppLib.Entities
 {
     public class DomainCheckResult
     {
+        public string Name { get; set; }
+        public bool Available { get; set; }
+        public string Reason { get; set; }
+
+        public DomainCheckResult()
+        {
+        }
+
         public DomainCheckResult(XmlNode child, XmlNamespaceManager namespaces)
         {
             var nameNode = child.SelectSingleNode("domain:name", namespaces);
 
             if (nameNode != null)
             {
-
                 Name = nameNode.InnerText;
 
                 if (nameNode.Attributes != null)
@@ -33,8 +40,8 @@ namespace EppLib.Entities
 
                     if (xmlAttribute != null)
                     {
-                        var atributeValue = xmlAttribute.Value.ToLower(CultureInfo.InvariantCulture);
-                        Available = atributeValue.Equals("true") || atributeValue.Equals("1");
+                        var attributeValue = xmlAttribute.Value.ToLower(CultureInfo.InvariantCulture);
+                        Available = attributeValue.Equals("true") || attributeValue.Equals("1");
                     }
                 }
             }
@@ -45,13 +52,20 @@ namespace EppLib.Entities
             {
                 Reason = reasonNode.InnerText;
             }
-
         }
 
-        public string Reason { get; set; }
+        public override bool Equals(object obj)
+        {
+            DomainCheckResult o = (DomainCheckResult)obj;
 
-        public bool Available { get; set; }
+            if (o == null) return false;
 
-        public string Name { get; set; }
+            return (o.Name == Name) && (o.Available == Available) && (o.Reason == Reason);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() ^ Available.GetHashCode() ^ Reason.GetHashCode();
+        }
     }
 }

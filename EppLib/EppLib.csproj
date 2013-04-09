@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\AuthInfo.cs" />
+    <Compile Include="Entities\Contact\ContactCheckResult.cs" />
     <Compile Include="Entities\Domain\DomainReleaseResponse.cs" />
     <Compile Include="Entities\Domain\DomainRelease.cs" />
     <Compile Include="Extensions\Iis\IisContactCreate.cs" />

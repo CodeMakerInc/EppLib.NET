@@ -11,24 +11,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
 using System.Xml;
 
 namespace EppLib.Entities
 {
     public class ContactInfo : ContactBase<ContactInfoResponse>
     {
-        private string m_id;
+        private readonly string id;
 
-        public ContactInfo(string mId)
+        public ContactInfo(string id)
         {
-            m_id = mId;
+            this.id = id;
         }
 
-      protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
+        protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
             var contact_info = BuildCommandElement(doc, "info", commandRootElement);
-
-            AddXmlElement(doc, contact_info, "contact:id", m_id, namespaceUri);
+            AddXmlElement(doc, contact_info, "contact:id", id, namespaceUri);
 
             return contact_info;
         }

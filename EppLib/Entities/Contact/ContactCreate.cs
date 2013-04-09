@@ -23,7 +23,7 @@ namespace EppLib.Entities
         {
             this.contact = contact;
         }
-        
+
         protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
             if (contact.Id == null)
@@ -57,18 +57,17 @@ namespace EppLib.Entities
                     voice.SetAttribute("x", contact.Fax.Extension);
                 }
             }
-			
+
             if (contact.Email != null) { AddXmlElement(doc, contact_create, "contact:email", contact.Email, namespaceUri); }
+
+            if (contact.DiscloseFlag != null)
+            {
+                var disclose = DiscloseToXml(doc, contact.DiscloseMask, (bool)contact.DiscloseFlag);
+                contact_create.AppendChild(disclose);
+            }
 
             return contact_create;
         }
-
-		protected override void AppendAuthInfo(XmlDocument doc, XmlElement cmdElement)
-		{
-			// add auth info
-			var authInfo = AddXmlElement(doc, cmdElement, "contact:authInfo", null, namespaceUri);
-			AddXmlElement(doc, authInfo, "contact:pw", Password, namespaceUri);
-		}
 
         public override ContactCreateResponse FromBytes(byte[] bytes)
         {

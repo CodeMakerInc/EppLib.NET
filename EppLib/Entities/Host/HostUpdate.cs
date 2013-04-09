@@ -51,7 +51,7 @@ namespace EppLib.Entities
 
             if (HostChange != null)
             {
-                var change_element = doc.CreateElement("host:chg");
+                var change_element = doc.CreateElement("host:chg", namespaceUri);
 
                 if (HostChange.HostName != null)
                 {
