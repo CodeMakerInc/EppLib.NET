@@ -40,13 +40,18 @@ namespace EppLib
         private readonly string EPP_REGISTRY_COM;
         private readonly int PORT;
 
+        private readonly int READ_TIMEOUT;
+        private readonly int WRITE_TIMEOUT;
+
         private readonly bool loggingEnabled;
         private readonly X509Certificate clientCertificate;
 
-        public TcpTransport(string host,int port, X509Certificate clientCertificate, bool loggingEnabled = false)
+        public TcpTransport(string host, int port, X509Certificate clientCertificate, bool loggingEnabled = false, int ReadTimeout = Timeout.Infinite, int WriteTimeout = Timeout.Infinite)
         {
             EPP_REGISTRY_COM = host;
             PORT = port;
+            READ_TIMEOUT = ReadTimeout;
+            WRITE_TIMEOUT = WriteTimeout;
             this.loggingEnabled = loggingEnabled;
             this.clientCertificate = clientCertificate;
         }
@@ -58,7 +63,11 @@ namespace EppLib
         {
             var client = new TcpClient(EPP_REGISTRY_COM, PORT);
 
-            stream = new SslStream(client.GetStream(), false, ValidateServerCertificate);
+            stream = new SslStream(client.GetStream(), false, ValidateServerCertificate)
+                     {
+                         ReadTimeout = READ_TIMEOUT,
+                         WriteTimeout = WRITE_TIMEOUT
+                     };
 
             if (clientCertificate != null)
             {
