@@ -8,6 +8,7 @@ namespace EppLib.Extensions.Nominet.Notifications
 	{
 		public string Originator { get; set; }
 		public string RegistrarTag { get; set; }
+		public string CaseId { get; set; }                  // Added by Brian Wojtczak, Fasthosts
 		public List<Domain> DomainList { get; set; }
 		public Contact Contact { get; set; }
 
@@ -33,6 +34,13 @@ namespace EppLib.Extensions.Nominet.Notifications
 				if (registrarNode != null)
 				{
 					RegistrarTag = registrarNode.InnerText;
+				}
+
+				// Added by Brian Wojtczak, Fasthosts
+				var caseNode = registrarChangeNode.SelectSingleNode("n:caseId", namespaces);
+				if (caseNode != null)
+				{
+					CaseId = caseNode.InnerText;
 				}
 
 				var domainListNode = registrarChangeNode.SelectSingleNode("n:domainListData", namespaces);
