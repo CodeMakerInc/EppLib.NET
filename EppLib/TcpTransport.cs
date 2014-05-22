@@ -47,12 +47,12 @@ namespace EppLib
         private readonly bool loggingEnabled;
         private readonly X509Certificate clientCertificate;
 
-        public TcpTransport(string host, int port, X509Certificate clientCertificate, bool loggingEnabled = false, int ReadTimeout = Timeout.Infinite, int WriteTimeout = Timeout.Infinite)
+        public TcpTransport(string host, int port, X509Certificate clientCertificate, bool loggingEnabled = false, int readTimeout = Timeout.Infinite, int writeTimeout = Timeout.Infinite)
         {
             EPP_REGISTRY_COM = host;
             PORT = port;
-            READ_TIMEOUT = ReadTimeout;
-            WRITE_TIMEOUT = WriteTimeout;
+            READ_TIMEOUT = readTimeout;
+            WRITE_TIMEOUT = writeTimeout;
             this.loggingEnabled = loggingEnabled;
             this.clientCertificate = clientCertificate;
         }
