@@ -21,6 +21,7 @@ namespace EppLib.Entities
         public string Name { get; set; }
         public bool Available { get; set; }
         public string Reason { get; set; }
+        public string Reserved { get; set; }
 
         public DomainCheckResult()
         {
