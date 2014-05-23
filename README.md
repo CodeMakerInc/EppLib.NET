@@ -1,6 +1,6 @@
 # EppLib.NET 
 
-[![Build Status](https://jenkins.codemaker.net/job/EppLib.NET/badge/icon)](https://jenkins.codemaker.net/job/EppLib.NET/)
+[![Build status](https://ci.appveyor.com/api/projects/status/dxtxp3tjjgne87ar)](https://ci.appveyor.com/project/AdemarGonzalez/epplib-net)
 
 EppLib.NET is a .NET library implementing the Extensible Provisioning Protocol (EPP)
 
