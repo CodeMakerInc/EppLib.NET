@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LocalTest.cs" />
+    <Compile Include="NominetExtensionLocalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IisExtensionLocalTest.cs" />
   </ItemGroup>
@@ -205,6 +206,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\MessageDomainPendingComplete1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\NominetDomainCheckCommand1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

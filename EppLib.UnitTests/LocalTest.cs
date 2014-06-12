@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using EppLib.Extensions.Nominet.DomainCheck;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using EppLib.Entities;
@@ -761,7 +762,7 @@ namespace EppLib.Tests
         // Domain
 
         #region Domain Check
-
+        
         /// <summary>
         /// Domain check command, example RFC5731
         /// </summary>
@@ -826,6 +827,8 @@ namespace EppLib.Tests
             Assert.AreEqual("ABC-12345", response.ClientTransactionId);
             Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
         }
+
+
 
         #endregion
 
