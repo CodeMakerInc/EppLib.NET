@@ -946,7 +946,11 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainRenewCommand1.xml")]
         public void TestDomainRenewCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            string expected = File.ReadAllText("DomainRenewCommand1.xml");
+
+            var command = new DomainRenew("example.com", new DateTime(2000, 4, 3).ToString("yyyy-MM-dd"), new DomainPeriod(5, "y"));
+            command.TransactionId = "ABC-12345";
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
         }
 
         /// <summary>

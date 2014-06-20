@@ -68,11 +68,11 @@ namespace EppLib.Tests
         [TestCategory("NominetExtension")]
         [TestCategory("LocalCommand")]
         [DeploymentItem("TestData/NominetDomainCheckCommand1.xml")]
-        public void TestNominetDomainReleaseCommand1()
+        public void TestDomainRenewCommand1()
         {
             string expected = File.ReadAllText("NominetDomainCheckCommand1.xml");
 
-            var command = new DomainRelease("example1.uk", "testing");
+            var command = new DomainRenew("example1.uk", new DateTime(2014, 6, 20, 16, 30, 0).ToString("yyyy-MM-dd"), null);
             command.TransactionId = "ABC-12345";
             var mmm = command.ToXml().InnerXml;
             Assert.AreEqual(expected, command.ToXml().InnerXml);
