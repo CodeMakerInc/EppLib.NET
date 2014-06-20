@@ -32,11 +32,16 @@ namespace EppLib.Entities
             var domainRelease = BuildCommandElement(doc, "update", commandRootElement);
 			var releaseNode = AddXmlElement(doc, domainRelease, "r:release", null, "http://www.nominet.org.uk/epp/xml/std-release-1.0");
 
-        	XmlNode domainNode = doc.CreateNode(XmlNodeType.Text, "domainName", "r");
-        	releaseNode.AppendChild(domainNode);
+            AddXmlElement(doc, releaseNode, "r:domainName", _domainName);
+            AddXmlElement(doc, releaseNode, "r:registrarTag", _registrarTag);
+            
+            //XmlNode domainNode = doc.CreateNode(XmlNodeType.Text, "domainName", "r");
+            //domainNode.Value = _domainName;
+            //releaseNode.AppendChild(domainNode);
 
-			XmlNode registrarTag = doc.CreateNode(XmlNodeType.Text, "registrarTag", "r");
-			releaseNode.AppendChild(registrarTag);
+            //XmlNode registrarTag = doc.CreateNode(XmlNodeType.Text, "registrarTag", "r");
+            //registrarTag.Value = _registrarTag;
+            //releaseNode.AppendChild(registrarTag);
 
             return domainRelease;
         }

@@ -60,6 +60,24 @@ namespace EppLib.Tests
             Assert.AreEqual(expected, command.ToXml().InnerXml);
         }
 
+        /// <summary>
+        /// Nominet Domain check command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#check
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetDomainCheckCommand1.xml")]
+        public void TestNominetDomainReleaseCommand1()
+        {
+            string expected = File.ReadAllText("NominetDomainCheckCommand1.xml");
+
+            var command = new DomainRelease("example1.uk", "testing");
+            command.TransactionId = "ABC-12345";
+            var mmm = command.ToXml().InnerXml;
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
         #endregion
     }
 }
