@@ -827,7 +827,44 @@ namespace EppLib.Tests
             Assert.AreEqual("ABC-12345", response.ClientTransactionId);
             Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
         }
+        
+        #endregion
 
+        #region Domain Release
+
+        /// <summary>
+        /// Domain release command, example RFC5731
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/DomainReleaseCommand1.xml")]
+        public void TestDomainReleaseCommand1()
+        {
+            string expected = File.ReadAllText("DomainReleaseCommand1.xml");
+
+            var command = new DomainRelease("epp-example.co.uk", "EXAMPLE-TAG");
+            command.TransactionId = "ABC-12345";
+            
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
+        /// Domain check response, example RFC5733
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/DomainReleaseResponse1.xml")]
+        public void TestDomainReleaseResponse1()
+        {
+            byte[] input = File.ReadAllBytes("DomainReleaseResponse1.xml");
+            var response = new DomainReleaseResponse(input);
+
+            Assert.AreEqual("1001", response.Code);
+            Assert.AreEqual("Command completed successfully; action pending", response.Message);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
+        }
 
 
         #endregion
