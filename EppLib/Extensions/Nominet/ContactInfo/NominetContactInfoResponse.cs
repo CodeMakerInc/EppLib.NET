@@ -28,6 +28,8 @@ namespace EppLib.Extensions.Nominet.ContactInfo
 			_nomContact.ClId = _contact.ClId;
 			_nomContact.CrId = _contact.CrId;
 			_nomContact.CrDate = _contact.CrDate;
+            _nomContact.UpDate = _contact.UpDate;
+            _nomContact.UpId = _contact.UpId;
 		}
 
 		protected override void ProcessExtensionNode(XmlDocument doc, XmlNamespaceManager namespaces)
