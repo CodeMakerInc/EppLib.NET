@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using EppLib.Entities;
 using EppLib.Extensions.Nominet.DomainCheck;
+using EppLib.Extensions.Nominet.DomainInfo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EppLib.Tests
@@ -58,6 +59,29 @@ namespace EppLib.Tests
             };
             command.TransactionId = "ABC-12345";
             Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        #endregion
+
+        #region Domain Info
+
+        /// <summary>
+        /// Nominet Domain check command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#check
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetDomainInfoCommand1.xml")]
+        public void TestNominetDomainInfoCommand1()
+        {
+            byte[] input = File.ReadAllBytes("NominetDomainInfoCommand1.xml");
+            var response = new NominetDomainInfoResponse(input);
+
+            Assert.AreEqual("30", response.Domain.AutoBill);
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+
         }
 
         #endregion
