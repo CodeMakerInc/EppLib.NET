@@ -13,3 +13,9 @@ EppLib.NET provides a library that makes easy for registrars to interact with re
 Our library is a complete implementation of the EPP specification. Have a look at the How to section for code examples and recipes.
 
 * We now include EPP extensions for CIRA (the .CA registry), Nominet (the .UK registry) and IIS (the .SE registry).
+
+# NuGet
+
+```bash
+PM> Install-Package EppLib
+```
