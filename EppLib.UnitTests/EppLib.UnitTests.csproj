@@ -88,6 +88,9 @@
     <Content Include="TestData\ContactUpdateResponse1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\PollMsgsResponse2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\DomainCheckCommand1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -225,6 +228,7 @@
     </Content>
     <Content Include="TestData\PollMsgsResponse1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="TestData\PollRequestCommand1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
