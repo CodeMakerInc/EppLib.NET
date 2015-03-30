@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EppLib.Extensions.Nominet.DomainCheck;
+using EppLib.Extensions.Nominet.Notifications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using EppLib.Entities;
@@ -1055,5 +1056,100 @@ namespace EppLib.Tests
 
         #endregion
 
+        // Poll
+
+        /// <summary>
+        /// Poll request command
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/PollRequestCommand1.xml")]
+        public void TestPollReqCommand1()
+        {
+            string expected = File.ReadAllText("PollRequestCommand1.xml");
+
+            var command = new Poll { Type = "req" };
+            command.TransactionId = "ABC-12345";
+
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
+        /// Poll acknowledge command
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/PollAckCommand1.xml")]
+        public void TestPollAckCommand1()
+        {
+            string expected = File.ReadAllText("PollAckCommand1.xml");
+
+            var command = new Poll { MessageId = "12345", Type = "ack" };
+            command.TransactionId = "ABC-12345";
+
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
+        /// Poll response, no messages
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/PollNoMsgsResponse1.xml")]
+        public void TestPollNoMsgsResponse1()
+        {
+            byte[] input = File.ReadAllBytes("PollNoMsgsResponse1.xml");
+            var response = new PollResponse(input);
+
+            Assert.AreEqual("1300", response.Code);
+            Assert.AreEqual("Command completed successfully; no messages", response.Message);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
+        }
+
+        /// <summary>
+        /// Poll response, Contact deleted notification messages
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/PollMsgsResponse1.xml")]
+        public void TestPollMsgsResponse1()
+        {
+            byte[] input = File.ReadAllBytes("PollMsgsResponse1.xml");
+            var response = new PollResponse(input);
+
+            Assert.AreEqual("1301", response.Code);
+            Assert.AreEqual("Command completed successfully; ack to dequeue", response.Message);
+
+            Assert.AreEqual("Contact deleted notification", response.Body);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
+        }
+        
+        /// <summary>
+        /// Poll response, Contact deleted notification messages
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/PollMsgsResponse2.xml")]
+        public void TestPollMsgsResponse2()
+        {
+            byte[] input = File.ReadAllBytes("PollMsgsResponse2.xml");
+            var response = new PollResponse(input);
+
+            Assert.AreEqual("1301", response.Code);
+            Assert.AreEqual("Command completed successfully; ack to dequeue", response.Message);
+
+            Assert.AreEqual("Domains Released Notification", response.Body);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
+
+            var notification = new DomainsReleasedNotification(File.ReadAllText("PollMsgsResponse2.xml"));
+
+            Assert.IsNotNull(notification.DomainsReleased);
+        }
     }
 }

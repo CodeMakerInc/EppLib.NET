@@ -68,6 +68,7 @@
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheckExtension.cs" />
     <Compile Include="Extensions\Nominet\NominetDirectRightsExtensionBase.cs" />
     <Compile Include="Extensions\Nominet\NominetDomainExtensionBase.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\DomainCancellationNotification.cs" />
     <Compile Include="Extensions\Nominet\Notifications\HandshakeRejectedNotification.cs" />
     <Compile Include="Extensions\Nominet\Notifications\DomainsReleasedNotification.cs" />
     <Compile Include="Extensions\Nominet\Notifications\ReferralRejecteNotification.cs" />
