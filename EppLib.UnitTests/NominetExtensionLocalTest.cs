@@ -6,6 +6,7 @@ using System.Text;
 using EppLib.Entities;
 using EppLib.Extensions.Nominet.DomainCheck;
 using EppLib.Extensions.Nominet.DomainInfo;
+using EppLib.Extensions.Nominet.Notifications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EppLib.Tests
@@ -82,6 +83,35 @@ namespace EppLib.Tests
             Assert.AreEqual("1000", response.Code);
             Assert.AreEqual("Command completed successfully", response.Message);
 
+        }
+
+        #endregion
+
+        #region Domain Name Cancellation Notification
+
+        /// <summary>
+        /// Poll response, Domain Name Cancellation notification messages
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/DomainNameCancelledNotification.xml")]
+        public void TestPollMsgsResponse2()
+        {
+            byte[] input = File.ReadAllBytes("DomainNameCancelledNotification.xml");
+            var response = new PollResponse(input);
+
+            Assert.AreEqual("1301", response.Code);
+            Assert.AreEqual("Command completed successfully; ack to dequeue", response.Message);
+
+            Assert.AreEqual("Domain Name Cancellation Notification", response.Body);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
+
+            var notification = new DomainCancellationNotification(File.ReadAllText("DomainNameCancelledNotification.xml"));
+
+            Assert.AreEqual("cancelleddomain.co.uk", notification.DomainName);
+            Assert.AreEqual("originator@nominet.org.uk", notification.Originator);
         }
 
         #endregion
