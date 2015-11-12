@@ -4,7 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EppLib.Entities;
+using EppLib.Extensions.Nominet;
+using EppLib.Extensions.Nominet.ContactUpdate;
 using EppLib.Extensions.Nominet.DomainCheck;
+using EppLib.Extensions.Nominet.DomainCreate;
 using EppLib.Extensions.Nominet.DomainInfo;
 using EppLib.Extensions.Nominet.Notifications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -27,6 +30,67 @@ namespace EppLib.Tests
         }
 
         public NominetExtensionLocalTest(){}
+
+        #region Contact Update
+
+        /// <summary>
+        /// Nominet Contact Update command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#update
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetContactUpdateCommand1.xml")]
+        public void TestNominetContactUpdateCommand1()
+        {
+            string expected = File.ReadAllText("NominetContactUpdateCommand1.xml");
+
+            var command = new NominetContactUpdate("my_contact");
+            command.ContactChange = new ContactChange();
+            command.ContactChange.Email = "example@email.co.uk";
+            command.ContactChange.PostalInfo = new PostalInfo
+            {
+                m_type = PostalAddressType.LOC,
+                m_name = "Changed main contact name",
+                m_address = new PostalAddress
+                {
+                    Street1 = "10 Modified Street",
+                    City = "Oxford",
+                    StateProvince = "Oxon",
+                    PostalCode = "OX5 5ZZ",
+                    CountryCode = "GB"
+                }
+            };
+            command.CompanyNumber = "NI65786";
+            command.OptOut = YesNoFlag.N;
+            command.TradeName = "Example trading name";
+            command.Type = CoType.LTD;
+            command.TransactionId = "ABC-12345";
+
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
+        /// Nominet Contact Update command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#update
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/ContactUpdateResponse1.xml")]
+        public void TestNominetContactUpdateResponse1()
+        {
+            byte[] input = File.ReadAllBytes("ContactUpdateResponse1.xml");
+            var response = new ContactUpdateResponse(input);
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
+        }
+
+        #endregion
 
         #region Domain Check
 
@@ -60,6 +124,60 @@ namespace EppLib.Tests
             };
             command.TransactionId = "ABC-12345";
             Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        #endregion
+
+        #region Domain Create
+
+        /// <summary>
+        /// Nominet Domain create command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#create
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetDomainCreateCommand1.xml")]
+        public void TestNominetDomainCreateCommand1()
+        {
+            string expected = File.ReadAllText("NominetDomainCreateCommand1.xml");
+
+            var command = new NominetDomainCreate("example.co.uk", "registrant")
+            {
+                AutoBill = "30"
+            };
+            command.NameServers.Add("ns1.example.net");
+            command.NameServers.Add("ns2.example.net");
+            command.NameServers.Add("ns3.example.net");
+            command.Period = new DomainPeriod(1, "y");
+            command.Password = "password";
+            command.TransactionId = "ABC-12345";
+
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
+        /// Nominet Domain check command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#create
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetDomainCreateResponse1.xml")]
+        public void TestNominetDomainCreateResponse1()
+        {
+            byte[] input = File.ReadAllBytes("NominetDomainCreateResponse1.xml");
+            var response = new DomainCreateResponse(input);
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+
+            Assert.AreEqual("example.co.uk", response.DomainCreateResult.DomainName);
+            Assert.AreEqual("2015-11-12T09:31:06", response.DomainCreateResult.CreatedDate);
+            Assert.AreEqual("2016-11-12T09:31:06", response.DomainCreateResult.ExpirationDate);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
         }
 
         #endregion
