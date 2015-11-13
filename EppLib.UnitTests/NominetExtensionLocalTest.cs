@@ -31,6 +31,46 @@ namespace EppLib.Tests
 
         public NominetExtensionLocalTest(){}
 
+        #region Contact Info
+
+        /// <summary>
+        /// Nominet Contact Info response
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#info
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/ContactInfoResponse1.xml")]
+        public void TestNominetContactInfoResponse1()
+        {
+            byte[] input = File.ReadAllBytes("ContactInfoResponse1.xml");
+            var response = new ContactInfoResponse(input);
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+
+            Assert.AreEqual("sh8013", response.Contact.Id);
+            Assert.AreEqual("SH8013-REP", response.Contact.Roid);
+            Assert.AreEqual("John Doe", response.Contact.PostalInfo.m_name);
+            Assert.AreEqual("Example Inc.", response.Contact.PostalInfo.m_org);
+            Assert.AreEqual("123 Example Dr.", response.Contact.PostalInfo.m_address.Street1);
+            Assert.AreEqual("Suite 100", response.Contact.PostalInfo.m_address.Street2);
+            Assert.AreEqual("Dulles", response.Contact.PostalInfo.m_address.City);
+            Assert.AreEqual("VA", response.Contact.PostalInfo.m_address.StateProvince);
+            Assert.AreEqual("20166-6503", response.Contact.PostalInfo.m_address.PostalCode);
+            Assert.AreEqual("US", response.Contact.PostalInfo.m_address.CountryCode);
+            Assert.AreEqual("1234", response.Contact.Voice.Extension);
+            Assert.AreEqual("+1.7035555555", response.Contact.Voice.Value);
+            Assert.AreEqual("", response.Contact.Fax.Extension);
+            Assert.AreEqual("+1.7035555556", response.Contact.Fax.Value);
+            Assert.AreEqual("jdoe@example.com", response.Contact.Email);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
+        }
+
+        #endregion
+
         #region Contact Update
 
         /// <summary>
@@ -71,7 +111,7 @@ namespace EppLib.Tests
         }
 
         /// <summary>
-        /// Nominet Contact Update command
+        /// Nominet Contact Update response
         /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#update
         /// </summary>
         [TestMethod]
