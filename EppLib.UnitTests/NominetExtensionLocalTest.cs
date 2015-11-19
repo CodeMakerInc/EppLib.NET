@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using EppLib.Entities;
 using EppLib.Extensions.Nominet;
+using EppLib.Extensions.Nominet.ContactInfo;
 using EppLib.Extensions.Nominet.ContactUpdate;
 using EppLib.Extensions.Nominet.DomainCheck;
 using EppLib.Extensions.Nominet.DomainCreate;
@@ -40,11 +42,11 @@ namespace EppLib.Tests
         [TestMethod]
         [TestCategory("NominetExtension")]
         [TestCategory("LocalCommand")]
-        [DeploymentItem("TestData/ContactInfoResponse1.xml")]
+        [DeploymentItem("TestData/NominetContactInfoResponse1.xml")]
         public void TestNominetContactInfoResponse1()
         {
-            byte[] input = File.ReadAllBytes("ContactInfoResponse1.xml");
-            var response = new ContactInfoResponse(input);
+            byte[] input = File.ReadAllBytes("NominetContactInfoResponse1.xml");
+            var response = new NominetContactInfoResponse(input);
 
             Assert.AreEqual("1000", response.Code);
             Assert.AreEqual("Command completed successfully", response.Message);
@@ -61,9 +63,20 @@ namespace EppLib.Tests
             Assert.AreEqual("US", response.Contact.PostalInfo.m_address.CountryCode);
             Assert.AreEqual("1234", response.Contact.Voice.Extension);
             Assert.AreEqual("+1.7035555555", response.Contact.Voice.Value);
-            Assert.AreEqual("", response.Contact.Fax.Extension);
-            Assert.AreEqual("+1.7035555556", response.Contact.Fax.Value);
             Assert.AreEqual("jdoe@example.com", response.Contact.Email);
+
+            Assert.AreEqual("invalid", response.DataQuality.Status);
+            Assert.AreEqual("Incorrect Address", response.DataQuality.Reason);
+            Assert.IsTrue(response.DataQuality.DateCommenced.HasValue);
+            Assert.AreEqual(new DateTime(2015,5,7,13,20,4).ToString(), response.DataQuality.DateCommenced.Value.ToString());
+            Assert.IsTrue(response.DataQuality.DateToSuspend.HasValue);
+            Assert.AreEqual(new DateTime(2015, 6, 6, 13, 20, 4).ToString(), response.DataQuality.DateToSuspend.Value.ToString());
+            Assert.IsTrue(response.DataQuality.LockApplied.HasValue);
+            Assert.IsTrue(response.DataQuality.LockApplied.Value);
+            Assert.IsNotNull(response.DataQuality.DomainList);
+            Assert.AreEqual(2, response.DataQuality.DomainList.Count);
+            Assert.AreEqual("epp-example1.co.uk", response.DataQuality.DomainList.First());
+            Assert.AreEqual("epp-example2.co.uk", response.DataQuality.DomainList.Last());
 
             Assert.AreEqual("ABC-12345", response.ClientTransactionId);
             Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
