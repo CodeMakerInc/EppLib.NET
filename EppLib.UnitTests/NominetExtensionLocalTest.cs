@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using EppLib.Entities;
+using EppLib.Extensions.Nominet;
+using EppLib.Extensions.Nominet.ContactInfo;
+using EppLib.Extensions.Nominet.ContactUpdate;
 using EppLib.Extensions.Nominet.DomainCheck;
+using EppLib.Extensions.Nominet.DomainCreate;
 using EppLib.Extensions.Nominet.DomainInfo;
 using EppLib.Extensions.Nominet.Notifications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -27,6 +32,118 @@ namespace EppLib.Tests
         }
 
         public NominetExtensionLocalTest(){}
+
+        #region Contact Info
+
+        /// <summary>
+        /// Nominet Contact Info response
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#info
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetContactInfoResponse1.xml")]
+        public void TestNominetContactInfoResponse1()
+        {
+            byte[] input = File.ReadAllBytes("NominetContactInfoResponse1.xml");
+            var response = new NominetContactInfoResponse(input);
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+
+            Assert.AreEqual("sh8013", response.Contact.Id);
+            Assert.AreEqual("SH8013-REP", response.Contact.Roid);
+            Assert.AreEqual("John Doe", response.Contact.PostalInfo.m_name);
+            Assert.AreEqual("Example Inc.", response.Contact.PostalInfo.m_org);
+            Assert.AreEqual("123 Example Dr.", response.Contact.PostalInfo.m_address.Street1);
+            Assert.AreEqual("Suite 100", response.Contact.PostalInfo.m_address.Street2);
+            Assert.AreEqual("Dulles", response.Contact.PostalInfo.m_address.City);
+            Assert.AreEqual("VA", response.Contact.PostalInfo.m_address.StateProvince);
+            Assert.AreEqual("20166-6503", response.Contact.PostalInfo.m_address.PostalCode);
+            Assert.AreEqual("US", response.Contact.PostalInfo.m_address.CountryCode);
+            Assert.AreEqual("1234", response.Contact.Voice.Extension);
+            Assert.AreEqual("+1.7035555555", response.Contact.Voice.Value);
+            Assert.AreEqual("jdoe@example.com", response.Contact.Email);
+
+            Assert.AreEqual("invalid", response.DataQuality.Status);
+            Assert.AreEqual("Incorrect Address", response.DataQuality.Reason);
+            Assert.IsTrue(response.DataQuality.DateCommenced.HasValue);
+            Assert.AreEqual(new DateTime(2015,5,7,13,20,4).ToString(), response.DataQuality.DateCommenced.Value.ToString());
+            Assert.IsTrue(response.DataQuality.DateToSuspend.HasValue);
+            Assert.AreEqual(new DateTime(2015, 6, 6, 13, 20, 4).ToString(), response.DataQuality.DateToSuspend.Value.ToString());
+            Assert.IsTrue(response.DataQuality.LockApplied.HasValue);
+            Assert.IsTrue(response.DataQuality.LockApplied.Value);
+            Assert.IsNotNull(response.DataQuality.DomainList);
+            Assert.AreEqual(2, response.DataQuality.DomainList.Count);
+            Assert.AreEqual("epp-example1.co.uk", response.DataQuality.DomainList.First());
+            Assert.AreEqual("epp-example2.co.uk", response.DataQuality.DomainList.Last());
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
+        }
+
+        #endregion
+
+        #region Contact Update
+
+        /// <summary>
+        /// Nominet Contact Update command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#update
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetContactUpdateCommand1.xml")]
+        public void TestNominetContactUpdateCommand1()
+        {
+            string expected = File.ReadAllText("NominetContactUpdateCommand1.xml");
+
+            var command = new NominetContactUpdate("my_contact");
+            command.ContactChange = new ContactChange();
+            command.ContactChange.Email = "example@email.co.uk";
+            command.ContactChange.PostalInfo = new PostalInfo
+            {
+                m_type = PostalAddressType.LOC,
+                m_name = "Changed main contact name",
+                m_address = new PostalAddress
+                {
+                    Street1 = "10 Modified Street",
+                    City = "Oxford",
+                    StateProvince = "Oxon",
+                    PostalCode = "OX5 5ZZ",
+                    CountryCode = "GB"
+                }
+            };
+            command.CompanyNumber = "NI65786";
+            command.OptOut = YesNoFlag.N;
+            command.TradeName = "Example trading name";
+            command.Type = CoType.LTD;
+            command.TransactionId = "ABC-12345";
+
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
+        /// Nominet Contact Update response
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#update
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/ContactUpdateResponse1.xml")]
+        public void TestNominetContactUpdateResponse1()
+        {
+            byte[] input = File.ReadAllBytes("ContactUpdateResponse1.xml");
+            var response = new ContactUpdateResponse(input);
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
+        }
+
+        #endregion
 
         #region Domain Check
 
@@ -60,6 +177,60 @@ namespace EppLib.Tests
             };
             command.TransactionId = "ABC-12345";
             Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        #endregion
+
+        #region Domain Create
+
+        /// <summary>
+        /// Nominet Domain create command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#create
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetDomainCreateCommand1.xml")]
+        public void TestNominetDomainCreateCommand1()
+        {
+            string expected = File.ReadAllText("NominetDomainCreateCommand1.xml");
+
+            var command = new NominetDomainCreate("example.co.uk", "registrant")
+            {
+                AutoBill = "30"
+            };
+            command.NameServers.Add("ns1.example.net");
+            command.NameServers.Add("ns2.example.net");
+            command.NameServers.Add("ns3.example.net");
+            command.Period = new DomainPeriod(1, "y");
+            command.Password = "password";
+            command.TransactionId = "ABC-12345";
+
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
+        /// Nominet Domain check command
+        /// example http://registrars.nominet.org.uk/namespace/uk/registration-and-domain-management/epp-commands#create
+        /// </summary>
+        [TestMethod]
+        [TestCategory("NominetExtension")]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/NominetDomainCreateResponse1.xml")]
+        public void TestNominetDomainCreateResponse1()
+        {
+            byte[] input = File.ReadAllBytes("NominetDomainCreateResponse1.xml");
+            var response = new DomainCreateResponse(input);
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+
+            Assert.AreEqual("example.co.uk", response.DomainCreateResult.DomainName);
+            Assert.AreEqual("2015-11-12T09:31:06", response.DomainCreateResult.CreatedDate);
+            Assert.AreEqual("2016-11-12T09:31:06", response.DomainCreateResult.ExpirationDate);
+
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
         }
 
         #endregion
