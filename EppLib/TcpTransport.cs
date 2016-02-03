@@ -74,7 +74,7 @@ namespace EppLib
             {
                 var clientCertificates = new X509CertificateCollection {clientCertificate};
 
-                stream.AuthenticateAsClient(EPP_REGISTRY_COM, clientCertificates, SslProtocols.Tls, false);
+                stream.AuthenticateAsClient(EPP_REGISTRY_COM, clientCertificates, SslProtocols.Tls12, false);
             }
             else
             {
