@@ -1056,7 +1056,7 @@ namespace EppLib.Tests
 
         #endregion
 
-        // Poll
+        #region Poll
 
         /// <summary>
         /// Poll request command
@@ -1151,5 +1151,7 @@ namespace EppLib.Tests
 
             Assert.IsNotNull(notification.DomainsReleased);
         }
+
+        #endregion
     }
 }
