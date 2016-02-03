@@ -286,5 +286,80 @@ namespace EppLib.Tests
         }
 
         #endregion
+
+        #region Abuse Notification
+
+        /// <summary>
+        /// Poll response, Domain Name Cancellation notification messages
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/AbuseNotification.xml")]
+        public void TestAbuseNotification()
+        {
+            byte[] input = File.ReadAllBytes("AbuseNotification.xml");
+            var response = new PollResponse(input);
+
+            Assert.AreEqual("1301", response.Code);
+            Assert.AreEqual("Command completed successfully; ack to dequeue", response.Message);
+
+            Assert.AreEqual("Domain Activity Notification", response.Body);
+
+            Assert.AreEqual("EPP-12345C-8BF-4CAA-A944-2F0EFCD37D9E", response.ClientTransactionId);
+            Assert.AreEqual("1254234", response.ServerTransactionId);
+
+            var notification = new AbuseNotification(File.ReadAllText("AbuseNotification.xml"));
+
+            Assert.AreEqual("phished.co.uk", notification.DomainName);
+            Assert.AreEqual("phished.co.uk", notification.Key);
+            Assert.AreEqual("phishing", notification.Activity);
+            Assert.AreEqual("Netcraft", notification.Source);
+            Assert.AreEqual("www.youve.been.phished.co.uk", notification.HostName);
+            Assert.AreEqual("http://www.youve.been.phished.co.uk/give/us/your/money.htm", notification.Url);
+            Assert.IsNotNull(notification.Date);
+            Assert.AreEqual(new DateTime(2011, 3, 1, 11, 44, 1), notification.Date.Value);
+            Assert.AreEqual("213.135.134.24", notification.Ip);
+            Assert.AreEqual("ns0.crooked.dealings.net", notification.Nameserver);
+            Assert.AreEqual("hostmaster@crooked.dealings.net", notification.DnsAdmin);
+            Assert.AreEqual("paypal", notification.Target);
+            Assert.IsNotNull(notification.WholeDomain);
+            Assert.AreEqual(YesNoFlag.Y, notification.WholeDomain);
+        }
+
+        #endregion
+
+        #region Domains Suspended Notification
+
+        /// <summary>
+        /// Poll response, Domain Name Cancellation notification messages
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/DomainsSuspendedNotification.xml")]
+        public void TestDomainsSuspendedNotification()
+        {
+            byte[] input = File.ReadAllBytes("DomainsSuspendedNotification.xml");
+            var response = new PollResponse(input);
+
+            Assert.AreEqual("1301", response.Code);
+            Assert.AreEqual("Command completed successfully; ack to dequeue", response.Message);
+
+            Assert.AreEqual("Domains Suspended Notification", response.Body);
+
+            Assert.AreEqual("EPP-ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("203355", response.ServerTransactionId);
+
+            var notification = new DomainsSuspendedNotification(File.ReadAllText("DomainsSuspendedNotification.xml"));
+
+            Assert.AreEqual("Data Quality", notification.SuspendedReason);
+            Assert.IsNotNull(notification.CancelDate);
+            Assert.AreEqual(new DateTime(2009, 12, 12, 0, 0, 13), notification.CancelDate.Value);
+            Assert.IsNotNull(notification.SuspendedDomains);
+            Assert.AreEqual(2, notification.SuspendedDomains.Count);
+            Assert.AreEqual("epp-example1.co.uk", notification.SuspendedDomains.First());
+            Assert.AreEqual("epp-example2.co.uk", notification.SuspendedDomains.Last());
+        }
+
+        #endregion
     }
 }
