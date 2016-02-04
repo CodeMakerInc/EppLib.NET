@@ -60,7 +60,7 @@ namespace EppLib
         /// <summary>
         /// Connect to the registry end point
         /// </summary>
-        public void Connect()
+        public void Connect(SslProtocols sslProtocols)
         {
             var client = new TcpClient(EPP_REGISTRY_COM, PORT);
 
@@ -74,7 +74,7 @@ namespace EppLib
             {
                 var clientCertificates = new X509CertificateCollection {clientCertificate};
 
-                stream.AuthenticateAsClient(EPP_REGISTRY_COM, clientCertificates, SslProtocols.Tls, false);
+                stream.AuthenticateAsClient(EPP_REGISTRY_COM, clientCertificates, sslProtocols, false);
             }
             else
             {

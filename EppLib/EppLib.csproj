@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -69,7 +72,9 @@
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheckExtension.cs" />
     <Compile Include="Extensions\Nominet\NominetDirectRightsExtensionBase.cs" />
     <Compile Include="Extensions\Nominet\NominetDomainExtensionBase.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\AbuseNotification.cs" />
     <Compile Include="Extensions\Nominet\Notifications\DomainCancellationNotification.cs" />
+    <Compile Include="Extensions\Nominet\Notifications\DomainsSuspendedNotification.cs" />
     <Compile Include="Extensions\Nominet\Notifications\HandshakeRejectedNotification.cs" />
     <Compile Include="Extensions\Nominet\Notifications\DomainsReleasedNotification.cs" />
     <Compile Include="Extensions\Nominet\Notifications\ReferralRejecteNotification.cs" />
