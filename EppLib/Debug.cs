@@ -11,40 +11,29 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using System.Globalization;
-using System.IO;
-using System.Text;
+using System;
+
 
 namespace EppLib
 {
     public static class Debug
     {
-        public static string LogFilename = "easyepplog.txt";
+        static IDebugger Debugger = new SimpleLogger();
+
+        public static void Setup(IDebugger debugger)
+        {
+            Debugger = debugger;
+        }
 
         public static void Log(byte[] bytes)
         {
-            LogMessageToFile(Encoding.Default.GetString(bytes));
+            Debugger.Log(bytes);
         }
 
         public static void Log(string str)
         {
-            Log(Encoding.Default.GetBytes(str));
-        }
-
-        private static void LogMessageToFile(string msg)
-        {
-            var sw = File.AppendText(LogFilename);
-
-            try
-            {
-                var logLine = System.String.Format( CultureInfo.InvariantCulture,"{0:G}: {1}.", System.DateTime.Now, msg);
-
-                sw.WriteLine(logLine);
-            }
-            finally
-            {
-                sw.Close();
-            }
+            Debugger.Log(str);
         }
     }
+
 }
