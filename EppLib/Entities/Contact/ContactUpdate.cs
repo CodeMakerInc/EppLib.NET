@@ -84,7 +84,16 @@ namespace EppLib.Entities
                     }
                 }
 
-                if (ContactChange.Email != null) { AddXmlElement(doc, change_element, "contact:email", ContactChange.Email, namespaceUri); }
+                if (ContactChange.DiscloseFlag != null)
+                {
+                    var disclose = DiscloseToXml(doc, ContactChange.DiscloseMask, (bool)ContactChange.DiscloseFlag);
+                    change_element.AppendChild(disclose);
+                }
+                    
+                if (ContactChange.Email != null) 
+                { 
+                    AddXmlElement(doc, change_element, "contact:email", ContactChange.Email, namespaceUri); 
+                }
 
                 contact_update.AppendChild(change_element);
             }
