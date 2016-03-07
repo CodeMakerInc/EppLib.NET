@@ -609,14 +609,13 @@ namespace EppLib.Tests
 
             ContactChange contactChange = new ContactChange();
             contactChange.DiscloseFlag = true;
-            contactChange.DiscloseMask = ~Contact.DiscloseFlags.OrganizationInt & ~Contact.DiscloseFlags.AddressInt;
+            contactChange.DiscloseMask = Contact.DiscloseFlags.OrganizationInt | Contact.DiscloseFlags.AddressInt;
 
             var command = new ContactUpdate("CONTACT-1234");
             command.ContactChange = contactChange;
 
             command.TransactionId = "ABC-12345";
             command.Password = "2fooBAR";
-            string result = command.ToXml().InnerXml;
             Assert.AreEqual(expected, command.ToXml().InnerXml);
         }
 
@@ -634,14 +633,13 @@ namespace EppLib.Tests
 
             ContactChange contactChange = new ContactChange();
             contactChange.DiscloseFlag = false;
-            contactChange.DiscloseMask = Contact.DiscloseFlags.OrganizationInt | Contact.DiscloseFlags.AddressInt;
+            contactChange.DiscloseMask = ~Contact.DiscloseFlags.OrganizationInt & ~Contact.DiscloseFlags.AddressInt;
 
             var command = new ContactUpdate("CONTACT-1234");
             command.ContactChange = contactChange;
 
             command.TransactionId = "ABC-12345";
             command.Password = "2fooBAR";
-            string result = command.ToXml().InnerXml;
             Assert.AreEqual(expected, command.ToXml().InnerXml);
         }
 
@@ -667,7 +665,7 @@ namespace EppLib.Tests
                     new Telephone("+1.7035555556", null));
             contact.PostalInfo.m_type = PostalAddressType.INT;
             contact.DiscloseFlag = false;
-            contact.DiscloseMask = Contact.DiscloseFlags.Email | Contact.DiscloseFlags.Voice;
+            contact.DiscloseMask = ~Contact.DiscloseFlags.Voice & ~Contact.DiscloseFlags.Email;
 
             var command = new ContactCreate(contact);
             command.TransactionId = "ABC-12345";
@@ -694,7 +692,7 @@ namespace EppLib.Tests
                     new Telephone("+1.7035555556", null));
             contact.PostalInfo.m_type = PostalAddressType.INT;
             contact.DiscloseFlag = false;
-            contact.DiscloseMask = Contact.DiscloseFlags.OrganizationInt | Contact.DiscloseFlags.AddressInt;
+            contact.DiscloseMask = ~Contact.DiscloseFlags.OrganizationInt & ~Contact.DiscloseFlags.AddressInt;
 
             var command = new ContactCreate(contact);
             command.TransactionId = "ABC-12345";
@@ -726,7 +724,6 @@ namespace EppLib.Tests
             var command = new ContactCreate(contact);
             command.TransactionId = "ABC-12345";
             command.Password = "2fooBAR";
-            string result = command.ToXml().InnerXml;
             Assert.AreEqual(expected, command.ToXml().InnerXml);
         }
         #endregion

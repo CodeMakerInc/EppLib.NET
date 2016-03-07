@@ -59,8 +59,8 @@ namespace EppLib.Entities
                 }
             }
 
-            if (contact.Email != null)
-            {
+            if (contact.Email != null) 
+            { 
                 AddXmlElement(doc, contact_create, "contact:email", contact.Email, namespaceUri); 
             }
 

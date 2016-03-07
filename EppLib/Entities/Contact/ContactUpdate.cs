@@ -60,9 +60,11 @@ namespace EppLib.Entities
             {
                 var change_element = doc.CreateElement("contact:chg", namespaceUri);
 
-                var xml = AddressToXml(doc, "contact:postalInfo", ContactChange.PostalInfo);
-
-                change_element.AppendChild(xml);
+                if (ContactChange.PostalInfo != null)
+                {
+                    var xml = AddressToXml(doc, "contact:postalInfo", ContactChange.PostalInfo);
+                    change_element.AppendChild(xml);
+                }
 
                 if (ContactChange.Voice != null)
                 {
