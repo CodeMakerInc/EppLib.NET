@@ -19,6 +19,8 @@ namespace EppLib.Entities
         public Telephone Voice;
         public Telephone Fax;
         public string Email;
+        public bool? DiscloseFlag;
+        public Contact.DiscloseFlags DiscloseMask;
 
         public ContactChange(Contact contact)
         {
@@ -27,6 +29,8 @@ namespace EppLib.Entities
             this.Fax = contact.Fax;
 
             this.PostalInfo = contact.PostalInfo;
+            this.DiscloseFlag = contact.DiscloseFlag;
+            this.DiscloseMask = contact.DiscloseMask;
         }
 
         public ContactChange()

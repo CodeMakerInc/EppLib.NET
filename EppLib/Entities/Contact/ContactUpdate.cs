@@ -60,9 +60,11 @@ namespace EppLib.Entities
             {
                 var change_element = doc.CreateElement("contact:chg", namespaceUri);
 
-                var xml = AddressToXml(doc, "contact:postalInfo", ContactChange.PostalInfo);
-
-                change_element.AppendChild(xml);
+                if (ContactChange.PostalInfo != null)
+                {
+                    var xml = AddressToXml(doc, "contact:postalInfo", ContactChange.PostalInfo);
+                    change_element.AppendChild(xml);
+                }
 
                 if (ContactChange.Voice != null)
                 {
@@ -84,7 +86,16 @@ namespace EppLib.Entities
                     }
                 }
 
-                if (ContactChange.Email != null) { AddXmlElement(doc, change_element, "contact:email", ContactChange.Email, namespaceUri); }
+                if (ContactChange.DiscloseFlag != null)
+                {
+                    var disclose = DiscloseToXml(doc, ContactChange.DiscloseMask, (bool)ContactChange.DiscloseFlag);
+                    change_element.AppendChild(disclose);
+                }
+                    
+                if (ContactChange.Email != null) 
+                { 
+                    AddXmlElement(doc, change_element, "contact:email", ContactChange.Email, namespaceUri); 
+                }
 
                 contact_update.AppendChild(change_element);
             }

@@ -58,8 +58,12 @@ namespace EppLib.Entities
         {
             if (!String.IsNullOrWhiteSpace(Password))
             {
-                var authInfo = AddXmlElement(doc, cmdElement, nspace + ":authInfo", null, namespaceUri);
-                AddXmlElement(doc, authInfo, nspace + ":pw", Password, namespaceUri);
+                // We may have had to insert the authInfo tag in this namespace already, in which case don't insert it again
+                if (doc.GetElementsByTagName(nspace + ":authInfo").Count == 0)
+                {
+                    var authInfo = AddXmlElement(doc, cmdElement, nspace + ":authInfo", null, namespaceUri);
+                    AddXmlElement(doc, authInfo, nspace + ":pw", Password, namespaceUri);
+                }
             }
         }
 

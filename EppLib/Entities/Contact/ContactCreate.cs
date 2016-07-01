@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
 using System.Xml;
 
 namespace EppLib.Entities
@@ -58,7 +59,17 @@ namespace EppLib.Entities
                 }
             }
 
-            if (contact.Email != null) { AddXmlElement(doc, contact_create, "contact:email", contact.Email, namespaceUri); }
+            if (contact.Email != null) 
+            { 
+                AddXmlElement(doc, contact_create, "contact:email", contact.Email, namespaceUri); 
+            }
+
+            if (!String.IsNullOrWhiteSpace(Password))
+            {
+                var authInfo = AddXmlElement(doc, contact_create, nspace + ":authInfo", null, namespaceUri);
+                AddXmlElement(doc, authInfo, nspace + ":pw", Password, namespaceUri);
+
+            }
 
             if (contact.DiscloseFlag != null)
             {
