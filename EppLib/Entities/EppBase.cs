@@ -68,6 +68,10 @@ namespace EppLib.Entities
 
             var root = doc.CreateElement(rootString, _urnIetfParamsXmlNsEpp);
 
+            var xsd = doc.CreateAttribute("xsi", "schemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
+            xsd.Value = "urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd";
+            root.Attributes.Append(xsd);
+
             return root;
         }
 
