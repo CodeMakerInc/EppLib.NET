@@ -19,7 +19,7 @@ namespace EppLib.Entities
     public abstract class ContactBase<T> : EppCommand<T> where T : EppResponse
     {
         protected ContactBase()
-            : base("contact", "urn:ietf:params:xml:ns:contact-1.0")
+            : base("contact", "urn:ietf:params:xml:ns:contact-1.0", "urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd")
         {
         }
 
