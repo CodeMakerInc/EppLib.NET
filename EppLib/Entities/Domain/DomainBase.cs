@@ -21,7 +21,7 @@ namespace EppLib.Entities
     public abstract class DomainBase<T> : EppCommand<T> where T : EppResponse
     {
         protected DomainBase()
-            : base("domain", "urn:ietf:params:xml:ns:domain-1.0")
+            : base("domain", "urn:ietf:params:xml:ns:domain-1.0", "urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd")
         {
         }
 
