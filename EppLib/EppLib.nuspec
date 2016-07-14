@@ -2,7 +2,6 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>EppLib</id>
-        <version>1.0.0</version>
         <authors>Code Maker Inc. and Contributors</authors>
         <owners>ademar</owners>
         <licenseUrl>https://github.com/ademar/EppLib.NET/blob/master/COPYING</licenseUrl>
