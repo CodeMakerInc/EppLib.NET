@@ -62,6 +62,11 @@
     <Compile Include="Extensions\Iis\IisDomainUpdate.cs" />
     <Compile Include="Extensions\Iis\IisDomainUpdateExtension.cs" />
     <Compile Include="Extensions\Iis\IisExtensionBase.cs" />
+    <Compile Include="Extensions\LaunchPhase\ClaimCheck\ClaimCheck.cs" />
+    <Compile Include="Extensions\LaunchPhase\ClaimCheck\ClaimCheckExtension.cs" />
+    <Compile Include="Extensions\LaunchPhase\ClaimCheck\ClaimCheckResponse.cs" />
+    <Compile Include="Extensions\LaunchPhase\ClaimCheck\ClaimCheckResult.cs" />
+    <Compile Include="Extensions\LaunchPhase\ClaimCheck\ClaimKey.cs" />
     <Compile Include="Extensions\Nominet\ContactInfo\NominetDataQualityExtension.cs" />
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheck.cs" />
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheckExtension.cs" />

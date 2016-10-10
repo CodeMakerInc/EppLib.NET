@@ -52,6 +52,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LaunchPhaseExtensionLocalTest.cs" />
     <Compile Include="LocalTest.cs" />
     <Compile Include="NominetExtensionLocalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,6 +114,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\DomainsSuspendedNotification.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ClaimCheckCommand.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\NominetContactInfoResponse1.xml">
