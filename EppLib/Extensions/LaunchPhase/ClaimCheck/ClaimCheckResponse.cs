@@ -15,7 +15,7 @@ namespace EppLib.Extensions.LaunchPhase.ClaimCheck
         {
             namespaces.AddNamespace("launch", "urn:ietf:params:xml:ns:launch-1.0");
 
-            var nodes = doc.SelectNodes("/ns:epp/ns:response/ns:extension/launch:cd", namespaces);
+            var nodes = doc.SelectNodes("/ns:epp/ns:response/ns:extension/launch:chkData/launch:cd", namespaces);
 
             foreach (XmlNode node in nodes)
             {

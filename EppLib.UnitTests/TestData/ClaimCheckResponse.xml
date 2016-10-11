@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd">
+  <response>
+    <result code="1000">
+      <msg lang="en-US">Command completed successfully</msg>
+      <value>
+        <text>Msg: --DOMAIN_SUCCESSFULLY_TMCHECK</text>
+      </value>
+      <value>
+        <text>Major: 20030</text>
+      </value>
+      <value>
+        <text>Minor: 20030</text>
+      </value>
+      <value>
+        <text>
+          Info: Code = 1000
+          Msg = Command completed successfully
+        </text>
+      </value>
+    </result>
+    <extension>
+      <launch:chkData xmlns:launch="urn:ietf:params:xml:ns:launch-1.0">
+        <launch:phase>claims</launch:phase>
+        <launch:cd xmlns:launch="urn:ietf:params:xml:ns:launch-1.0">
+          <launch:name exists="1">example1.com</launch:name>
+          <launch:claimKey>2016100401/2/D/7/LXsvtbnP8C5bUdxDuoj-XvJK0000000263</launch:claimKey>
+        </launch:cd>
+        <launch:cd>
+          <launch:name exists="0">example2.com</launch:name>
+        </launch:cd>
+      </launch:chkData>
+    </extension>
+    <trID>
+      <svTRID>test-1475594735689</svTRID>
+    </trID>
+  </response>
+</epp>

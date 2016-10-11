@@ -9,7 +9,7 @@ namespace EppLib.Extensions.LaunchPhase.ClaimCheck
 
         public override XmlNode ToXml(XmlDocument doc)
         {
-            var root = doc.CreateElement("launch:check", "urn:ietf:params:xml:ns:launch-1.0"); //CreateElement(doc, );
+            var root = doc.CreateElement("launch:check", "urn:ietf:params:xml:ns:launch-1.0"); 
             root.SetAttribute("type", "claims");
 
             var xsd = doc.CreateAttribute("xsi", "schemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
