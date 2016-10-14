@@ -187,6 +187,9 @@
     <Compile Include="Extensions\Nominet\DomainInfo\NominetDomainInfoResponse.cs" />
     <Compile Include="Extensions\Nominet\DomainUpdate\NominetDomainUpdate.cs" />
     <Compile Include="Extensions\Nominet\DomainUpdate\NominetDomainUpdateExtension.cs" />
+    <Compile Include="Extensions\SecDNS\SecDNSCreate.cs" />
+    <Compile Include="Extensions\SecDNS\SecDNSData.cs" />
+    <Compile Include="Extensions\SecDNS\SecDNSUpdate.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

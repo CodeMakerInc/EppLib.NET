@@ -57,6 +57,7 @@
     <Compile Include="NominetExtensionLocalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IisExtensionLocalTest.cs" />
+    <Compile Include="SecDNSExtensionLocalTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EppLib\EppLib.csproj">
@@ -283,6 +284,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\PollNoMsgsResponse1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\SecDNSCreateExtension.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\SecDNSUpdateExtension.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
