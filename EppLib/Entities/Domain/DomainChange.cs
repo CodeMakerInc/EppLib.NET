@@ -16,6 +16,6 @@ namespace EppLib.Entities
     public class DomainChange
     {
         public string RegistrantContactId;
-
+        public string AuthInfo;
     }
 }
