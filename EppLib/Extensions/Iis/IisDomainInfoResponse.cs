@@ -69,14 +69,22 @@ namespace EppLib.Extensions.Iis
                 }
 
                 // ClientDelete
+                _iisDomain.ClientDelete = false;
+
                 node = children.SelectSingleNode("iis:clientDelete", namespaces);
                 if (node != null)
                 {
-                    bool value;
-                    if (!Boolean.TryParse(node.InnerText, out value))
+                    var innerText = node.InnerText;
+
+                    if (!String.IsNullOrEmpty(innerText))
                     {
-                        throw new Exception(String.Format("Failed to parse '{0}' as boolean value in iis:clientDelete", node.InnerText));
+
+                        if(innerText.Equals("1") || innerText.ToLowerInvariant().Equals("true"))
+                        {
+                            _iisDomain.ClientDelete = true;
+                        }
                     }
+                    
                 }
 
                 // DeactivationDate
