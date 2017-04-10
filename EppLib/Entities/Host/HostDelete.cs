@@ -17,6 +17,11 @@ namespace EppLib.Entities
 {
     public class HostDelete : HostBase<HostDeleteResponse>
     {
+        public HostDelete(string hostname)
+        {
+            HostName = hostname;
+        }
+
         protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
             var hostInfo = BuildCommandElement(doc, "delete", commandRootElement);
