@@ -27,7 +27,7 @@ namespace EppLib.Extensions.Iis
 
             if (ClientDelete != null)
             {
-                AddXmlElement(doc, root, "iis:clientDelete", ClientDelete.ToString());
+                AddXmlElement(doc, root, "iis:clientDelete", ClientDelete.ToString().ToLowerInvariant());
             }
 
             return root;
