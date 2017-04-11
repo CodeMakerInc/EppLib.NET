@@ -56,11 +56,16 @@ namespace EppLib.Entities
                     AddXmlElement(doc, change_element, "domain:registrant", DomainChange.RegistrantContactId, namespaceUri);
                 }
 
-                if (DomainChange.AuthInfo != null)
-                {
-                    var authInfoElement = AddXmlElement(doc, change_element, "domain:authInfo", null, namespaceUri);
-                    AddXmlElement(doc, authInfoElement, "domain:pw", DomainChange.AuthInfo, namespaceUri);
+                if (DomainChange.AuthInfo != null) {
+                    var authInfoElement = AddXmlElement (doc, change_element, "domain:authInfo", null, namespaceUri);
+                    AddXmlElement (doc, authInfoElement, "domain:pw", DomainChange.AuthInfo, namespaceUri);
+                } 
+                else if (DomainChange.NullAuthInfo) 
+                { 
+                  var authInfoElement = AddXmlElement (doc, change_element, "domain:authInfo", null, namespaceUri);
+                  AddXmlElement (doc, authInfoElement, "domain:null", null, namespaceUri);
                 }
+
 
                 domainUpdate.AppendChild(change_element);
             }

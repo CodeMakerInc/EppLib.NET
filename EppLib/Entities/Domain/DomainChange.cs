@@ -17,5 +17,6 @@ namespace EppLib.Entities
     {
         public string RegistrantContactId;
         public string AuthInfo;
+        public bool NullAuthInfo;
     }
 }
