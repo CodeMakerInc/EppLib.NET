@@ -25,7 +25,7 @@ namespace EppLib.Extensions.Iis
         {
             var root = CreateElement(doc, "iis:create");
 
-            if (!String.IsNullOrWhiteSpace(VatNumber))
+            if (VatNumber!=null)
             {
                 AddXmlElement(doc, root, "iis:vatno", VatNumber);
             }
