@@ -23,7 +23,7 @@ namespace EppLib.Extensions.Iis
 
         public override XmlNode ToXml(XmlDocument doc)
         {
-            var root = CreateElement(doc, "iis:create");
+            var root = CreateElement(doc, "iis:update");
 
             if (VatNumber!=null)
             {
