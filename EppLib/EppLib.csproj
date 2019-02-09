@@ -49,6 +49,11 @@
     <Compile Include="Entities\Contact\ContactCheckResult.cs" />
     <Compile Include="Entities\Domain\DomainReleaseResponse.cs" />
     <Compile Include="Entities\Domain\DomainRelease.cs" />
+    <Compile Include="Extensions\Fury\FuryContactCreateExtension.cs" />
+    <Compile Include="Extensions\Fury\FuryContactUpdateExtension .cs" />
+    <Compile Include="Extensions\Fury\FuryDomainCreateExtension.cs" />
+    <Compile Include="Extensions\Fury\FuryDomainUpdateExtension.cs" />
+    <Compile Include="Extensions\Fury\FuryExtension.cs" />
     <Compile Include="Extensions\Iis\IisContactCreate.cs" />
     <Compile Include="Extensions\Iis\IisContactCreateExtension.cs" />
     <Compile Include="Extensions\Iis\IisContactExtension.cs" />
@@ -209,7 +214,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
