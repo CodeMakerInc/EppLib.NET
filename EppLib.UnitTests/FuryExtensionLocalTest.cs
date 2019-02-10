@@ -111,21 +111,13 @@ namespace EppLib.Tests
             var command = new ContactUpdate("agreed2");
 
             //change contact email and language
-
-            var registrantContact = new Contact("agreed6",
-    "Test Contact1", "Test Organization",
-    "Ottawa", "123 Main Street", "ON", "K1R 7S8", "CA",
-    "jdoe@example.com",
-    new Telephone { Value = "+1.6471114444", Extension = "333" },
-    new Telephone { Value = "+1.6471114445" });
-
-            var contactChange = new ContactChange(registrantContact);
+            var contactChange = new ContactChange();
 
             contactChange.Email = "noprops@domain.fr";
 
             command.ContactChange = contactChange;
 
-            command.Extensions.Add(new FuryContactUpdateExtension("fr", "en"));
+            command.Extensions.Add(new FuryContactUpdateExtension("en", "fr"));
 
             var xml = command.ToXml().InnerXml;
 

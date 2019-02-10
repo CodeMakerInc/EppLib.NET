@@ -45,7 +45,7 @@ namespace EppLib.Extensions.Fury
             AddXmlElement(doc, propertyNode, "fury:key", "language");
             AddXmlElement(doc, propertyNode, "fury:value", newLanguage);
 
-            propertiesNode.AppendChild(propertiesNode);
+            propertiesNode.AppendChild(propertyNode);
 
             add.AppendChild(propertiesNode);
 
@@ -61,7 +61,7 @@ namespace EppLib.Extensions.Fury
             AddXmlElement(doc, propertyNode1, "fury:key", "language");
             AddXmlElement(doc, propertyNode1, "fury:value", oldLanguage);
 
-            propertiesNode1.AppendChild(propertiesNode1);
+            propertiesNode1.AppendChild(propertyNode1);
 
             rem.AppendChild(propertiesNode1);
 
