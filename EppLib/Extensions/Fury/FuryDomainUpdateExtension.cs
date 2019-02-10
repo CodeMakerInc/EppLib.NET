@@ -39,7 +39,7 @@ namespace EppLib.Extensions.Fury
             AddXmlElement(doc, propertyNode, "fury:key", "PRIVACY");
             AddXmlElement(doc, propertyNode, "fury:value", isPrivate ? "PRIVATE" : "PUBLIC");
 
-            propertiesNode.AppendChild(propertiesNode);
+            propertiesNode.AppendChild(propertyNode);
 
             add.AppendChild(propertiesNode);
 
@@ -54,7 +54,7 @@ namespace EppLib.Extensions.Fury
             AddXmlElement(doc, propertyNode1, "fury:key", "PRIVACY");
             AddXmlElement(doc, propertyNode1, "fury:value", !isPrivate ? "PRIVATE" : "PUBLIC");
 
-            propertiesNode1.AppendChild(propertiesNode1);
+            propertiesNode1.AppendChild(propertyNode1);
 
             rem.AppendChild(propertiesNode1);
 

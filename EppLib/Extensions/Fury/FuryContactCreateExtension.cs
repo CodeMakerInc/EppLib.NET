@@ -14,7 +14,6 @@
 
 using System.Collections.Generic;
 using System.Xml;
-using EppLib.Entities;
 
 namespace EppLib.Extensions.Fury
 {
@@ -23,21 +22,22 @@ namespace EppLib.Extensions.Fury
     /// </summary>
 	public class FuryContactCreateExtension : FuryExtension
     {
-        private Dictionary<string,string> properties;
-        
-        public FuryContactCreateExtension(string language,string cprCode,string agreement_version)
+        private Dictionary<string, string> properties = new Dictionary<string, string>();
+
+        public FuryContactCreateExtension(string language, string cprCode, string agreement_version)
         {
-            properties.Add("LANGUAGE", language);
-            properties.Add("CPR", cprCode);
+            if (!string.IsNullOrEmpty(language)) { properties.Add("LANGUAGE", language); }
+            if (!string.IsNullOrEmpty(cprCode)) { properties.Add("CPR", cprCode); }
             properties.Add("agreement_version", agreement_version);
+
         }
-        
+
         public override XmlNode ToXml(XmlDocument doc)
         {
-            var root = CreateElement(doc,"fury:create");
+            var root = CreateElement(doc, "fury:create");
 
             var propertiesNode = CreateElement(doc, "fury:properties");
-            
+
             foreach (var a in properties)
             {
                 var propertyNode = CreateElement(doc, "fury:property");
@@ -46,18 +46,19 @@ namespace EppLib.Extensions.Fury
 
                 if (a.Value == null)
                 {
-                    AddXmlElement(doc, propertyNode, "fury:value default", "");
+                    var e = AddXmlElement(doc, propertyNode, "fury:value", "");
+                    e.SetAttribute("default", "true");
                 }
                 else
                 {
                     AddXmlElement(doc, propertyNode, "fury:value", a.Value);
                 }
 
-                propertiesNode.AppendChild(propertiesNode);
+                propertiesNode.AppendChild(propertyNode);
             }
 
             root.AppendChild(propertiesNode);
-            
+
             return root;
         }
 

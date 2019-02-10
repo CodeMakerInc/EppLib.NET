@@ -29,6 +29,7 @@ namespace EppLib.Tests
             services.Extensions.Add("urn:ietf:params:xml:ns:fury-2.0");
 
             command.Services = services;
+            command.TransactionId = "ABC-12345";
 
             var xml = command.ToXml().InnerXml;
 
@@ -63,8 +64,11 @@ namespace EppLib.Tests
             string expected = File.ReadAllText("FuryDomainUpdateCommand.xml");
 
             var command = new DomainUpdate("example.com");
-            command.Password = "password2";
-            command.Extensions.Add(new FuryDomainUpdateExtension(true));
+
+            var domainChange = new DomainChange { AuthInfo = "password2" };
+
+            command.DomainChange = domainChange;
+            command.Extensions.Add(new FuryDomainUpdateExtension(false));
 
             var xml = command.ToXml().InnerXml;
 
@@ -84,10 +88,10 @@ namespace EppLib.Tests
     "jdoe@example.com",
     new Telephone { Value = "+1.6471114444", Extension = "333" },
     new Telephone { Value = "+1.6471114445" });
-
+            //registrantContact.Password = "password";
             var command = new ContactCreate(registrantContact);
-
-            var furyExtension = new FuryContactCreateExtension("en", "CCT", null);
+            command.Password = "password";
+            var furyExtension = new FuryContactCreateExtension("EN", "CCT", null);
 
             command.Extensions.Add(furyExtension);
 
@@ -121,7 +125,7 @@ namespace EppLib.Tests
 
             command.ContactChange = contactChange;
 
-            command.Extensions.Add(new FuryContactUpdateExtension ("fr","en"));
+            command.Extensions.Add(new FuryContactUpdateExtension("fr", "en"));
 
             var xml = command.ToXml().InnerXml;
 
