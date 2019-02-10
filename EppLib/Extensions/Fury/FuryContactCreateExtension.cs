@@ -25,9 +25,9 @@ namespace EppLib.Extensions.Fury
     {
         private Dictionary<string,string> properties;
         
-        public FuryContactCreateExtension(bool isPrivate,string cprCode,string agreement_version)
+        public FuryContactCreateExtension(string language,string cprCode,string agreement_version)
         {
-            properties.Add("PRIVACY", isPrivate ? "PRIVATE" : "PUBLIC");
+            properties.Add("LANGUAGE", language);
             properties.Add("CPR", cprCode);
             properties.Add("agreement_version", agreement_version);
         }
