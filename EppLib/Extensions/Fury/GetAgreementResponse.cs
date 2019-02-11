@@ -48,10 +48,20 @@ namespace EppLib.Extensions.Fury
                 {
 
                     var furyKey = children1.SelectSingleNode("fury:key", namespaces);
+                    var furyLocalizedKey = children1.SelectSingleNode("fury:localizeKey", namespaces);
+                    var furyProperyValues = children1.SelectSingleNode("fury:key", namespaces);
 
-                    // TODO 
+                    if (furyProperyValues != null)
+                    {
+                        var furyValue = furyProperyValues.SelectSingleNode("fury:value", namespaces);
+
+                        AgreementVersion = furyValue.InnerText;
+
+                        var furyDetail = furyProperyValues.SelectSingleNode("fury:value", namespaces);
+
+                        Agreement = furyDetail.InnerText;
+                    }
                 }
-
                 
             }
         }
