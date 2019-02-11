@@ -54,6 +54,9 @@
     <Compile Include="Extensions\Fury\FuryDomainCreateExtension.cs" />
     <Compile Include="Extensions\Fury\FuryDomainUpdateExtension.cs" />
     <Compile Include="Extensions\Fury\FuryExtension.cs" />
+    <Compile Include="Extensions\Fury\FuryGetAgreementExtension.cs" />
+    <Compile Include="Extensions\Fury\GetAgreement.cs" />
+    <Compile Include="Extensions\Fury\GetAgreementResponse.cs" />
     <Compile Include="Extensions\Iis\IisContactCreate.cs" />
     <Compile Include="Extensions\Iis\IisContactCreateExtension.cs" />
     <Compile Include="Extensions\Iis\IisContactExtension.cs" />
