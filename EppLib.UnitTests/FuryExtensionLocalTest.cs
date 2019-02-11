@@ -2,6 +2,8 @@
 using EppLib.Extensions.Fury;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Text;
+using System.Xml;
 
 namespace EppLib.Tests
 {
@@ -137,6 +139,18 @@ namespace EppLib.Tests
             var xml = command.ToXml().InnerXml;
 
             Assert.AreEqual(expected, xml);
+        }
+
+        [TestMethod]
+        [TestCategory("FuryExtension")]
+        [DeploymentItem("TestData/FuryGetAgreementResponse.xml")]
+        public void FuryGetAgreementResponse()
+        {
+            string str = File.ReadAllText("FuryGetAgreementResponse.xml");
+
+            var getAgreementResponse = new GetAgreementResponse(Encoding.UTF8.GetBytes(str));
+
+            Assert.AreEqual(getAgreementResponse.Agreement, "Cogito ergo sum");
         }
     }
 }

@@ -49,7 +49,7 @@ namespace EppLib.Extensions.Fury
 
                     var furyKey = children1.SelectSingleNode("fury:key", namespaces);
                     var furyLocalizedKey = children1.SelectSingleNode("fury:localizeKey", namespaces);
-                    var furyProperyValues = children1.SelectSingleNode("fury:key", namespaces);
+                    var furyProperyValues = children1.SelectSingleNode("fury:propertyValues/fury:propertyValue", namespaces);
 
                     if (furyProperyValues != null)
                     {
@@ -57,7 +57,7 @@ namespace EppLib.Extensions.Fury
 
                         AgreementVersion = furyValue.InnerText;
 
-                        var furyDetail = furyProperyValues.SelectSingleNode("fury:value", namespaces);
+                        var furyDetail = furyProperyValues.SelectSingleNode("fury:localizedDetail", namespaces);
 
                         Agreement = furyDetail.InnerText;
                     }

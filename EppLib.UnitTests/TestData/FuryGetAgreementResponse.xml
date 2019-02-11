@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <response>
+    <result code="1000">
+      <msg>Command completed successfully</msg>
+    </result>
+    <extension>
+      <fury:response xmlns:fury="urn:ietf:params:xml:ns:fury-2.0">
+        <fury:infData>
+          <fury:language>en</fury:language>
+          <fury:properties>
+            <fury:property>
+              <fury:key>AGREEMENT_VERSION</fury:key>
+              <fury:localizedKey>Agreement Version</fury:localizedKey>
+              <fury:propertyValues>
+                <fury:propertyValue>
+                  <fury:value default="true">2.0</fury:value>
+                  <fury:localizedValue>2.0</fury:localizedValue>
+                  <fury:localizedDetail>Cogito ergo sum</fury:localizedDetail>
+                  <fury:propertyValueAttributes>
+                    <fury:propertyValueAttribute>
+                      <fury:key>expiry_date</fury:key>
+                      <fury:value>3000-01-01T00:00:00.000Z</fury:value>
+                    </fury:propertyValueAttribute>
+                    <fury:propertyValueAttribute>
+                      <fury:key>effective_date</fury:key>
+                      <fury:value>2018-03-14T20:04:10.618Z</fury:value>
+                    </fury:propertyValueAttribute>
+                    <fury:propertyValueAttribute>
+                      <fury:key>enabled</fury:key>
+                      <fury:value>true</fury:value>
+                    </fury:propertyValueAttribute>
+                  </fury:propertyValueAttributes>
+                </fury:propertyValue>
+              </fury:propertyValues>
+              <fury:propertyAttributes>
+                <fury:propertyAttribute>
+                  <fury:key>entitytype</fury:key>
+                  <fury:value>contact</fury:value>
+                </fury:propertyAttribute>
+                <fury:propertyAttribute>
+                  <fury:key>removable</fury:key>
+                  <fury:value>false</fury:value>
+                </fury:propertyAttribute>
+                <fury:propertyAttribute>
+                  <fury:key>propertytype</fury:key>
+                  <fury:value>SINGLEENUM</fury:value>
+                </fury:propertyAttribute>
+                <fury:propertyAttribute>
+                  <fury:key>updatable</fury:key>
+                  <fury:value>true</fury:value>
+                </fury:propertyAttribute>
+              </fury:propertyAttributes>
+            </fury:property>
+          </fury:properties>
+        </fury:infData>
+      </fury:response>
+    </extension>
+    <trID>
+      <svTRID>CIRA-000000002723-0000000003</svTRID>
+    </trID>
+  </response>
+</epp>
