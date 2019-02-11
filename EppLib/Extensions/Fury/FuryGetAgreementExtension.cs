@@ -33,6 +33,8 @@ namespace EppLib.Extensions.Fury
 
             var info = CreateElement(doc, "fury:info");
 
+            root.AppendChild(info);
+
             AddXmlElement(doc, info, "fury:language", language);
 
             var propertiesNode = CreateElement(doc, "fury:properties");

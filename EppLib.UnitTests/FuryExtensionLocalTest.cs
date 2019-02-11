@@ -123,5 +123,20 @@ namespace EppLib.Tests
 
             Assert.AreEqual(expected, xml);
         }
+
+
+        [TestMethod]
+        [TestCategory("FuryExtension")]
+        [DeploymentItem("TestData/FuryGetAgreement.xml")]
+        public void FuryGetAgreement()
+        {
+            string expected = File.ReadAllText("FuryGetAgreement.xml");
+
+            var command = new GetAgreement("EN", null);
+
+            var xml = command.ToXml().InnerXml;
+
+            Assert.AreEqual(expected, xml);
+        }
     }
 }
