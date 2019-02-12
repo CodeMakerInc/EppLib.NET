@@ -19,5 +19,11 @@ namespace EppLib.Entities
     {
         public IList<HostAddress> Adresses { get; set; }
         public IList<Status> Status;
+
+        public EppHostUpdateAddRemove()
+        {
+            Adresses = new List<HostAddress>();
+            Status = new List<Status>();
+        }
     }
 }

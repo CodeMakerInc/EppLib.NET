@@ -19,8 +19,8 @@ namespace EppLib.Entities
     {
         private readonly string HostName;
 
-        public EppHostUpdateAddRemove ToAdd;
-        public EppHostUpdateAddRemove ToRemove;
+        public EppHostUpdateAddRemove ToAdd = new EppHostUpdateAddRemove();
+        public EppHostUpdateAddRemove ToRemove = new EppHostUpdateAddRemove();
 
         public HostChange HostChange;
 
