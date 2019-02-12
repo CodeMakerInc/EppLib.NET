@@ -64,7 +64,7 @@ namespace EppLib.Entities
                 AddXmlElement(doc, contact_create, "contact:email", contact.Email, namespaceUri); 
             }
 
-            if (!String.IsNullOrWhiteSpace(Password))
+            if (Password!=null)
             {
                 var authInfo = AddXmlElement(doc, contact_create, nspace + ":authInfo", null, namespaceUri);
                 AddXmlElement(doc, authInfo, nspace + ":pw", Password, namespaceUri);
