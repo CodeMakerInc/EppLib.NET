@@ -2,6 +2,7 @@
 using EppLib.Extensions.LaunchPhase.ClaimCreate;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace EppLib.Tests
@@ -9,6 +10,19 @@ namespace EppLib.Tests
     [TestClass]
     public class LaunchPhaseExtensionLocalTest
     {
+
+        public TestContext TestContext { get; set; }
+        
+        [TestInitialize]
+        public void TestSetup()
+        {
+            var testName = TestContext.TestName;
+            var method = new StackFrame().GetMethod().DeclaringType.GetMethod(testName);
+            var attributes = method.GetCustomAttributes(typeof(DeploymentItemAttribute), false);
+            DeploymentUtility.CopyDeploymentItems(attributes);
+        }
+
+
         #region Claim Check
 
         /// <summary>

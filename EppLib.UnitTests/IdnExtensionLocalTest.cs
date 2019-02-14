@@ -1,6 +1,7 @@
 ﻿using EppLib.Entities;
 using EppLib.Extensions.Idn;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 using System.IO;
 
 namespace EppLib.Tests
@@ -8,6 +9,17 @@ namespace EppLib.Tests
     [TestClass]
     public class IdnExtensionLocalTest
     {
+        public TestContext TestContext { get; set; }
+        
+        [TestInitialize]
+        public void TestSetup()
+        {
+            var testName = TestContext.TestName;
+            var method = new StackFrame().GetMethod().DeclaringType.GetMethod(testName);
+            var attributes = method.GetCustomAttributes(typeof(DeploymentItemAttribute), false);
+            DeploymentUtility.CopyDeploymentItems(attributes);
+        }
+
         [TestMethod]
         [TestCategory("FuryExtension")]
         [DeploymentItem("TestData/IdnDomainCreateCommand.xml")]

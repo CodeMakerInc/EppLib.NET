@@ -1,17 +1,25 @@
 ﻿using EppLib.Entities;
 using EppLib.Extensions.SecDNS;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace EppLib.Tests
 {
     [TestClass]
     public class SecDNSExtensionLocalTest
     {
+        public TestContext TestContext { get; set; }
+        
+        [TestInitialize]
+        public void TestSetup()
+        {
+            var testName = TestContext.TestName;
+            var method = new StackFrame().GetMethod().DeclaringType.GetMethod(testName);
+            var attributes = method.GetCustomAttributes(typeof(DeploymentItemAttribute), false);
+            DeploymentUtility.CopyDeploymentItems(attributes);
+        }
+
         [TestMethod]
         [TestCategory("SecDNSExtension")]
         [DeploymentItem("TestData/SecDNSCreateExtension.xml")]

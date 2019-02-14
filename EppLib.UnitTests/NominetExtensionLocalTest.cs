@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using EppLib.Entities;
 using EppLib.Extensions.Nominet;
 using EppLib.Extensions.Nominet.ContactInfo;
@@ -19,16 +17,15 @@ namespace EppLib.Tests
     [TestClass]
     public class NominetExtensionLocalTest
     {
-        private TestContext _context;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        public TestContext TestContext { get; set; }
+        
+        [TestInitialize]
+        public void TestSetup()
         {
-            get { return _context; }
-            set { _context = value; }
+            var testName = TestContext.TestName;
+            var method = new StackFrame().GetMethod().DeclaringType.GetMethod(testName);
+            var attributes = method.GetCustomAttributes(typeof(DeploymentItemAttribute), false);
+            DeploymentUtility.CopyDeploymentItems(attributes);
         }
 
         public NominetExtensionLocalTest(){}
