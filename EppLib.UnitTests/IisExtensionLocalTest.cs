@@ -3,22 +3,22 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EppLib.Entities;
 using EppLib.Extensions.Iis;
+using System.Diagnostics;
 
 namespace EppLib.Tests
 {
     [TestClass]
     public class IisExtensionLocalTest
     {
-        private TestContext _context;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        public TestContext TestContext { get; set; }
+        
+        [TestInitialize]
+        public void TestSetup()
         {
-            get { return _context; }
-            set { _context = value; }
+            var testName = TestContext.TestName;
+            var method = new StackFrame().GetMethod().DeclaringType.GetMethod(testName);
+            var attributes = method.GetCustomAttributes(typeof(DeploymentItemAttribute), false);
+            DeploymentUtility.CopyDeploymentItems(attributes);
         }
 
         public IisExtensionLocalTest()
