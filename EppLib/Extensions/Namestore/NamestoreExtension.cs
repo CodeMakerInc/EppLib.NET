@@ -1,8 +1,4 @@
 ﻿using EppLib.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 
 namespace EppLib.Extensions.Namestore
 {
