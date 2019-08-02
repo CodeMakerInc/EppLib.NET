@@ -42,6 +42,8 @@
     <Compile Include="Extensions\LaunchPhase\ClaimCreate\ClaimCreate.cs" />
     <Compile Include="Extensions\LaunchPhase\ClaimCreate\ClaimCreateExtension.cs" />
     <Compile Include="Extensions\LaunchPhase\ClaimCreate\ClaimNotice.cs" />
+    <Compile Include="Extensions\Namestore\NamestoreCreateExtension.cs" />
+    <Compile Include="Extensions\Namestore\NamestoreExtension.cs" />
     <Compile Include="Extensions\Nominet\ContactInfo\NominetDataQualityExtension.cs" />
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheck.cs" />
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheckExtension.cs" />
