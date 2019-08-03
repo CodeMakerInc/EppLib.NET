@@ -164,6 +164,10 @@
     <Compile Include="Extensions\SecDNS\SecDNSCreate.cs" />
     <Compile Include="Extensions\SecDNS\SecDNSData.cs" />
     <Compile Include="Extensions\SecDNS\SecDNSUpdate.cs" />
+    <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactCreate.cs" />
+    <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactPMCreateExtension.cs" />
+    <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactPPCreateExtension.cs" />
+    <Compile Include="Extensions\Smallregistry\SmallregistryExtensionBase.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TcpTransport.cs" />
