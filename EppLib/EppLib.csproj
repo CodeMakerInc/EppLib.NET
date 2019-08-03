@@ -42,6 +42,8 @@
     <Compile Include="Extensions\LaunchPhase\ClaimCreate\ClaimCreate.cs" />
     <Compile Include="Extensions\LaunchPhase\ClaimCreate\ClaimCreateExtension.cs" />
     <Compile Include="Extensions\LaunchPhase\ClaimCreate\ClaimNotice.cs" />
+    <Compile Include="Extensions\Namestore\NamestoreCreateExtension.cs" />
+    <Compile Include="Extensions\Namestore\NamestoreExtension.cs" />
     <Compile Include="Extensions\Nominet\ContactInfo\NominetDataQualityExtension.cs" />
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheck.cs" />
     <Compile Include="Extensions\Nominet\DomainCheck\NominetDomainCheckExtension.cs" />
@@ -162,6 +164,10 @@
     <Compile Include="Extensions\SecDNS\SecDNSCreate.cs" />
     <Compile Include="Extensions\SecDNS\SecDNSData.cs" />
     <Compile Include="Extensions\SecDNS\SecDNSUpdate.cs" />
+    <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactCreate.cs" />
+    <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactPMCreateExtension.cs" />
+    <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactPPCreateExtension.cs" />
+    <Compile Include="Extensions\Smallregistry\SmallregistryExtensionBase.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TcpTransport.cs" />
