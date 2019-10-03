@@ -23,9 +23,9 @@ namespace EppLib
 	/// </summary>
 	public class Service
 	{
-		private readonly TcpTransport transport;
+		private readonly ITransport transport;
 
-		public Service(TcpTransport transport)
+		public Service(ITransport transport)
 		{
 			this.transport = transport;
 		}
