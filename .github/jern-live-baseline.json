@@ -1,0 +1,18 @@
+{
+  "policy": {
+    "allow": [
+      "edit_file",
+      "write_file"
+    ],
+    "deny": [
+      "mcp__*"
+    ],
+    "edits_within": [
+      "src/"
+    ],
+    "memory": "deny",
+    "shell_allow": [
+      "dotnet test"
+    ]
+  }
+}
