@@ -1,0 +1,65 @@
+name: governed Jern task
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: Task for the governed agent (set task or issue_number)
+        required: false
+        type: string
+      issue_number:
+        description: GitHub issue to resolve (set issue_number or task)
+        required: false
+        type: string
+      task_id:
+        description: Jern Cloud task identity
+        required: false
+        type: string
+      agent_kind:
+        description: Agent runtime selected by Jern Cloud
+        required: false
+        default: jern-native
+        type: choice
+        options:
+          - jern-native
+          - codex
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  agent:
+    name: governed agent
+    environment: governed-live
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ inputs.agent_kind == 'jern-native' && secrets.ANTHROPIC_API_KEY || '' }}
+      OPENAI_API_KEY: ${{ inputs.agent_kind == 'codex' && secrets.OPENAI_API_KEY || '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install supervised Codex adapter
+        if: inputs.agent_kind == 'codex'
+        run: npm install --global @openai/codex@0.150.1
+
+      - uses: jern-ai/jern/action@b2953fda7e7238c9c8b43352a10f40b95179377c
+        with:
+          version: "0.14.5"
+          live-task: ${{ inputs.task }}
+          live-issue: ${{ inputs.issue_number }}
+          live-task-id: ${{ inputs.task_id }}
+          live-agent: ${{ inputs.agent_kind }}
+          live-agent-version: ${{ inputs.agent_kind == 'codex' && '0.150.1' || '' }}
+          live-timeout-minutes: "30"
+          live-delivery: "pull-request"
+          live-token-budget: "20000"
+          baseline-path: .github/jern-live-baseline.json
+          policy-trust: "40b0d06ca4a69fa87be2eb4ffa1bbe0da90fff50495912500ebcadc03d6763af"
+          tests: "false"
+          golden: "false"
+          comment: "false"
+          cloud-upload: "true"
