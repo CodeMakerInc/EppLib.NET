@@ -58,7 +58,7 @@ jobs:
           live-delivery: "pull-request"
           live-token-budget: "20000"
           baseline-path: .github/jern-live-baseline.json
-          policy-trust: "40b0d06ca4a69fa87be2eb4ffa1bbe0da90fff50495912500ebcadc03d6763af"
+          policy-trust: "da49108764e938db752062d9644d9f1c4afcdcd05874582a1900948bfbc1120d"
           tests: "false"
           golden: "false"
           comment: "false"

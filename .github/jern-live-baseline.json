@@ -8,7 +8,9 @@
       "mcp__*"
     ],
     "edits_within": [
-      "src/"
+      "EppLib.Tests/",
+      "EppLib.UnitTests/",
+      "EppLib/"
     ],
     "memory": "deny",
     "shell_allow": [
