@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>EppLib</id>
@@ -15,6 +15,6 @@ Our library is a complete implementation of the EPP specification. Have a look a
         <summary>EppLib.NET is a .NET library implementing the Extensible Provisioning Protocol (EPP)</summary>
     </metadata>
     <files>
-        <file src="bin\Debug\netstandard2.0\EppLib.dll" target="lib\netstandard2.0\EppLib.dll" />
+        <file src="bin\Debug\net10.0\EppLib.dll" target="lib\net10.0\EppLib.dll" />
     </files>
 </package>
