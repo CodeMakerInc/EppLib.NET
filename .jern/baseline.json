@@ -13,9 +13,6 @@
       "mcp__jern__fetch_page",
       "mcp__jern__package_info"
     ],
-    "deny": [
-      "mcp__*"
-    ],
     "edits_within": [
       "EppLib.Tests/",
       "EppLib.UnitTests/",
