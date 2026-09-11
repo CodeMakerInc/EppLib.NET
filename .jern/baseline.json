@@ -1,0 +1,23 @@
+{
+  "policy": {
+    "allow": [
+      "edit_file",
+      "edit_symbol",
+      "apply_patch",
+      "write_file"
+    ],
+    "deny": [
+      "mcp__*"
+    ],
+    "edits_within": [
+      "EppLib.Tests/",
+      "EppLib.UnitTests/",
+      "EppLib/"
+    ],
+    "memory": "deny",
+    "shell_allow": [
+      "dotnet test"
+    ]
+  },
+  "test_command": "dotnet test"
+}
