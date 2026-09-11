@@ -21,6 +21,7 @@ using System.Xml;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using EppLib.Entities;
 
 
 /*
@@ -108,7 +109,14 @@ namespace EppLib
 
             while (read < 4)
             {
-                read = read + stream.Read(lenghtBytes, read, 4 - read);
+                var readNow = stream.Read(lenghtBytes, read, 4 - read);
+
+                if (readNow == 0)
+                {
+                    throw new EppException("Unexpectedly reached end of the EPP response stream.");
+                }
+
+                read += readNow;
             }
 
             Array.Reverse(lenghtBytes);
@@ -126,7 +134,14 @@ namespace EppLib
 
             while (returned != length)
             {
-                returned += stream.Read(bytes, returned, length - returned);
+                var readNow = stream.Read(bytes, returned, length - returned);
+
+                if (readNow == 0)
+                {
+                    throw new EppException("Unexpectedly reached end of the EPP response stream.");
+                }
+
+                returned += readNow;
             }
 
             if (loggingEnabled)
