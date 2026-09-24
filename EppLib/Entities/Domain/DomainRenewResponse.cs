@@ -41,7 +41,7 @@ namespace EppLib.Entities
                 if (exDateNode != null)
                 {
                     DateTime exDate;
-                    if (DateTime.TryParse(exDateNode.InnerText, out exDate))
+                    if (EppDateTime.TryParse(exDateNode.InnerText, out exDate))
                     {
                         this._exDate = exDate;
                     }

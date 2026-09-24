@@ -57,7 +57,7 @@ namespace EppLib.Extensions.Nominet.Notifications
                 if (dateNode != null)
                 {
                     DateTime parsedDate;
-                    if (DateTime.TryParse(dateNode.InnerText, out parsedDate))
+                    if (EppDateTime.TryParse(dateNode.InnerText, out parsedDate))
                     {
                         Date = parsedDate;
                     }

@@ -65,9 +65,11 @@ namespace EppLib.Tests
             Assert.AreEqual("invalid", response.DataQuality.Status);
             Assert.AreEqual("Incorrect Address", response.DataQuality.Reason);
             Assert.IsTrue(response.DataQuality.DateCommenced.HasValue);
-            Assert.AreEqual(new DateTime(2015,5,7,13,20,4).ToString(), response.DataQuality.DateCommenced.Value.ToString());
+            Assert.AreEqual(new DateTime(2015, 5, 7, 13, 20, 4, DateTimeKind.Utc), response.DataQuality.DateCommenced.Value);
+            Assert.AreEqual(DateTimeKind.Utc, response.DataQuality.DateCommenced.Value.Kind);
             Assert.IsTrue(response.DataQuality.DateToSuspend.HasValue);
-            Assert.AreEqual(new DateTime(2015, 6, 6, 13, 20, 4).ToString(), response.DataQuality.DateToSuspend.Value.ToString());
+            Assert.AreEqual(new DateTime(2015, 6, 6, 13, 20, 4, DateTimeKind.Utc), response.DataQuality.DateToSuspend.Value);
+            Assert.AreEqual(DateTimeKind.Utc, response.DataQuality.DateToSuspend.Value.Kind);
             Assert.IsTrue(response.DataQuality.LockApplied.HasValue);
             Assert.IsTrue(response.DataQuality.LockApplied.Value);
             Assert.IsNotNull(response.DataQuality.DomainList);
@@ -314,7 +316,8 @@ namespace EppLib.Tests
             Assert.AreEqual("www.youve.been.phished.co.uk", notification.HostName);
             Assert.AreEqual("http://www.youve.been.phished.co.uk/give/us/your/money.htm", notification.Url);
             Assert.IsNotNull(notification.Date);
-            Assert.AreEqual(new DateTime(2011, 3, 1, 11, 44, 1), notification.Date.Value);
+            Assert.AreEqual(new DateTime(2011, 3, 1, 11, 44, 1, DateTimeKind.Utc), notification.Date.Value);
+            Assert.AreEqual(DateTimeKind.Utc, notification.Date.Value.Kind);
             Assert.AreEqual("213.135.134.24", notification.Ip);
             Assert.AreEqual("ns0.crooked.dealings.net", notification.Nameserver);
             Assert.AreEqual("hostmaster@crooked.dealings.net", notification.DnsAdmin);
@@ -350,7 +353,8 @@ namespace EppLib.Tests
 
             Assert.AreEqual("Data Quality", notification.SuspendedReason);
             Assert.IsNotNull(notification.CancelDate);
-            Assert.AreEqual(new DateTime(2009, 12, 12, 0, 0, 13, DateTimeKind.Utc), notification.CancelDate.Value.ToUniversalTime());
+            Assert.AreEqual(new DateTime(2009, 12, 12, 0, 0, 13, DateTimeKind.Utc), notification.CancelDate.Value);
+            Assert.AreEqual(DateTimeKind.Utc, notification.CancelDate.Value.Kind);
             Assert.IsNotNull(notification.SuspendedDomains);
             Assert.AreEqual(2, notification.SuspendedDomains.Count);
             Assert.AreEqual("epp-example1.co.uk", notification.SuspendedDomains.First());

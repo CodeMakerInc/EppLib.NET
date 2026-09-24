@@ -94,7 +94,7 @@ namespace EppLib.Extensions.Nominet.ContactInfo
                 if (dateCommenced != null)
                 {
                     DateTime date;
-                    if (DateTime.TryParse(dateCommenced.InnerText, out date))
+                    if (EppDateTime.TryParse(dateCommenced.InnerText, out date))
                     {
                         _nomDataQuality.DateCommenced = date;
                     }
@@ -103,7 +103,7 @@ namespace EppLib.Extensions.Nominet.ContactInfo
                 if (dateToSuspend != null)
                 {
                     DateTime date;
-                    if (DateTime.TryParse(dateToSuspend.InnerText, out date))
+                    if (EppDateTime.TryParse(dateToSuspend.InnerText, out date))
                     {
                         _nomDataQuality.DateToSuspend = date;
                     }
