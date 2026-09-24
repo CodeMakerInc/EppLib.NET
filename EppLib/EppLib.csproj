@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net10.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <AssemblyName>EppLib</AssemblyName>
+    <PackageId>EppLib</PackageId>
+    <Version>1.4.0</Version>
+    <Authors>Code Maker Inc. and Contributors</Authors>
+    <Description>EppLib.NET provides a library that makes easy for registrars to interact with registries implementing the Extensible Provisioning Protocol (EPP). Includes extensions for CIRA (.CA), Nominet (.UK), IIS (.SE), Verisign Namestore, LaunchPhase and SecDNS.</Description>
+    <PackageTags>epp;registrar;registry;domain;rfc5730</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CodeMakerInc/EppLib.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CodeMakerInc/EppLib.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Adds a net10.0 target alongside netstandard2.0. Fixes an infinite loop at 100% CPU in TcpTransport.Read when the server closes the connection (#46).</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -174,5 +185,8 @@
     <Compile Include="TcpTransport.cs" />
     <Compile Include="IDebugger.cs" />
     <Compile Include="SimpleLogger.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
