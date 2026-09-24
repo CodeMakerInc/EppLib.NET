@@ -23,5 +23,5 @@
       "dotnet"
     ]
   },
-  "test_command": "dotnet test"
+  "test_command": "dotnet test EppLib/EppLib.sln"
 }
