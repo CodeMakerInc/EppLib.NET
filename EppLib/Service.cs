@@ -34,7 +34,8 @@ namespace EppLib
 		/// <summary>
 		/// Connects to the registry end point
 		/// </summary>
-        public void Connect(SslProtocols sslProtocols = SslProtocols.Tls)
+		/// <param name="sslProtocols">TLS versions to allow; the default lets the operating system choose.</param>
+        public void Connect(SslProtocols sslProtocols = SslProtocols.None)
 		{
             transport.Connect(sslProtocols);
 			transport.Read();

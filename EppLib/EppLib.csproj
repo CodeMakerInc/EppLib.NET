@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <AssemblyName>EppLib</AssemblyName>
     <PackageId>EppLib</PackageId>
-    <Version>1.4.0</Version>
+    <Version>1.4.1</Version>
     <Authors>Code Maker Inc. and Contributors</Authors>
     <Description>EppLib.NET provides a library that makes easy for registrars to interact with registries implementing the Extensible Provisioning Protocol (EPP). Includes extensions for CIRA (.CA), Nominet (.UK), IIS (.SE), Verisign Namestore, LaunchPhase and SecDNS.</Description>
     <PackageTags>epp;registrar;registry;domain;rfc5730</PackageTags>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/CodeMakerInc/EppLib.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Adds a net10.0 target alongside netstandard2.0. Fixes an infinite loop at 100% CPU in TcpTransport.Read when the server closes the connection (#46).</PackageReleaseNotes>
+    <PackageReleaseNotes>Connect() now lets the operating system choose the TLS version (SslProtocols.None) instead of forcing TLS 1.0 when a client certificate is used. Recompile against this version to pick up the new default.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
