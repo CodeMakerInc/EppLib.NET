@@ -350,7 +350,7 @@ namespace EppLib.Tests
 
             Assert.AreEqual("Data Quality", notification.SuspendedReason);
             Assert.IsNotNull(notification.CancelDate);
-            Assert.AreEqual(new DateTime(2009, 12, 12, 0, 0, 13), notification.CancelDate.Value);
+            Assert.AreEqual(new DateTime(2009, 12, 12, 0, 0, 13, DateTimeKind.Utc), notification.CancelDate.Value.ToUniversalTime());
             Assert.IsNotNull(notification.SuspendedDomains);
             Assert.AreEqual(2, notification.SuspendedDomains.Count);
             Assert.AreEqual("epp-example1.co.uk", notification.SuspendedDomains.First());
