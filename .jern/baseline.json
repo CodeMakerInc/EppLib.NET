@@ -25,5 +25,6 @@
       "dotnet"
     ]
   },
-  "test_command": "dotnet test EppLib/EppLib.sln"
+  "test_command": "dotnet test EppLib/EppLib.sln",
+  "environment": { "network_allow": ["api.nuget.org"] }
 }
