@@ -19,3 +19,29 @@ Our library is a complete implementation of the EPP specification. Have a look a
 ```bash
 PM> Install-Package EppLib
 ```
+
+# Upgrading to 1.5
+
+Starting with 1.5.0, `TcpTransport` validates the registry's server certificate: it must chain to a trusted root, match the host name and not be expired. Earlier versions accepted any certificate, which let a man-in-the-middle read your EPP login credentials.
+
+Production registries use valid certificates, so no change is needed there. If you connect to a test (OT&E) environment that uses a self-signed certificate, `Connect()` will now fail with an `AuthenticationException`. Allow that one certificate by pinning its SHA-256 fingerprint:
+
+```csharp
+var transport = new TcpTransport("epp.test.example", 700, clientCertificate)
+{
+    // Test environments only. Accepts a valid certificate, or this exact self-signed one.
+    ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
+        errors == SslPolicyErrors.None ||
+        certificate?.GetCertHashString(HashAlgorithmName.SHA256) == "PASTE_SHA256_FINGERPRINT_HERE"
+};
+```
+
+To get the fingerprint (drop the colons from the output):
+
+```bash
+openssl s_client -connect epp.test.example:700 </dev/null 2>/dev/null | openssl x509 -noout -fingerprint -sha256
+```
+
+`GetCertHashString(HashAlgorithmName)` needs .NET Core 3.0 or later. On .NET Framework, compare `certificate.GetCertHashString()` against the SHA-1 fingerprint (`-sha1` in the command above) instead.
+
+Don't return `true` unconditionally, and never set this callback when connecting to a production registry.
