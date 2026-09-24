@@ -59,13 +59,20 @@ namespace EppLib
         }
 
         /// <summary>
+        /// Overrides how the registry's server certificate is validated. By default the certificate must
+        /// chain to a trusted root and match the host name. Set this only for test environments that use
+        /// self-signed certificates, and prefer pinning the expected certificate over accepting any.
+        /// </summary>
+        public RemoteCertificateValidationCallback ServerCertificateValidationCallback { get; set; }
+
+        /// <summary>
         /// Connect to the registry end point
         /// </summary>
         public void Connect(SslProtocols sslProtocols)
         {
             var client = new TcpClient(EPP_REGISTRY_COM, PORT);
 
-            stream = new SslStream(client.GetStream(), false, ValidateServerCertificate)
+            stream = new SslStream(client.GetStream(), false, ServerCertificateValidationCallback ?? ValidateServerCertificate)
                      {
                          ReadTimeout = READ_TIMEOUT,
                          WriteTimeout = WRITE_TIMEOUT
@@ -87,7 +94,7 @@ namespace EppLib
         
         private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            return true;
+            return sslPolicyErrors == SslPolicyErrors.None;
         }
 
         /// <summary>

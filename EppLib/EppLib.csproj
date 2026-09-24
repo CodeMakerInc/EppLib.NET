@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <AssemblyName>EppLib</AssemblyName>
     <PackageId>EppLib</PackageId>
-    <Version>1.4.1</Version>
+    <Version>1.5.0</Version>
     <Authors>Code Maker Inc. and Contributors</Authors>
     <Description>EppLib.NET provides a library that makes easy for registrars to interact with registries implementing the Extensible Provisioning Protocol (EPP). Includes extensions for CIRA (.CA), Nominet (.UK), IIS (.SE), Verisign Namestore, LaunchPhase and SecDNS.</Description>
     <PackageTags>epp;registrar;registry;domain;rfc5730</PackageTags>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/CodeMakerInc/EppLib.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Connect() now lets the operating system choose the TLS version (SslProtocols.None) instead of forcing TLS 1.0 when a client certificate is used. Recompile against this version to pick up the new default.</PackageReleaseNotes>
+    <PackageReleaseNotes>Breaking: TcpTransport now validates the registry's server certificate (trusted chain and matching host name) instead of accepting any certificate. For test environments with self-signed certificates, set TcpTransport.ServerCertificateValidationCallback.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
