@@ -27,7 +27,7 @@ namespace EppLib
 {
     public interface ITransport : IDisposable
     {
-        void Connect(SslProtocols sslProtocols = SslProtocols.Tls);
+        void Connect(SslProtocols sslProtocols = SslProtocols.None);
         void Disconnect();
         void Write(XmlDocument xmlDocument);
         byte[] Read();
