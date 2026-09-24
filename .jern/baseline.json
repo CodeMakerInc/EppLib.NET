@@ -16,7 +16,9 @@
     "edits_within": [
       "EppLib.Tests/",
       "EppLib.UnitTests/",
-      "EppLib/"
+      "EppLib/",
+      "README.md",
+      ".github/"
     ],
     "memory": "allow",
     "shell_allow": [
