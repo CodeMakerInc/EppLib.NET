@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 
 namespace EppLib.Entities
@@ -44,11 +45,44 @@ namespace EppLib.Entities
             this.registrantContactId = registrantContactId;
         }
 
+        /// <summary>
+        /// The transfer operation; defaults to Request.
+        /// </summary>
+        public TransferOperation Operation { get; set; } = TransferOperation.Request;
+
+        /// <summary>
+        /// Years or months to add to the registration when the transfer completes. Only used with Request.
+        /// </summary>
+        public DomainPeriod Period { get; set; }
+
+        /// <summary>
+        /// The repository object ID of the contact whose authorization information is in Password,
+        /// when it is a contact's rather than the domain's (the pw roid attribute).
+        /// </summary>
+        public string AuthInfoRoid { get; set; }
+
         protected override XmlElement BuildCommandElement(XmlDocument doc, XmlElement commandRootElement)
         {
-            var domainTransfer = BuildCommandElement(doc, "transfer", commandRootElement, "request");
+            var domainTransfer = BuildCommandElement(doc, "transfer", commandRootElement, Operation.ToEppValue());
 
             AddXmlElement(doc, domainTransfer, "domain:name", m_name, namespaceUri);
+
+            if (Period != null)
+            {
+                var period = AddXmlElement(doc, domainTransfer, "domain:period", Period.Value.ToString(CultureInfo.InvariantCulture), namespaceUri);
+                period.SetAttribute("unit", Period.Unit);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Password))
+            {
+                var authInfo = AddXmlElement(doc, domainTransfer, "domain:authInfo", null, namespaceUri);
+                var pw = AddXmlElement(doc, authInfo, "domain:pw", Password, namespaceUri);
+
+                if (AuthInfoRoid != null)
+                {
+                    pw.SetAttribute("roid", AuthInfoRoid);
+                }
+            }
 
             return domainTransfer;
         }

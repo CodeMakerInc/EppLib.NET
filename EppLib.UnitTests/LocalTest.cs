@@ -321,7 +321,13 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/HostCreateResponse1.xml")]
         public void TestHostCreateResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new HostCreateResponse(File.ReadAllBytes("HostCreateResponse1.xml"));
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("ns1.example.com", response.HostCreateResult.HostName);
+            Assert.AreEqual("1999-04-03T22:00:00.0Z", response.HostCreateResult.CreatedDate);
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
         }
 
         #endregion
@@ -399,7 +405,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/HostDeleteCommand1.xml")]
         public void TestHostDeleteCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new HostDelete("ns1.example.com") { TransactionId = "ABC-12345" };
+
+            AssertXmlEquivalent(File.ReadAllText("HostDeleteCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -410,7 +418,12 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/HostDeleteResponse1.xml")]
         public void TestHostDeleteResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new HostDeleteResponse(File.ReadAllBytes("HostDeleteResponse1.xml"));
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
         }
 
         #endregion
@@ -567,7 +580,25 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/ContactUpdateCommand1.xml")]
         public void TestContactUpdateCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new ContactUpdate("sh8013") { TransactionId = "ABC-12345" };
+            command.ToAdd = new EppContactUpdateAddRemove();
+            command.ToAdd.Status.Add(new Status("", "clientDeleteProhibited"));
+            command.ContactChange = new ContactChange
+            {
+                PostalInfo = new PostalInfo
+                {
+                    m_type = "int",
+                    m_org = "",
+                    m_address = new PostalAddress { Street1 = "124 Example Dr.", Street2 = "Suite 200", City = "Dulles", StateProvince = "VA", PostalCode = "20166-6503", CountryCode = "US" }
+                },
+                Voice = new Telephone("+1.7034444444", null),
+                Fax = new Telephone("", null),
+                AuthInfo = "2fooBAR",
+                DiscloseFlag = true,
+                DiscloseMask = Contact.DiscloseFlags.Voice | Contact.DiscloseFlags.Email
+            };
+
+            AssertXmlEquivalent(File.ReadAllText("ContactUpdateCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -578,12 +609,16 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/ContactUpdateResponse1.xml")]
         public void TestContactUpdateResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new ContactUpdateResponse(File.ReadAllBytes("ContactUpdateResponse1.xml"));
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
         }
 
         /// <summary>
         /// Contact Update command, This is the Nominet specific example from their documentation for privacy off
-        /// NOTE: minor change to example XML, contact:disclose moved before contact:authinfo
         /// Disclose is set
         /// </summary>
         [TestMethod]
@@ -607,7 +642,6 @@ namespace EppLib.Tests
 
         /// <summary>
         /// Contact Update command, This is the Nominet specific example from their documentation for privacy on
-        /// NOTE: minor change to example XML, contact:disclose moved before contact:authinfo
         /// Disclose is not set
         /// </summary>
         [TestMethod]
@@ -635,7 +669,6 @@ namespace EppLib.Tests
 
         /// <summary>
         /// Contact create command, example RFC5733
-        /// NOTE: minor change to example XML, contact:disclose moved before contact:authinfo
         /// Disclose is not set
         /// </summary>
         [TestMethod]
@@ -662,7 +695,6 @@ namespace EppLib.Tests
 
         /// <summary>
         /// Contact create command, This is the Nominet specific example from their documentation for privacy on
-        /// NOTE: minor change to example XML, contact:disclose moved before contact:authinfo
         /// Disclose is set to false
         /// </summary>
         [TestMethod]
@@ -724,17 +756,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/ContactTransferQueryCommand1.xml")]
         public void TestContactTransferQueryCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new ContactTransfer("sh8013") { Operation = TransferOperation.Query, Password = "2fooBAR", TransactionId = "ABC-12345" };
 
-            /*
-            string expected = File.ReadAllText("ContactTransferQueryCommand1.xml");
-
-            var command = new ContactTransferQuery("sh8013");
-            command.TransactionId = "ABC-12345";
-            command.Password = "2fooBAR";
-
-            Assert.AreEqual(expected, command.ToXml().InnerXml);
-            */
+            AssertXmlEquivalent(File.ReadAllText("ContactTransferQueryCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -745,27 +769,18 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/ContactTransferQueryResponse1.xml")]
         public void TestContactTransferQueryResponse1()
         {
-            Assert.Inconclusive("Not implemented");
-
-            /*
-            byte[] input = File.ReadAllBytes("ContactTransferQueryResponse1.xml");
-            var response = new ContactTransferQueryResponse(input);
+            var response = new ContactTransferResponse(File.ReadAllBytes("ContactTransferQueryResponse1.xml"));
 
             Assert.AreEqual("1000", response.Code);
             Assert.AreEqual("Command completed successfully", response.Message);
-
             Assert.AreEqual("sh8013", response.ContactId);
-            Assert.AreEqual("pending", response.TransferStatus); // trStatus
-
-            Assert.AreEqual("ClientX", response.RequestingClient); //reID
-            Assert.AreEqual("2000-06-06T22:00:00.0Z", response.RequestDate); //reDate
-
-            Assert.AreEqual("ClientY", response.ActionClient); // acID
-            Assert.AreEqual("2000-06-11T22:00:00.0Z", response.ActionDate); //acDate
-
+            Assert.AreEqual("pending", response.TransferStatus);
+            Assert.AreEqual("ClientX", response.RequestClientId);
+            Assert.AreEqual("2000-06-06T22:00:00.0Z", response.RequestDate);
+            Assert.AreEqual("ClientY", response.ActionClientId);
+            Assert.AreEqual("2000-06-11T22:00:00.0Z", response.ActionDate);
             Assert.AreEqual("ABC-12345", response.ClientTransactionId);
             Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
-            */
         }
 
         #endregion
@@ -780,17 +795,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/ContactTransferRequestCommand1.xml")]
         public void TestContactTransferRequestCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new ContactTransfer("sh8013") { Password = "2fooBAR", TransactionId = "ABC-12345" };
 
-            /*
-            string expected = File.ReadAllText("ContactTransferRequestCommand1.xml");
-
-            var command = new ContactTransfer("sh8013");
-            command.TransactionId = "ABC-12345";
-            command.Password = "2fooBAR";
-
-            Assert.AreEqual(expected, command.ToXml().InnerXml);
-            */
+            AssertXmlEquivalent(File.ReadAllText("ContactTransferRequestCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -801,27 +808,16 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/ContactTransferRequestResponse1.xml")]
         public void TestContactTransferRequestResponse1()
         {
-            Assert.Inconclusive("Not implemented");
-
-            /*
-            byte[] input = File.ReadAllBytes("ContactTransferRequestResponse1.xml");
-            var response = new ContactTransferResponse(input);
+            var response = new ContactTransferResponse(File.ReadAllBytes("ContactTransferRequestResponse1.xml"));
 
             Assert.AreEqual("1001", response.Code);
             Assert.AreEqual("Command completed successfully; action pending", response.Message);
-
             Assert.AreEqual("sh8013", response.ContactId);
-            Assert.AreEqual("pending", response.TransferStatus); // trStatus
-
-            Assert.AreEqual("ClientX", response.RequestingClient); //reID
-            Assert.AreEqual("2000-06-08T22:00:00.0Z", response.RequestDate); //reDate
-
-            Assert.AreEqual("ClientY", response.ActionClient); // acID
-            Assert.AreEqual("2000-06-13T22:00:00.0Z", response.ActionDate); //acDate
-
-            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
-            Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
-            */
+            Assert.AreEqual("pending", response.TransferStatus);
+            Assert.AreEqual("ClientX", response.RequestClientId);
+            Assert.AreEqual("2000-06-08T22:00:00.0Z", response.RequestDate);
+            Assert.AreEqual("ClientY", response.ActionClientId);
+            Assert.AreEqual("2000-06-13T22:00:00.0Z", response.ActionDate);
         }
 
         #endregion
@@ -946,7 +942,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainInfoCommand1.xml")]
         public void TestDomainInfoCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new DomainInfo("example.com") { Hosts = "all", TransactionId = "ABC-12345" };
+
+            AssertXmlEquivalent(File.ReadAllText("DomainInfoCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -957,7 +955,25 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainInfoResponse1.xml")]
         public void TestDomainInfoResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new DomainInfoResponse(File.ReadAllBytes("DomainInfoResponse1.xml"));
+            var domain = response.Domain;
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("example.com", domain.Name);
+            Assert.AreEqual("EXAMPLE1-REP", domain.Roid);
+            CollectionAssert.AreEqual(new[] { "ok" }, domain.Status.Select(s => s.Type).ToArray());
+            Assert.AreEqual("jd1234", domain.RegistrantId);
+            CollectionAssert.AreEqual(new[] { "admin:sh8013", "tech:sh8013" }, domain.Contacts.Select(c => c.Type + ":" + c.Id).ToArray());
+            CollectionAssert.AreEqual(new[] { "ns1.example.com", "ns1.example.net" }, domain.NameServers.ToArray());
+            CollectionAssert.AreEqual(new[] { "ns1.example.com", "ns2.example.com" }, domain.Hosts.ToArray());
+            Assert.AreEqual("ClientX", domain.ClId);
+            Assert.AreEqual("ClientY", domain.CrId);
+            Assert.AreEqual("1999-04-03T22:00:00.0Z", domain.CrDate);
+            Assert.AreEqual("ClientX", domain.UpId);
+            Assert.AreEqual("1999-12-03T09:00:00.0Z", domain.UpDate);
+            Assert.AreEqual("2005-04-03T22:00:00.0Z", domain.ExDate);
+            Assert.AreEqual("2000-04-08T09:00:00.0Z", domain.TrDate);
+            Assert.AreEqual("2fooBAR", domain.Password);
         }
 
         #endregion
@@ -972,7 +988,16 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainUpdateCommand1.xml")]
         public void TestDomainUpdateCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new DomainUpdate("example.com") { TransactionId = "ABC-12345" };
+            command.ToAdd.NameServers.Add("ns2.example.com");
+            command.ToAdd.DomainContacts.Add(new DomainContact("mak21", "tech"));
+            command.ToAdd.Status.Add(new Status("Payment overdue.", "clientHold") { Lang = "en" });
+            command.ToRemove.NameServers.Add("ns1.example.com");
+            command.ToRemove.DomainContacts.Add(new DomainContact("sh8013", "tech"));
+            command.ToRemove.Status.Add(new Status("", "clientUpdateProhibited"));
+            command.DomainChange = new DomainChange { RegistrantContactId = "sh8013", AuthInfo = "2BARfoo" };
+
+            AssertXmlEquivalent(File.ReadAllText("DomainUpdateCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -983,7 +1008,12 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainUpdateResponse1.xml")]
         public void TestDomainUpdateResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new DomainUpdateResponse(File.ReadAllBytes("DomainUpdateResponse1.xml"));
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
         }
 
         #endregion
@@ -998,7 +1028,13 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainCreateCommand1.xml")]
         public void TestDomainCreateCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new DomainCreate("example.com", "jd1234") { Period = new DomainPeriod(2, "y"), Password = "2fooBAR", TransactionId = "ABC-12345" };
+            command.NameServers.Add("ns1.example.net");
+            command.NameServers.Add("ns2.example.net");
+            command.DomainContacts.Add(new DomainContact("sh8013", "admin"));
+            command.DomainContacts.Add(new DomainContact("sh8013", "tech"));
+
+            AssertXmlEquivalent(File.ReadAllText("DomainCreateCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -1009,7 +1045,12 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainCreateResponse1.xml")]
         public void TestDomainCreateResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new DomainCreateResponse(File.ReadAllBytes("DomainCreateResponse1.xml"));
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("example.com", response.DomainCreateResult.DomainName);
+            Assert.AreEqual("1999-04-03T22:00:00.0Z", response.DomainCreateResult.CreatedDate);
+            Assert.AreEqual("2001-04-03T22:00:00.0Z", response.DomainCreateResult.ExpirationDate);
         }
 
         #endregion
@@ -1024,7 +1065,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainDeleteCommand1.xml")]
         public void TestDomainDeleteCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new DomainDelete("example.com") { TransactionId = "ABC-12345" };
+
+            AssertXmlEquivalent(File.ReadAllText("DomainDeleteCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -1035,7 +1078,12 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainDeleteResponse1.xml")]
         public void TestDomainDeleteResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new DomainDeleteResponse(File.ReadAllBytes("DomainDeleteResponse1.xml"));
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("Command completed successfully", response.Message);
+            Assert.AreEqual("ABC-12345", response.ClientTransactionId);
+            Assert.AreEqual("54321-XYZ", response.ServerTransactionId);
         }
 
         #endregion
@@ -1100,7 +1148,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainTransferQueryCommand1.xml")]
         public void TestDomainTransferQueryCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new DomainTransfer("example.com") { Operation = TransferOperation.Query, Password = "2fooBAR", AuthInfoRoid = "JD1234-REP", TransactionId = "ABC-12345" };
+
+            AssertXmlEquivalent(File.ReadAllText("DomainTransferQueryCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -1136,7 +1186,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainTransferRequestCommand1.xml")]
         public void TestDomainTransferRequestCommand1()
         {
-            Assert.Inconclusive("Not implemented");
+            var command = new DomainTransfer("example.com") { Period = new DomainPeriod(1, "y"), Password = "2fooBAR", AuthInfoRoid = "JD1234-REP", TransactionId = "ABC-12345" };
+
+            AssertXmlEquivalent(File.ReadAllText("DomainTransferRequestCommand1.xml"), command.ToXml().OuterXml);
         }
 
         /// <summary>
@@ -1259,6 +1311,46 @@ namespace EppLib.Tests
         }
 
         #endregion
+
+        // Compares EPP documents ignoring formatting, namespace declarations, schemaLocation and attribute order.
+        private static void AssertXmlEquivalent(string expected, string actual)
+        {
+            var expectedXml = NormalizeXml(System.Xml.Linq.XDocument.Parse(expected.TrimStart('\uFEFF')).Root);
+            var actualXml = NormalizeXml(System.Xml.Linq.XDocument.Parse(actual).Root);
+
+            Assert.IsTrue(System.Xml.Linq.XNode.DeepEquals(expectedXml, actualXml), "Expected:\n" + expectedXml + "\nActual:\n" + actualXml);
+        }
+
+        private static System.Xml.Linq.XElement NormalizeXml(System.Xml.Linq.XElement element)
+        {
+            return new System.Xml.Linq.XElement(element.Name,
+                element.Attributes().Where(a => !a.IsNamespaceDeclaration && a.Name.LocalName != "schemaLocation").OrderBy(a => a.Name.ToString()),
+                element.Nodes().Select(n => n is System.Xml.Linq.XElement child ? (object)NormalizeXml(child)
+                    : n is System.Xml.Linq.XText text && !string.IsNullOrWhiteSpace(text.Value) ? text.Value.Trim() : null).Where(n => n != null));
+        }
+
+        /// <summary>
+        /// Contact update removing a status and changing email together with disclose: RFC 5733 orders email before disclose.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        public void TestContactUpdateRemoveStatusAndEmailBeforeDisclose()
+        {
+            var command = new ContactUpdate("sh8013") { TransactionId = "ABC-12345" };
+            command.ToRemove = new EppContactUpdateAddRemove();
+            command.ToRemove.Status.Add(new Status("", "clientDeleteProhibited"));
+            command.ContactChange = new ContactChange
+            {
+                Email = "jdoe@example.com",
+                DiscloseFlag = false,
+                DiscloseMask = Contact.DiscloseFlags.Email
+            };
+
+            var xml = command.ToXml().InnerXml;
+
+            StringAssert.Contains(xml, "<contact:rem><contact:status s=\"clientDeleteProhibited\" /></contact:rem>");
+            StringAssert.Contains(xml, "<contact:chg><contact:email>jdoe@example.com</contact:email><contact:disclose flag=\"0\">");
+        }
 
         #region Fork gaps (1.8.0)
 

@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <AssemblyName>EppLib</AssemblyName>
     <PackageId>EppLib</PackageId>
-    <Version>1.8.0</Version>
+    <Version>1.9.0</Version>
     <Authors>Code Maker Inc. and Contributors</Authors>
     <Description>EppLib.NET provides a library that makes easy for registrars to interact with registries implementing the Extensible Provisioning Protocol (EPP). Includes extensions for CIRA (.CA), Nominet (.UK), IIS (.SE), Verisign Namestore, LaunchPhase and SecDNS.</Description>
     <PackageTags>epp;registrar;registry;domain;rfc5730</PackageTags>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/CodeMakerInc/EppLib.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>HostInfoResponse.Host is now public, so host info responses can be read. DomainTransferResponse reads exDate (it looked for expDate, so ExpirationDate was always null) and the transfer status, requesting and acting clients and dates. Name servers can be sent as host attributes (hostAttr, with glue addresses) through DomainCreate.NameServerAttributes and EppDomainUpdateAddRemove.NameServerAttributes, and are returned in Domain.NameServerAttributes. PollResponse.DomainName is filled from standard domain notifications and IIS notifications. Thanks to the Esselink-nu and NoorDigitalAgency forks, which found these gaps.</PackageReleaseNotes>
+    <PackageReleaseNotes>ContactUpdate no longer throws when adding or removing statuses, can change the contact's authorization information (ContactChange.AuthInfo, or Password, now placed inside chg), and sends email before disclose as RFC 5733 requires. DomainTransfer supports every operation (Operation: request, query, approve, reject, cancel), a Period and the pw roid attribute (AuthInfoRoid). New ContactTransfer command and ContactTransferResponse. HostCreateResponse.HostCreateResult is now public.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -21,6 +21,9 @@
   <ItemGroup>
     <Compile Include="Entities\AuthInfo.cs" />
     <Compile Include="Entities\Contact\ContactCheckResult.cs" />
+    <Compile Include="Entities\Contact\ContactTransfer.cs" />
+    <Compile Include="Entities\Contact\ContactTransferResponse.cs" />
+    <Compile Include="Entities\TransferOperation.cs" />
     <Compile Include="Entities\Domain\DomainReleaseResponse.cs" />
     <Compile Include="Entities\Domain\DomainRelease.cs" />
     <Compile Include="Extensions\Fury\FuryContactCreateExtension.cs" />
