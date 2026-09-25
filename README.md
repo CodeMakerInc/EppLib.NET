@@ -20,6 +20,48 @@ Our library is a complete implementation of the EPP specification. Have a look a
 PM> Install-Package EppLib
 ```
 
+# Transfers
+
+`DomainTransfer` and `ContactTransfer` support every transfer operation in RFC 5731 and RFC 5733: `Request` (the default), `Query`, `Approve`, `Reject` and `Cancel`. Put the object's authorization code in `Password`.
+
+Request a domain transfer, adding a year to the registration:
+
+```csharp
+var request = new DomainTransfer("example.com")
+{
+    Period = new DomainPeriod(1, "y"),
+    Password = "2fooBAR"
+};
+var response = service.Execute(request);
+
+var transfer = response.DomainTransferResult;
+// transfer.TransferStatus is "pending" until the losing registrar or the registry acts.
+```
+
+Check on it later, or approve, reject or cancel it, with the same command and a different operation:
+
+```csharp
+var query = new DomainTransfer("example.com") { Operation = TransferOperation.Query, Password = "2fooBAR" };
+var status = service.Execute(query).DomainTransferResult;
+
+Console.WriteLine($"{status.TransferStatus}: requested by {status.RequestClientId} on {status.RequestDate}, " +
+                  $"action due from {status.ActionClientId} by {status.ActionDate}");
+
+// As the losing registrar:
+service.Execute(new DomainTransfer("example.com") { Operation = TransferOperation.Approve });
+```
+
+When the authorization code belongs to one of the domain's contacts rather than the domain itself, set `AuthInfoRoid` to that contact's repository ID (the `roid` attribute on `pw`).
+
+Contacts transfer the same way:
+
+```csharp
+var contactTransfer = service.Execute(new ContactTransfer("sh8013") { Password = "2fooBAR" });
+// contactTransfer.ContactId, TransferStatus, RequestClientId, RequestDate, ActionClientId, ActionDate
+```
+
+Registries that need extra data use their own subclass, such as `CiraDomainTransfer` for .ca, which accepts the same `Operation`, `Period` and `Password`.
+
 # Upgrading
 
 Releases 1.4.1 to 1.7.0 change behavior you may depend on. Newest first:
