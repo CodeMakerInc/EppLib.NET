@@ -301,8 +301,9 @@
     <None Include="TestData\iis-1.2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="TestData\secDNS-1.1.xsd">
+    <Content Include="TestData\secDNS-1.1.xsd">
       <SubType>Designer</SubType>
-    </None>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
