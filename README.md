@@ -22,7 +22,28 @@ PM> Install-Package EppLib
 
 # Upgrading
 
-Releases 1.4.1 to 1.6.0 change behavior you may depend on. Newest first:
+Releases 1.4.1 to 1.7.0 change behavior you may depend on. Newest first:
+
+## 1.7: complete DNSSEC (secDNS) support
+
+1.7.0 implements the rest of RFC 5910: DNSKEY data (`SecDNSKeyData`), removing all DNSSEC data, changing `maxSigLife`, urgent updates, and reading DNSSEC data from info responses with `SecDNSInfData.FromResponse`.
+
+Two changes to check:
+
+- `SecDNSData.KeyTag` is now an `int` instead of a `short`, because key tags go up to 65535. Code that assigns a key tag still compiles, but you must rebuild your application: a binary built against an earlier version fails when it touches `KeyTag`. Code that reads `KeyTag` into a `short` needs a cast or an `int`.
+- `SecDNSData` now has a `DigestType` property. Earlier versions always sent SHA-1 (`1`), and the default stays SHA-1 so existing code sends the same request. Most registries expect SHA-256 today, so set it explicitly:
+
+```csharp
+var extension = new SecDNSCreate();
+extension.DsData.Add(new SecDNSData
+{
+    KeyTag = 54321,
+    Algorithm = SecDNSAlgorithm.ECDSAP256SHA256,
+    DigestType = SecDNSDigestType.SHA256,
+    Digest = "E2D3C916F6DEEAC73294E8268FB5885044A833FC5459588F4A9184CFC41A5766"
+});
+domainCreate.Extensions.Add(extension);
+```
 
 ## 1.6: dates are returned in UTC
 
