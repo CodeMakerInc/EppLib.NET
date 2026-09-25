@@ -20,7 +20,34 @@ Our library is a complete implementation of the EPP specification. Have a look a
 PM> Install-Package EppLib
 ```
 
-# Upgrading to 1.5
+# Upgrading
+
+Releases 1.4.1 to 1.6.0 change behavior you may depend on. Newest first:
+
+## 1.6: dates are returned in UTC
+
+EPP requires every date-time to be UTC (RFC 5731 §2.4, RFC 5732 §2.4, RFC 5733 §2.7). Earlier versions converted parsed dates to the local time of the machine running your code. From 1.6.0 these properties hold UTC values with `DateTimeKind.Utc`:
+
+- `DomainRenewResponse.ExDate`
+- Nominet `DataQuality.DateCommenced` and `DataQuality.DateToSuspend`
+- Nominet `AbuseNotification.Date`
+- Nominet `DomainsSuspendedNotification.CancelDate`
+
+Values the registry sends without a zone designator (some Nominet dates) are taken as UTC. Before, they came back with `DateTimeKind.Unspecified` and the same clock time.
+
+If your code shows these values to people, or compares them with `DateTime.Now`, update it:
+
+```csharp
+var expires = renewResponse.ExDate.Value;            // UTC
+var expiresLocal = expires.ToLocalTime();            // for display in local time
+var expired = expires < DateTime.UtcNow;             // compare against UtcNow, not Now
+```
+
+Dates exposed as strings, such as `Domain.ExDate` or `PollResponse.QDate`, are unchanged: they hold the registry's text as sent.
+
+1.6.0 also fixes `DomainRenew` when given a full date-time. You can pass an `exDate` straight from an info response (for example `2026-04-03T22:00:00.0Z`), and `curExpDate` is now `2026-04-03` in every timezone. Before, machines east of UTC sent the next day, and the registry rejected the renew.
+
+## 1.5: server certificates are validated
 
 Starting with 1.5.0, `TcpTransport` validates the registry's server certificate: it must chain to a trusted root, match the host name and not be expired. Earlier versions accepted any certificate, which let a man-in-the-middle read your EPP login credentials.
 
@@ -45,3 +72,9 @@ openssl s_client -connect epp.test.example:700 </dev/null 2>/dev/null | openssl 
 `GetCertHashString(HashAlgorithmName)` needs .NET Core 3.0 or later. On .NET Framework, compare `certificate.GetCertHashString()` against the SHA-1 fingerprint (`-sha1` in the command above) instead.
 
 Don't return `true` unconditionally, and never set this callback when connecting to a production registry.
+
+## 1.4.1: TLS version chosen by the operating system
+
+`Connect()` used to default to TLS 1.0 when a client certificate was set, and servers that only accept TLS 1.2 or later reset the connection. From 1.4.1 the default is `SslProtocols.None`, so the operating system negotiates the best version it supports.
+
+C# compiles default parameter values into the calling code, so rebuild your application against 1.4.1 or later to pick up the new default. If you pass `SslProtocols.Tls` to `Connect()` explicitly, remove the argument.
