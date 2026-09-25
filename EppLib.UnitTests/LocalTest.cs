@@ -262,13 +262,9 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/HostInfoResponse1.xml")]
         public void TestHostInfoResponse1()
         {
-            Assert.Inconclusive("Not implemented");
-
-            /*
             byte[] input = File.ReadAllBytes("HostInfoResponse1.xml");
             var response = new HostInfoResponse(input);
-            //var host = response.Host;
-            var host = new Host();
+            var host = response.Host;
 
             Assert.AreEqual("1000", response.Code);
             Assert.AreEqual("Command completed successfully", response.Message);
@@ -283,24 +279,13 @@ namespace EppLib.Tests
             Assert.AreEqual("1999-12-03T09:00:00.0Z", host.UpDate);
             Assert.AreEqual("2000-04-08T09:00:00.0Z", host.TrDate);
 
-            var status = new List<Status>()
-                    {
-                        new Status("linked", null),
-                        new Status("clientUpdateProhibited", null)
-                    };
-            CollectionAssert.AreEqual(status.ToArray(), host.Status.ToArray());
+            CollectionAssert.AreEqual(new[] { "linked", "clientUpdateProhibited" }, host.Status.Select(s => s.Type).ToArray());
 
-            var hosts = new List<HostAddress>()
-                    {
-                        new HostAddress("192.0.2.2", "v4"),
-                        new HostAddress("192.0.2.29", "v4"),
-                        new HostAddress("1080:0:0:0:8:800:200C:417A", "v6")
-                    };
-            CollectionAssert.AreEqual(hosts.ToArray(), host.Addresses.ToArray());
+            CollectionAssert.AreEqual(new[] { "192.0.2.2", "192.0.2.29", "1080:0:0:0:8:800:200C:417A" }, host.Addresses.Select(a => a.IPAddress).ToArray());
+            CollectionAssert.AreEqual(new[] { "v4", "v4", "v6" }, host.Addresses.Select(a => a.IPVersion).ToArray());
 
             Assert.AreEqual("ABC-12345", response.ClientTransactionId);
             Assert.AreEqual("54322-XYZ", response.ServerTransactionId);
-            */
         }
 
         #endregion
@@ -1126,7 +1111,17 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainTransferQueryResponse1.xml")]
         public void TestDomainTransferQueryResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new DomainTransferResponse(File.ReadAllBytes("DomainTransferQueryResponse1.xml"));
+            var result = response.DomainTransferResult;
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.AreEqual("example.com", result.DomainName);
+            Assert.AreEqual("pending", result.TransferStatus);
+            Assert.AreEqual("ClientX", result.RequestClientId);
+            Assert.AreEqual("2000-06-06T22:00:00.0Z", result.RequestDate);
+            Assert.AreEqual("ClientY", result.ActionClientId);
+            Assert.AreEqual("2000-06-11T22:00:00.0Z", result.ActionDate);
+            Assert.AreEqual("2002-09-08T22:00:00.0Z", result.ExpirationDate);
         }
 
         #endregion
@@ -1152,7 +1147,17 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainTransferRequestResponse1.xml")]
         public void TestDomainTransferRequestResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new DomainTransferResponse(File.ReadAllBytes("DomainTransferRequestResponse1.xml"));
+            var result = response.DomainTransferResult;
+
+            Assert.AreEqual("1001", response.Code);
+            Assert.AreEqual("example.com", result.DomainName);
+            Assert.AreEqual("pending", result.TransferStatus);
+            Assert.AreEqual("ClientX", result.RequestClientId);
+            Assert.AreEqual("2000-06-08T22:00:00.0Z", result.RequestDate);
+            Assert.AreEqual("ClientY", result.ActionClientId);
+            Assert.AreEqual("2000-06-13T22:00:00.0Z", result.ActionDate);
+            Assert.AreEqual("2002-09-08T22:00:00.0Z", result.ExpirationDate);
         }
 
         #endregion
@@ -1251,6 +1256,116 @@ namespace EppLib.Tests
             var notification = new DomainsReleasedNotification(File.ReadAllText("PollMsgsResponse2.xml"));
 
             Assert.IsNotNull(notification.DomainsReleased);
+        }
+
+        #endregion
+
+        #region Fork gaps (1.8.0)
+
+        /// <summary>
+        /// Domain create with name servers as host attributes (RFC 5731 hostAttr)
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        public void TestDomainCreateHostAttributes()
+        {
+            var command = new DomainCreate("example.com", "jd1234");
+            command.NameServerAttributes.Add(new DomainHostAttribute("ns1.example.net"));
+            command.NameServerAttributes.Add(new DomainHostAttribute("ns1.example.com", new HostAddress("192.0.2.2", "v4"), new HostAddress("1080:0:0:0:8:800:200C:417A", "v6")));
+            command.TransactionId = "ABC-12345";
+
+            var xml = command.ToXml().InnerXml;
+
+            StringAssert.Contains(xml, "<domain:ns><domain:hostAttr><domain:hostName>ns1.example.net</domain:hostName></domain:hostAttr>" +
+                "<domain:hostAttr><domain:hostName>ns1.example.com</domain:hostName><domain:hostAddr ip=\"v4\">192.0.2.2</domain:hostAddr>" +
+                "<domain:hostAddr ip=\"v6\">1080:0:0:0:8:800:200C:417A</domain:hostAddr></domain:hostAttr></domain:ns>");
+            Assert.IsFalse(xml.Contains("hostObj"));
+        }
+
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestDomainCreateRejectsHostObjectsAndAttributesTogether()
+        {
+            var command = new DomainCreate("example.com", "jd1234");
+            command.NameServers.Add("ns1.example.net");
+            command.NameServerAttributes.Add(new DomainHostAttribute("ns2.example.net"));
+
+            command.ToXml();
+        }
+
+        /// <summary>
+        /// Domain update adding and removing host attributes
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        public void TestDomainUpdateHostAttributes()
+        {
+            var command = new DomainUpdate("example.com");
+            command.ToAdd.NameServerAttributes.Add(new DomainHostAttribute("ns2.example.com", new HostAddress("192.0.2.3", "v4")));
+            command.ToRemove.NameServerAttributes.Add(new DomainHostAttribute("ns1.example.com"));
+
+            var xml = command.ToXml().InnerXml;
+
+            StringAssert.Contains(xml, "<domain:add><domain:ns><domain:hostAttr><domain:hostName>ns2.example.com</domain:hostName><domain:hostAddr ip=\"v4\">192.0.2.3</domain:hostAddr></domain:hostAttr></domain:ns></domain:add>");
+            StringAssert.Contains(xml, "<domain:rem><domain:ns><domain:hostAttr><domain:hostName>ns1.example.com</domain:hostName></domain:hostAttr></domain:ns></domain:rem>");
+        }
+
+        /// <summary>
+        /// Domain info response with host attributes keeps the glue addresses
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        public void TestDomainInfoResponseHostAttributes()
+        {
+            var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+                "<epp xmlns=\"urn:ietf:params:xml:ns:epp-1.0\"><response><result code=\"1000\"><msg>Command completed successfully</msg></result>" +
+                "<resData><domain:infData xmlns:domain=\"urn:ietf:params:xml:ns:domain-1.0\"><domain:name>example.com</domain:name><domain:roid>EXAMPLE1-REP</domain:roid>" +
+                "<domain:ns><domain:hostAttr><domain:hostName>ns1.example.com</domain:hostName><domain:hostAddr ip=\"v4\">192.0.2.2</domain:hostAddr><domain:hostAddr ip=\"v6\">1080:0:0:0:8:800:200C:417A</domain:hostAddr></domain:hostAttr>" +
+                "<domain:hostAttr><domain:hostName>ns2.example.net</domain:hostName></domain:hostAttr></domain:ns>" +
+                "<domain:clID>ClientX</domain:clID></domain:infData></resData><trID><clTRID>ABC-12345</clTRID><svTRID>54322-XYZ</svTRID></trID></response></epp>";
+
+            var response = new DomainInfoResponse(xml);
+            var domain = response.Domain;
+
+            CollectionAssert.AreEqual(new[] { "ns1.example.com", "ns2.example.net" }, domain.NameServers.ToArray());
+            Assert.AreEqual(2, domain.NameServerAttributes.Count);
+            Assert.AreEqual("ns1.example.com", domain.NameServerAttributes[0].HostName);
+            CollectionAssert.AreEqual(new[] { "192.0.2.2", "1080:0:0:0:8:800:200C:417A" }, domain.NameServerAttributes[0].Addresses.Select(a => a.IPAddress).ToArray());
+            CollectionAssert.AreEqual(new[] { "v4", "v6" }, domain.NameServerAttributes[0].Addresses.Select(a => a.IPVersion).ToArray());
+            Assert.AreEqual(0, domain.NameServerAttributes[1].Addresses.Count);
+        }
+
+        /// <summary>
+        /// Poll message with a standard pending action notification (RFC 5731 panData)
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        [DeploymentItem("TestData/MessageDomainPendingComplete1.xml")]
+        public void TestPollDomainNameFromPanData()
+        {
+            var response = new PollResponse(File.ReadAllBytes("MessageDomainPendingComplete1.xml"));
+
+            Assert.AreEqual("1301", response.Code);
+            Assert.AreEqual("example.com", response.DomainName);
+        }
+
+        /// <summary>
+        /// Poll message with an IIS (.se/.nu) update notification wrapping domain:infData
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalResponse")]
+        public void TestPollDomainNameFromIisUpdateNotify()
+        {
+            var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+                "<epp xmlns=\"urn:ietf:params:xml:ns:epp-1.0\"><response><result code=\"1301\"><msg>Command completed successfully; ack to dequeue</msg></result>" +
+                "<msgQ count=\"1\" id=\"77\"><qDate>2025-06-19T10:00:00.0Z</qDate><msg>Domain updated</msg></msgQ>" +
+                "<resData><iis:updateNotify xmlns:iis=\"urn:se:iis:xml:epp:iis-1.2\"><domain:infData xmlns:domain=\"urn:ietf:params:xml:ns:domain-1.0\"><domain:name>example.se</domain:name><domain:roid>example.se-1</domain:roid></domain:infData></iis:updateNotify></resData>" +
+                "<trID><svTRID>54322-XYZ</svTRID></trID></response></epp>";
+
+            var response = new PollResponse(System.Text.Encoding.UTF8.GetBytes(xml));
+
+            Assert.AreEqual("example.se", response.DomainName);
         }
 
         #endregion

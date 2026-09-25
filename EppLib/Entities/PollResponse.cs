@@ -78,6 +78,19 @@ namespace EppLib.Entities
                 {
                     DomainName = domainNameNode.InnerText;
                 }
+
+                // Standard domain notifications (domain:panData, domain:trnData) and registry wrappers
+                // such as IIS's updateNotify carry the name as a domain-1.0 name element.
+                if (string.IsNullOrEmpty(DomainName))
+                {
+                    namespaces.AddNamespace("pollDomain", "urn:ietf:params:xml:ns:domain-1.0");
+                    var nameNode = resData.SelectSingleNode(".//pollDomain:name", namespaces);
+
+                    if (nameNode != null)
+                    {
+                        DomainName = nameNode.InnerText;
+                    }
+                }
             }
         }
 

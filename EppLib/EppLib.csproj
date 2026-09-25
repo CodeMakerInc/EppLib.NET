@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <AssemblyName>EppLib</AssemblyName>
     <PackageId>EppLib</PackageId>
-    <Version>1.7.0</Version>
+    <Version>1.8.0</Version>
     <Authors>Code Maker Inc. and Contributors</Authors>
     <Description>EppLib.NET provides a library that makes easy for registrars to interact with registries implementing the Extensible Provisioning Protocol (EPP). Includes extensions for CIRA (.CA), Nominet (.UK), IIS (.SE), Verisign Namestore, LaunchPhase and SecDNS.</Description>
     <PackageTags>epp;registrar;registry;domain;rfc5730</PackageTags>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/CodeMakerInc/EppLib.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Completes the secDNS (DNSSEC, RFC 5910) extension (#31): keyData on create and update and inside dsData, remove-all, maxSigLife changes, the urgent flag, and SecDNSInfData for reading DNSSEC data from domain info responses. SecDNSData.KeyTag is now an int so key tags above 32767 work, DigestType can be set (for example SHA256) instead of always being SHA-1, and newer algorithms such as RSASHA256, ECDSAP256SHA256 and ED25519 are named in SecDNSAlgorithm.</PackageReleaseNotes>
+    <PackageReleaseNotes>HostInfoResponse.Host is now public, so host info responses can be read. DomainTransferResponse reads exDate (it looked for expDate, so ExpirationDate was always null) and the transfer status, requesting and acting clients and dates. Name servers can be sent as host attributes (hostAttr, with glue addresses) through DomainCreate.NameServerAttributes and EppDomainUpdateAddRemove.NameServerAttributes, and are returned in Domain.NameServerAttributes. PollResponse.DomainName is filled from standard domain notifications and IIS notifications. Thanks to the Esselink-nu and NoorDigitalAgency forks, which found these gaps.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -97,6 +97,7 @@
     <Compile Include="Entities\Domain\DomainCheckResponse.cs" />
     <Compile Include="Entities\Domain\DomainCheckResult.cs" />
     <Compile Include="Entities\Domain\DomainContact.cs" />
+    <Compile Include="Entities\Domain\DomainHostAttribute.cs" />
     <Compile Include="Entities\Domain\DomainCreate.cs" />
     <Compile Include="Entities\Domain\DomainCreateResponse.cs" />
     <Compile Include="Entities\Domain\DomainCreateResult.cs" />

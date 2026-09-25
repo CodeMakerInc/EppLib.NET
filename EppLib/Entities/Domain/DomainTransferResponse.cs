@@ -43,12 +43,19 @@ namespace EppLib.Entities
                         DomainTransferResult.CreatedDate = crDateNode.InnerText;
                     }
 
-                    var exDateNode = children.SelectSingleNode("domain:expDate", namespaces);
+                    // RFC 5731 names it exDate; expDate is kept for registries that relied on the old lookup.
+                    var exDateNode = children.SelectSingleNode("domain:exDate", namespaces) ?? children.SelectSingleNode("domain:expDate", namespaces);
 
                     if (exDateNode != null)
                     {
                         DomainTransferResult.ExpirationDate = exDateNode.InnerText;
                     }
+
+                    DomainTransferResult.TransferStatus = children.SelectSingleNode("domain:trStatus", namespaces)?.InnerText;
+                    DomainTransferResult.RequestClientId = children.SelectSingleNode("domain:reID", namespaces)?.InnerText;
+                    DomainTransferResult.RequestDate = children.SelectSingleNode("domain:reDate", namespaces)?.InnerText;
+                    DomainTransferResult.ActionClientId = children.SelectSingleNode("domain:acID", namespaces)?.InnerText;
+                    DomainTransferResult.ActionDate = children.SelectSingleNode("domain:acDate", namespaces)?.InnerText;
                 }
             }
         }
