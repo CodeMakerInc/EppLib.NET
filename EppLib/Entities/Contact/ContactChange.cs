@@ -19,6 +19,11 @@ namespace EppLib.Entities
         public Telephone Voice;
         public Telephone Fax;
         public string Email;
+
+        /// <summary>
+        /// New authorization information (password) for the contact.
+        /// </summary>
+        public string AuthInfo;
         public bool? DiscloseFlag;
         public Contact.DiscloseFlags DiscloseMask;
 

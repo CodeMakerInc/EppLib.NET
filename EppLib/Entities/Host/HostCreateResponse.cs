@@ -46,6 +46,6 @@ namespace EppLib.Entities
             }
         }
 
-        protected HostCreateResult HostCreateResult { get; set; }
+        public HostCreateResult HostCreateResult { get; protected set; }
     }
 }
