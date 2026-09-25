@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml;
 
 namespace EppLib.Extensions.Smallregistry
@@ -19,7 +20,7 @@ namespace EppLib.Extensions.Smallregistry
 
             if (BirthDate != null)
             {
-                AddXmlElement(doc, person, "birthDate", BirthDate.ToString("yyyy-MM-dd"));
+                AddXmlElement(doc, person, "birthDate", BirthDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
             }
 
             if (BirthPlace != null)

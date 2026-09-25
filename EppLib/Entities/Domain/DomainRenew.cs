@@ -35,7 +35,7 @@ namespace EppLib.Entities
             var domainRenew = BuildCommandElement(doc, "renew", commandRootElement);
 
             AddXmlElement(doc, domainRenew, "domain:name", DomainName, namespaceUri);
-            AddXmlElement(doc, domainRenew, "domain:curExpDate", DateTime.Parse(CurrentExpirationDate, CultureInfo.InvariantCulture).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), namespaceUri);
+            AddXmlElement(doc, domainRenew, "domain:curExpDate", EppDateTime.Parse(CurrentExpirationDate).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), namespaceUri);
 
             if (m_period != null)
             {

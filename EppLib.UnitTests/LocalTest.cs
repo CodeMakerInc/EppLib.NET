@@ -1073,6 +1073,21 @@ namespace EppLib.Tests
         }
 
         /// <summary>
+        /// Domain renew command given a full UTC date-time, as returned in exDate. The date must not shift with the local timezone.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("LocalCommand")]
+        [DeploymentItem("TestData/DomainRenewCommand1.xml")]
+        public void TestDomainRenewCommandWithUtcDateTime()
+        {
+            string expected = File.ReadAllText("DomainRenewCommand1.xml");
+
+            var command = new DomainRenew("example.com", "2000-04-03T22:00:00.0Z", new DomainPeriod(5, "y"));
+            command.TransactionId = "ABC-12345";
+            Assert.AreEqual(expected, command.ToXml().InnerXml);
+        }
+
+        /// <summary>
         /// Domain renew response, example RFC5731
         /// </summary>
         [TestMethod]
@@ -1080,7 +1095,12 @@ namespace EppLib.Tests
         [DeploymentItem("TestData/DomainRenewResponse1.xml")]
         public void TestDomainRenewResponse1()
         {
-            Assert.Inconclusive("Not implemented");
+            var response = new DomainRenewResponse(File.ReadAllBytes("DomainRenewResponse1.xml"));
+
+            Assert.AreEqual("1000", response.Code);
+            Assert.IsNotNull(response.ExDate);
+            Assert.AreEqual(new DateTime(2005, 4, 3, 22, 0, 0, DateTimeKind.Utc), response.ExDate.Value);
+            Assert.AreEqual(DateTimeKind.Utc, response.ExDate.Value.Kind);
         }
 
         #endregion

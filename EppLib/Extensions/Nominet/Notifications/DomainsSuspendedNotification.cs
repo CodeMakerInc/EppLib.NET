@@ -32,7 +32,7 @@ namespace EppLib.Extensions.Nominet.Notifications
                 if (cancelDateNode != null)
                 {
                     DateTime parsedDate;
-                    if (DateTime.TryParse(cancelDateNode.InnerText, out parsedDate))
+                    if (EppDateTime.TryParse(cancelDateNode.InnerText, out parsedDate))
                     {
                         CancelDate = parsedDate;
                     }
