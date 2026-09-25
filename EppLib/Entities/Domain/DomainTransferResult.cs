@@ -22,5 +22,30 @@ namespace EppLib.Entities
         public string ExpirationDate { get; set; }
 
         public string DomainName { get; set; }
+
+        /// <summary>
+        /// Transfer status: clientApproved, clientCancelled, clientRejected, pending, serverApproved or serverCancelled.
+        /// </summary>
+        public string TransferStatus { get; set; }
+
+        /// <summary>
+        /// The client that requested the transfer (reID).
+        /// </summary>
+        public string RequestClientId { get; set; }
+
+        /// <summary>
+        /// When the transfer was requested (reDate), as sent by the registry.
+        /// </summary>
+        public string RequestDate { get; set; }
+
+        /// <summary>
+        /// The client that should act on the transfer (acID).
+        /// </summary>
+        public string ActionClientId { get; set; }
+
+        /// <summary>
+        /// When action was completed or is due (acDate), as sent by the registry.
+        /// </summary>
+        public string ActionDate { get; set; }
     }
 }

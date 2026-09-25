@@ -41,6 +41,7 @@ namespace EppLib.Extensions.Iis
             _iisDomain.Hosts = _domain.Hosts;
             _iisDomain.Name = _domain.Name;
             _iisDomain.NameServers = _domain.NameServers;
+            _iisDomain.NameServerAttributes = _domain.NameServerAttributes;
             _iisDomain.Password = _domain.Password;
             _iisDomain.RegistrantId = _domain.RegistrantId;
             _iisDomain.Roid = _domain.Roid;

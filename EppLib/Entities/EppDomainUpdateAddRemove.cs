@@ -18,6 +18,7 @@ namespace EppLib.Entities
     public class EppDomainUpdateAddRemove
     {
         public IList<string> NameServers = new List<string>();
+        public IList<DomainHostAttribute> NameServerAttributes = new List<DomainHostAttribute>();
         public IList<DomainContact> DomainContacts = new List<DomainContact>();
         public IList<Status> Status = new List<Status>();
     }

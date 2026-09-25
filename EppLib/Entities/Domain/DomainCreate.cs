@@ -34,6 +34,12 @@ namespace EppLib.Entities
             get { return nameServers; }
         }
 
+        /// <summary>
+        /// Name servers as host attributes (name plus glue addresses), for registries that do not use host objects.
+        /// Use this or <see cref="NameServers"/>, not both.
+        /// </summary>
+        public IList<DomainHostAttribute> NameServerAttributes { get; } = new List<DomainHostAttribute>();
+
         public IList<DomainContact> DomainContacts
         {
             get { return domainContacts; }
@@ -58,9 +64,9 @@ namespace EppLib.Entities
                 period.SetAttribute("unit", Period.Unit);
             }
 
-            if (NameServers != null && NameServers.Count>0)
+            if (NameServers.Count > 0 || NameServerAttributes.Count > 0)
             {
-                domainCreate.AppendChild(CreateNameServerElement(doc, NameServers));
+                domainCreate.AppendChild(CreateNameServerElement(doc, NameServers, NameServerAttributes));
             }
             
             if (RegistrantContactId != null)

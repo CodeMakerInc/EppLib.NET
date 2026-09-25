@@ -36,5 +36,30 @@ namespace EppLib.Entities
 
             return nameServerElement;
         }
+
+        /// <summary>
+        /// Builds domain:ns from either host object names (hostObj) or host attributes (hostAttr); RFC 5731 allows one form per element.
+        /// </summary>
+        protected XmlNode CreateNameServerElement(XmlDocument doc, ICollection<string> hostObjects, ICollection<DomainHostAttribute> hostAttributes)
+        {
+            if (hostObjects.Count > 0 && hostAttributes.Count > 0)
+            {
+                throw new InvalidOperationException("domain:ns takes either host objects (NameServers) or host attributes (NameServerAttributes), not both (RFC 5731 section 1.1).");
+            }
+
+            if (hostObjects.Count > 0)
+            {
+                return CreateNameServerElement(doc, hostObjects);
+            }
+
+            var nameServerElement = doc.CreateElement("domain:ns", namespaceUri);
+
+            foreach (var hostAttribute in hostAttributes)
+            {
+                nameServerElement.AppendChild(hostAttribute.ToXml(doc, namespaceUri));
+            }
+
+            return nameServerElement;
+        }
     }
 }

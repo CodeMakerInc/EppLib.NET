@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System.Collections.Generic;
 using System.Xml;
 
 namespace EppLib.Entities
@@ -100,12 +101,14 @@ namespace EppLib.Entities
             if (add_remove_items != null)
             {
 
-                if (add_remove_items.NameServers != null &&
-                     add_remove_items.NameServers.Count > 0)
+                var nameServers = add_remove_items.NameServers ?? new List<string>();
+                var nameServerAttributes = add_remove_items.NameServerAttributes ?? new List<DomainHostAttribute>();
+
+                if (nameServers.Count > 0 || nameServerAttributes.Count > 0)
                 {
                     add_remove_element = doc.CreateElement(tag_name, namespaceURI);
 
-                    add_remove_element.AppendChild(CreateNameServerElement(doc, add_remove_items.NameServers));
+                    add_remove_element.AppendChild(CreateNameServerElement(doc, nameServers, nameServerAttributes));
                 }
 
                 if (add_remove_items.DomainContacts != null &&

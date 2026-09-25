@@ -136,6 +136,21 @@ namespace EppLib.Entities
                                         Domain.NameServers.Add(hostName.InnerText);
                                     }
                                 }
+
+                                var hostNameNode = hostAttrNode.SelectSingleNode("domain:hostName", namespaces);
+
+                                if (hostNameNode != null)
+                                {
+                                    var hostAttribute = new DomainHostAttribute { HostName = hostNameNode.InnerText };
+
+                                    foreach (XmlNode hostAddrNode in hostAttrNode.SelectNodes("domain:hostAddr", namespaces))
+                                    {
+                                        var ip = hostAddrNode.Attributes?["ip"];
+                                        hostAttribute.Addresses.Add(new HostAddress(hostAddrNode.InnerText, ip != null ? ip.Value : "v4"));
+                                    }
+
+                                    Domain.NameServerAttributes.Add(hostAttribute);
+                                }
                             }
                         }
                     }

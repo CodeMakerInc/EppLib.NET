@@ -21,6 +21,7 @@ namespace EppLib.Entities
         public Domain()
         {
             NameServers = new List<string>();
+            NameServerAttributes = new List<DomainHostAttribute>();
             Hosts = new List<string>();
             Status = new List<Status>();
             Contacts = new List<DomainContact>();
@@ -55,6 +56,12 @@ namespace EppLib.Entities
         /// Name servers
         /// </summary>
         public IList<string> NameServers { get; set; }
+
+        /// <summary>
+        /// Name servers the registry returned as host attributes, with their glue addresses.
+        /// Their names are also in <see cref="NameServers"/>.
+        /// </summary>
+        public IList<DomainHostAttribute> NameServerAttributes { get; set; }
 
         /// <summary>
         /// The identifier of the sponsoring Registrar

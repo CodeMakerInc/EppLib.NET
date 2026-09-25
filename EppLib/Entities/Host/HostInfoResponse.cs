@@ -121,6 +121,6 @@ namespace EppLib.Entities
         
     }
 
-        protected Host Host { get; set; }
+        public Host Host { get; protected set; }
     }
 }

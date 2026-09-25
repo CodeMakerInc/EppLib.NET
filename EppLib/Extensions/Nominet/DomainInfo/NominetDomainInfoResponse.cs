@@ -26,6 +26,7 @@ namespace EppLib.Extensions.Nominet.DomainInfo
 			_nomDomain.Hosts = _domain.Hosts;
 			_nomDomain.Name = _domain.Name;
 			_nomDomain.NameServers = _domain.NameServers;
+			_nomDomain.NameServerAttributes = _domain.NameServerAttributes;
 			_nomDomain.Password = _domain.Password;
 			_nomDomain.RegistrantId = _domain.RegistrantId;
 			_nomDomain.Roid = _domain.Roid;
