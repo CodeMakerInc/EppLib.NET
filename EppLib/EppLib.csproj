@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <AssemblyName>EppLib</AssemblyName>
     <PackageId>EppLib</PackageId>
-    <Version>1.6.0</Version>
+    <Version>1.7.0</Version>
     <Authors>Code Maker Inc. and Contributors</Authors>
     <Description>EppLib.NET provides a library that makes easy for registrars to interact with registries implementing the Extensible Provisioning Protocol (EPP). Includes extensions for CIRA (.CA), Nominet (.UK), IIS (.SE), Verisign Namestore, LaunchPhase and SecDNS.</Description>
     <PackageTags>epp;registrar;registry;domain;rfc5730</PackageTags>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/CodeMakerInc/EppLib.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Breaking: parsed EPP dates (DomainRenewResponse.ExDate and the Nominet dates) are now returned in UTC (DateTimeKind.Utc) as RFC 5730-5733 require, instead of being converted to the machine's local time. Values without a zone designator are taken as UTC. Fixes DomainRenew sending the wrong curExpDate east of UTC when given a full date-time, and a culture-dependent Smallregistry birthDate.</PackageReleaseNotes>
+    <PackageReleaseNotes>Completes the secDNS (DNSSEC, RFC 5910) extension (#31): keyData on create and update and inside dsData, remove-all, maxSigLife changes, the urgent flag, and SecDNSInfData for reading DNSSEC data from domain info responses. SecDNSData.KeyTag is now an int so key tags above 32767 work, DigestType can be set (for example SHA256) instead of always being SHA-1, and newer algorithms such as RSASHA256, ECDSAP256SHA256 and ED25519 are named in SecDNSAlgorithm.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -174,6 +174,8 @@
     <Compile Include="Extensions\Nominet\DomainUpdate\NominetDomainUpdateExtension.cs" />
     <Compile Include="Extensions\SecDNS\SecDNSCreate.cs" />
     <Compile Include="Extensions\SecDNS\SecDNSData.cs" />
+    <Compile Include="Extensions\SecDNS\SecDNSInfData.cs" />
+    <Compile Include="Extensions\SecDNS\SecDNSKeyData.cs" />
     <Compile Include="Extensions\SecDNS\SecDNSUpdate.cs" />
     <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactCreate.cs" />
     <Compile Include="Extensions\Smallregistry\ContactCreate\SmallregistryContactPMCreateExtension.cs" />
